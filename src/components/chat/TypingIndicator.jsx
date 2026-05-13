@@ -4,9 +4,9 @@
  */
 export default function TypingIndicator() {
   return (
-    <div className="flex items-end gap-2 animate-fade-in">
+    <div className="flex items-end gap-1.5 sm:gap-2 animate-fade-in">
       {/* Bot avatar */}
-      <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-500 text-white text-sm shadow">
+      <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-500 text-white text-[10px] sm:text-sm shadow">
         🤖
       </div>
 

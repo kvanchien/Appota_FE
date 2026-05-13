@@ -109,14 +109,14 @@ export default function ChatInput({ onSend, disabled }) {
   }
 
   return (
-    <div className="p-4 bg-transparent space-y-4">
+    <div className="p-2 sm:p-4 bg-transparent space-y-2 sm:space-y-4">
       {/* Quick Prompts */}
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
         <button
           type="button"
           disabled={disabled}
           onClick={() => applyQuickPrompt(QUICK_PROMPTS.mechanic)}
-          className="px-4 py-2 rounded-xl text-xs font-semibold border border-blue-100 text-blue-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-blue-300 transition-all disabled:opacity-50"
+          className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold border border-blue-100 text-blue-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-blue-300 transition-all disabled:opacity-50"
         >
           💡 Cơ chế game
         </button>
@@ -124,7 +124,7 @@ export default function ChatInput({ onSend, disabled }) {
           type="button"
           disabled={disabled}
           onClick={() => applyQuickPrompt(QUICK_PROMPTS.event)}
-          className="px-4 py-2 rounded-xl text-xs font-semibold border border-purple-100 text-purple-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-purple-300 transition-all disabled:opacity-50"
+          className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold border border-purple-100 text-purple-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-purple-300 transition-all disabled:opacity-50"
         >
           🎁 Sự kiện game
         </button>
@@ -132,14 +132,14 @@ export default function ChatInput({ onSend, disabled }) {
           type="button"
           disabled={disabled}
           onClick={() => setShowTicketForm((prev) => !prev)}
-          className="px-4 py-2 rounded-xl text-xs font-semibold border border-emerald-100 text-emerald-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-emerald-300 transition-all disabled:opacity-50"
+          className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold border border-emerald-100 text-emerald-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-emerald-300 transition-all disabled:opacity-50"
         >
           🐞 Báo lỗi QA
         </button>
       </div>
 
       {showTicketForm && (
-        <div className="rounded-2xl border border-slate-200 bg-white/90 backdrop-blur-md p-4 space-y-3 shadow-xl animate-slide-up">
+        <div className="rounded-2xl border border-slate-200 bg-white/90 backdrop-blur-md p-3 sm:p-4 space-y-2 sm:space-y-3 shadow-xl animate-slide-up">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <input
               type="text"
@@ -217,11 +217,11 @@ export default function ChatInput({ onSend, disabled }) {
       <div className="relative max-w-4xl mx-auto w-full">
         <div
           className="
-      flex items-end gap-2
+      flex items-end gap-1.5 sm:gap-2
       bg-white
-      rounded-3xl
+      rounded-2xl sm:rounded-3xl
       border border-slate-200/80
-      px-4 py-2
+      px-3 sm:px-4 py-1.5 sm:py-2
       shadow-sm
       transition-all duration-200
       focus-within:border-slate-300
@@ -256,7 +256,7 @@ export default function ChatInput({ onSend, disabled }) {
           <button
             onClick={handleSend}
             disabled={disabled || !text.trim()}
-            className="mb-1 mr-1 flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-20 disabled:grayscale disabled:scale-100 flex items-center justify-center"
+            className="mb-1 mr-0.5 sm:mr-1 flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-20 disabled:grayscale disabled:scale-100 flex items-center justify-center"
           >
             {' '}
             <SendOutlined className="text-base" />{' '}

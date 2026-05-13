@@ -30,7 +30,7 @@ export default function ChatPage() {
     // If it's a very fast update (streaming), instant scroll is often better
     // but smooth is nicer for new messages. Let's try smooth first.
     scrollToBottom(isLoading ? 'auto' : 'smooth')
-  }, [messages])
+  }, [messages, isLoading])
 
   // Effect for loading state changes (typing indicator appearing)
   useEffect(() => {
@@ -43,29 +43,31 @@ export default function ChatPage() {
     <div className="flex flex-col h-screen bg-hero-gradient overflow-hidden">
       {/* ── Header ──────────────────────────────────────────── */}
       <header className="flex-shrink-0 bg-white/90 backdrop-blur-md border-b border-slate-200/60 shadow-sm z-20">
-        <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200/50">
-              <RobotOutlined className="text-white text-xl" />
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 sm:gap-4">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200/50">
+              <RobotOutlined className="text-white text-base sm:text-xl" />
             </div>
             <div>
-              <h1 className="font-extrabold text-slate-800 text-lg leading-tight tracking-tight">
+              <h1 className="font-extrabold text-slate-800 text-base sm:text-lg leading-tight tracking-tight">
                 Appota Chat AI
               </h1>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[11px] font-semibold text-emerald-600 uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[10px] sm:text-[11px] font-semibold text-emerald-600 uppercase tracking-wider">
                   Trực tuyến
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {isConnecting && (
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-100">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-amber-50 border border-amber-100">
                 <Spin size="small" />
-                <span className="text-xs font-medium text-amber-700">Đang đồng bộ...</span>
+                <span className="text-[10px] sm:text-xs font-medium text-amber-700">
+                  Đang đồng bộ...
+                </span>
               </div>
             )}
           </div>
@@ -75,19 +77,19 @@ export default function ChatPage() {
       {/* ── Messages Area ────────────────────────────────────── */}
       <main
         ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto scrollbar-thin scroll-smooth pt-4 pb-10"
+        className="flex-1 overflow-y-auto scrollbar-thin scroll-smooth pt-2 sm:pt-4 pb-6 sm:pb-10"
       >
-        <div className="max-w-4xl mx-auto px-4 md:px-6 flex flex-col gap-6">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 flex flex-col gap-3 sm:gap-6">
           {/* Welcome message */}
           {messages.length === 0 && !isConnecting && (
-            <div className="flex flex-col items-center justify-center py-20 animate-fade-in">
-              <div className="w-24 h-24 rounded-[2.5rem] bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-blue-200/50 mb-8 transform hover:scale-110 transition-transform duration-500">
-                <RobotOutlined className="text-white text-5xl" />
+            <div className="flex flex-col items-center justify-center py-10 sm:py-20 animate-fade-in">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-[2.5rem] bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-blue-200/50 mb-4 sm:mb-8 transform hover:scale-110 transition-transform duration-500">
+                <RobotOutlined className="text-white text-3xl sm:text-5xl" />
               </div>
-              <h2 className="text-3xl font-black text-slate-800 mb-4 tracking-tight">
+              <h2 className="text-xl sm:text-3xl font-black text-slate-800 mb-2 sm:mb-4 tracking-tight text-center">
                 Xin chào, tôi là Appota AI
               </h2>
-              <p className="text-slate-500 text-center max-w-md text-base leading-relaxed">
+              <p className="text-slate-500 text-center max-w-md text-sm sm:text-base leading-relaxed px-4 sm:px-0">
                 Tôi có thể giúp bạn giải đáp thắc mắc về game, hỗ trợ kỹ thuật hoặc hướng dẫn các sự
                 kiện đang diễn ra. Hãy đặt câu hỏi bên dưới nhé!
               </p>
@@ -103,7 +105,7 @@ export default function ChatPage() {
           )}
 
           {/* Messages List */}
-          <div className="flex flex-col gap-6 w-full">
+          <div className="flex flex-col gap-3 sm:gap-6 w-full">
             {messages.map((msg, idx) => (
               <ChatBubble
                 key={msg.id || idx}
@@ -142,8 +144,8 @@ export default function ChatPage() {
       </main>
 
       {/* ── Input Bar ────────────────────────────────────────── */}
-      <div className="flex-shrink-0 w-full bg-gradient-to-t from-white via-white/80 to-transparent pt-6 pb-2">
-        <div className="max-w-4xl mx-auto px-4">
+      <div className="flex-shrink-0 w-full bg-gradient-to-t from-white via-white/80 to-transparent pt-3 sm:pt-6 pb-[env(safe-area-inset-bottom,8px)]">
+        <div className="max-w-4xl mx-auto px-2 sm:px-4">
           <ChatInput onSend={sendMessage} disabled={isConnecting || isLoading} />
         </div>
       </div>

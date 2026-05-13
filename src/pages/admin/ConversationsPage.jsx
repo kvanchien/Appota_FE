@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Alert, DatePicker } from 'antd'
-import { MessageOutlined, CalendarOutlined } from '@ant-design/icons'
+import { Alert, DatePicker, Button, message } from 'antd'
+import { MessageOutlined, CalendarOutlined, BarChartOutlined } from '@ant-design/icons'
 import { getConversations } from '../../api/conversationApi'
+import { generateAIReport } from '../../api/reportApi'
 import ConversationTable from '../../components/admin/ConversationTable'
+import AIReportModal from '../../components/admin/AIReportModal'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 
@@ -18,6 +20,11 @@ export default function ConversationsPage() {
   const [error, setError] = useState(null)
 
   const [dateRange, setDateRange] = useState(null)
+
+  // AI Report state
+  const [reportOpen, setReportOpen] = useState(false)
+  const [reportData, setReportData] = useState(null)
+  const [reportLoading, setReportLoading] = useState(false)
 
   useEffect(() => {
     async function load() {
@@ -45,6 +52,21 @@ export default function ConversationsPage() {
     return itemDate.isBetween(startDate, endDate, null, '[]')
   })
 
+  const handleGenerateReport = async () => {
+    setReportOpen(true)
+    setReportLoading(true)
+    setReportData(null)
+    try {
+      const report = await generateAIReport()
+      setReportData(report)
+    } catch (err) {
+      message.error(err.message || 'Không thể tạo báo cáo AI')
+      setReportOpen(false)
+    } finally {
+      setReportLoading(false)
+    }
+  }
+
   return (
     <div className="p-4 md:p-6 lg:p-8 animate-fade-in">
       {/* Header & Filter: Chuyển sang column trên màn hình dưới lg (tablet portrait), row trên laptop */}
@@ -59,7 +81,7 @@ export default function ConversationsPage() {
           </div>
         </div>
 
-        {/* Khối Filter: Cho phép ôm trọn chiều ngang trên Tablet nếu cần */}
+        {/* Khối Filter + AI Report */}
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
           <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
             <CalendarOutlined />
@@ -78,6 +100,18 @@ export default function ConversationsPage() {
               {filteredData.length} kết quả
             </div>
           )}
+
+          <Button
+            id="btn-ai-report"
+            type="primary"
+            icon={<BarChartOutlined />}
+            onClick={handleGenerateReport}
+            loading={reportLoading}
+            className="rounded-xl h-10 shadow-md font-semibold"
+            style={{ background: 'linear-gradient(135deg, #7c3aed, #2563eb)' }}
+          >
+            Báo cáo AI
+          </Button>
         </div>
       </div>
 
@@ -90,6 +124,14 @@ export default function ConversationsPage() {
           onRowClick={(record) => navigate(`/admin/conversations/${record._id}`)}
         />
       </div>
+
+      {/* AI Report Modal */}
+      <AIReportModal
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+        report={reportData}
+        loading={reportLoading}
+      />
     </div>
   )
 }
