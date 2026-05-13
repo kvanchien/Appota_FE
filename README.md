@@ -4,10 +4,11 @@
   <h3>Chatbot QA System — Appota NextGen 2026</h3>
   <p>React + Vite + Tailwind CSS + Ant Design | SSE Streaming | Player Chat + Admin Dashboard</p>
 
-  ![Version](https://img.shields.io/badge/version-0.1.0-blue?style=flat-square)
-  ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&style=flat-square)
-  ![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&style=flat-square)
-  ![Tailwind](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss&style=flat-square)
+![Version](https://img.shields.io/badge/version-0.1.0-blue?style=flat-square)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&style=flat-square)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&style=flat-square)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss&style=flat-square)
+
 </div>
 
 ---
@@ -57,14 +58,14 @@ src/
 
 ## 🚀 Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| Framework | React 18 + Vite 5 |
-| Styling | Tailwind CSS 3 + Ant Design 5 |
-| Routing | React Router DOM v6 |
+| Layer        | Technology                                           |
+| ------------ | ---------------------------------------------------- |
+| Framework    | React 18 + Vite 5                                    |
+| Styling      | Tailwind CSS 3 + Ant Design 5                        |
+| Routing      | React Router DOM v6                                  |
 | AI Streaming | SSE (text/event-stream) via Fetch API ReadableStream |
-| Backend | Express.js + MongoDB (TypeScript) — port `5000` |
-| Deploy | Vercel |
+| Backend      | Express.js + MongoDB (TypeScript) — port `5000`      |
+| Deploy       | Vercel                                               |
 
 ---
 
@@ -91,12 +92,12 @@ npm run dev
 
 ## 📡 Routes
 
-| Path | Description |
-|------|-------------|
-| `/` | Player chat (SSE streaming) |
-| `/admin/conversations` | Admin — list all sessions |
+| Path                       | Description                  |
+| -------------------------- | ---------------------------- |
+| `/`                        | Player chat (SSE streaming)  |
+| `/admin/conversations`     | Admin — list all sessions    |
 | `/admin/conversations/:id` | Admin — full chat log detail |
-| `/admin/knowledge` | Admin — CRUD Knowledge Base |
+| `/admin/knowledge`         | Admin — CRUD Knowledge Base  |
 
 ---
 
@@ -117,6 +118,7 @@ npm run format:check # Prettier check (CI)
 ## 🛡️ Security Notes
 
 > **Không bao giờ commit:**
+>
 > - `.env` files
 > - API keys, secrets
 > - `.claude/settings.local.json`
@@ -127,14 +129,14 @@ npm run format:check # Prettier check (CI)
 
 Backend chạy tại `http://localhost:5000` với các endpoints:
 
-| Method | Path | Description |
-|--------|------|-------------|
-| `POST` | `/api/session` | Tạo session mới |
-| `POST` | `/api/chat` | Gửi message (SSE stream) |
-| `GET` | `/api/chat/:sessionId` | Lấy lịch sử chat |
-| `GET` | `/api/conversations` | Danh sách conversations (admin) |
-| `GET` | `/api/conversations/:id` | Chi tiết conversation (admin) |
-| `GET` | `/api/knowledge` | Danh sách Q&A |
-| `POST` | `/api/knowledge` | Tạo Q&A mới |
-| `PUT` | `/api/knowledge/:id` | Cập nhật Q&A |
-| `DELETE` | `/api/knowledge/:id` | Xóa Q&A |
+| Method   | Path                     | Description                     |
+| -------- | ------------------------ | ------------------------------- |
+| `POST`   | `/api/session`           | Tạo session mới                 |
+| `POST`   | `/api/chat`              | Gửi message (SSE stream)        |
+| `GET`    | `/api/chat/:sessionId`   | Lấy lịch sử chat                |
+| `GET`    | `/api/conversations`     | Danh sách conversations (admin) |
+| `GET`    | `/api/conversations/:id` | Chi tiết conversation (admin)   |
+| `GET`    | `/api/knowledge`         | Danh sách Q&A                   |
+| `POST`   | `/api/knowledge`         | Tạo Q&A mới                     |
+| `PUT`    | `/api/knowledge/:id`     | Cập nhật Q&A                    |
+| `DELETE` | `/api/knowledge/:id`     | Xóa Q&A                         |

@@ -16,7 +16,7 @@ export function parseSSEChunk(chunk) {
     const trimmed = line.trim()
     if (!trimmed.startsWith('data:')) continue
 
-    const jsonStr = trimmed.slice(5).trim() 
+    const jsonStr = trimmed.slice(5).trim()
     if (!jsonStr) continue
 
     try {

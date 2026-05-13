@@ -26,9 +26,7 @@ export default function ConversationTable({ data, loading, onRowClick }) {
       dataIndex: 'lastMessage',
       key: 'lastMessage',
       ellipsis: true,
-      render: (text) => (
-        <span className="text-slate-600 text-sm">{text || '—'}</span>
-      ),
+      render: (text) => <span className="text-slate-600 text-sm">{text || '—'}</span>,
     },
     {
       title: 'Số tin nhắn',
@@ -37,11 +35,7 @@ export default function ConversationTable({ data, loading, onRowClick }) {
       width: 120,
       align: 'center',
       render: (count) => (
-        <Tag
-          icon={<MessageOutlined />}
-          color="blue"
-          className="font-semibold"
-        >
+        <Tag icon={<MessageOutlined />} color="blue" className="font-semibold">
           {count}
         </Tag>
       ),

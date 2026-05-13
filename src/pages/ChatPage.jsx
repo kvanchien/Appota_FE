@@ -60,7 +60,6 @@ export default function ChatPage() {
       {/* ── Messages Area ────────────────────────────────────── */}
       <main className="flex-1 overflow-y-auto scrollbar-thin">
         <div className="max-w-3xl mx-auto px-4 py-6 flex flex-col gap-4">
-
           {/* Welcome message */}
           {messages.length === 0 && !isConnecting && (
             <div className="flex flex-col items-center justify-center py-16 animate-fade-in">
@@ -72,8 +71,7 @@ export default function ChatPage() {
                 Tôi là chatbot hỗ trợ của Appota. Bạn có thể hỏi tôi về{' '}
                 <span className="text-blue-600 font-medium">nạp tiền</span>,{' '}
                 <span className="text-purple-600 font-medium">tài khoản</span>,{' '}
-                <span className="text-emerald-600 font-medium">gameplay</span>{' '}
-                và các vấn đề khác.
+                <span className="text-emerald-600 font-medium">gameplay</span> và các vấn đề khác.
               </p>
             </div>
           )}
@@ -96,18 +94,11 @@ export default function ChatPage() {
           ))}
 
           {/* Typing indicator — show when streaming but last bot msg is still getting tokens */}
-          {isStreaming && messages[messages.length - 1]?.role === 'user' && (
-            <TypingIndicator />
-          )}
+          {isStreaming && messages[messages.length - 1]?.role === 'user' && <TypingIndicator />}
 
           {/* Error alert */}
           {error && (
-            <Alert
-              type="error"
-              message={error}
-              showIcon
-              className="rounded-xl animate-fade-in"
-            />
+            <Alert type="error" message={error} showIcon className="rounded-xl animate-fade-in" />
           )}
 
           {/* Scroll anchor */}
@@ -117,10 +108,7 @@ export default function ChatPage() {
 
       {/* ── Input Bar ────────────────────────────────────────── */}
       <div className="flex-shrink-0 max-w-3xl w-full mx-auto">
-        <ChatInput
-          onSend={sendMessage}
-          disabled={isConnecting || isStreaming}
-        />
+        <ChatInput onSend={sendMessage} disabled={isConnecting || isStreaming} />
       </div>
     </div>
   )

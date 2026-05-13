@@ -3,7 +3,7 @@ import { MessageOutlined, DatabaseOutlined, HomeOutlined } from '@ant-design/ico
 
 const NAV_ITEMS = [
   { to: '/admin/conversations', icon: <MessageOutlined />, label: 'Conversations' },
-  { to: '/admin/knowledge',     icon: <DatabaseOutlined />, label: 'Knowledge Base' },
+  { to: '/admin/knowledge', icon: <DatabaseOutlined />, label: 'Knowledge Base' },
 ]
 
 /**
@@ -34,9 +34,7 @@ export default function AdminLayout() {
             <NavLink
               key={to}
               to={to}
-              className={({ isActive }) =>
-                `sidebar-link${isActive ? ' active' : ''}`
-              }
+              className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
             >
               <span className="text-base">{icon}</span>
               <span>{label}</span>
@@ -46,10 +44,7 @@ export default function AdminLayout() {
 
         {/* Footer link back to chat */}
         <div className="p-4 border-t border-slate-100">
-          <NavLink
-            to="/"
-            className="sidebar-link text-slate-500"
-          >
+          <NavLink to="/" className="sidebar-link text-slate-500">
             <HomeOutlined />
             <span>Về trang Chat</span>
           </NavLink>

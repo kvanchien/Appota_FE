@@ -1,17 +1,12 @@
 import { useState } from 'react'
 import { Table, Tag, Button, Popconfirm, Tooltip } from 'antd'
-import {
-  EditOutlined,
-  DeleteOutlined,
-  TagOutlined,
-  ClockCircleOutlined,
-} from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined, TagOutlined, ClockCircleOutlined } from '@ant-design/icons'
 
 const CATEGORY_COLORS = {
-  payment:  'blue',
-  account:  'purple',
+  payment: 'blue',
+  account: 'purple',
   gameplay: 'green',
-  default:  'default',
+  default: 'default',
 }
 
 /**
@@ -42,9 +37,7 @@ export default function KnowledgeTable({ data, loading, onEdit, onDelete }) {
       key: 'index',
       width: 52,
       align: 'center',
-      render: (_, __, idx) => (
-        <span className="text-slate-400 text-xs font-mono">{idx + 1}</span>
-      ),
+      render: (_, __, idx) => <span className="text-slate-400 text-xs font-mono">{idx + 1}</span>,
     },
     {
       title: 'Câu hỏi',
@@ -52,9 +45,7 @@ export default function KnowledgeTable({ data, loading, onEdit, onDelete }) {
       key: 'question',
       ellipsis: true,
       width: '30%',
-      render: (text) => (
-        <span className="font-medium text-slate-800 text-sm">{text}</span>
-      ),
+      render: (text) => <span className="font-medium text-slate-800 text-sm">{text}</span>,
     },
     {
       title: 'Câu trả lời',

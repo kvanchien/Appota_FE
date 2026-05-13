@@ -19,7 +19,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'antd-vendor':  ['antd', '@ant-design/icons'],
+          'antd-vendor': ['antd', '@ant-design/icons'],
         },
       },
     },

@@ -10,7 +10,7 @@ import { parseSSEChunk } from '../utils/sseParser'
  */
 export function useChat() {
   const [sessionId, setSessionId] = useState(null)
-  const [messages, setMessages] = useState([])     // { role, content, timestamp }[]
+  const [messages, setMessages] = useState([]) // { role, content, timestamp }[]
   const [isStreaming, setIsStreaming] = useState(false)
   const [isConnecting, setIsConnecting] = useState(true) // true while creating session
   const [error, setError] = useState(null)
@@ -38,7 +38,9 @@ export function useChat() {
     }
 
     initSession()
-    return () => { cancelled = true }
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   // ── 2. Send message + consume SSE stream ────────────────────────────────
@@ -84,9 +86,7 @@ export function useChat() {
             if (evt.token) {
               // Append token to the bot placeholder message
               setMessages((prev) =>
-                prev.map((m) =>
-                  m.id === botMsgId ? { ...m, content: m.content + evt.token } : m
-                )
+                prev.map((m) => (m.id === botMsgId ? { ...m, content: m.content + evt.token } : m))
               )
             }
             if (evt.done) {
@@ -100,9 +100,7 @@ export function useChat() {
       } catch (err) {
         setError(err.message || 'Đã xảy ra lỗi khi nhận phản hồi.')
         // Remove empty bot placeholder on error
-        setMessages((prev) =>
-          prev.filter((m) => !(m.id === botMsgId && m.content === ''))
-        )
+        setMessages((prev) => prev.filter((m) => !(m.id === botMsgId && m.content === '')))
       } finally {
         setIsStreaming(false)
         abortRef.current = null

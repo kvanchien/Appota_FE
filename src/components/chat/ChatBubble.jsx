@@ -38,9 +38,7 @@ export default function ChatBubble({ role, content, timestamp }) {
         </div>
 
         {/* Timestamp */}
-        {time && (
-          <span className="text-[11px] text-slate-400 px-1">{time}</span>
-        )}
+        {time && <span className="text-[11px] text-slate-400 px-1">{time}</span>}
       </div>
     </div>
   )

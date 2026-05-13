@@ -12,14 +12,16 @@ import KnowledgeModal from '../../components/admin/KnowledgeModal'
 export default function KnowledgePage() {
   const { items, loading, fetchAll, create, update, remove } = useKnowledge()
 
-  const [modalOpen, setModalOpen]     = useState(false)
-  const [editItem, setEditItem]       = useState(null)   // null = create mode
-  const [submitting, setSubmitting]   = useState(false)
-  const [error, setError]             = useState(null)
-  const [searchText, setSearchText]   = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [editItem, setEditItem] = useState(null) // null = create mode
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
+  const [searchText, setSearchText] = useState('')
 
   // Load on mount
-  useEffect(() => { fetchAll() }, [fetchAll])
+  useEffect(() => {
+    fetchAll()
+  }, [fetchAll])
 
   // ── Filtered list for search ────────────────────────────────────────────
   const filteredItems = items.filter((item) => {
@@ -28,14 +30,23 @@ export default function KnowledgePage() {
     return (
       item.question.toLowerCase().includes(q) ||
       item.answer.toLowerCase().includes(q) ||
-      (item.category?.toLowerCase().includes(q))
+      item.category?.toLowerCase().includes(q)
     )
   })
 
   // ── Handlers ────────────────────────────────────────────────────────────
-  const openCreate = () => { setEditItem(null); setModalOpen(true) }
-  const openEdit   = (item) => { setEditItem(item); setModalOpen(true) }
-  const closeModal = () => { setModalOpen(false); setEditItem(null) }
+  const openCreate = () => {
+    setEditItem(null)
+    setModalOpen(true)
+  }
+  const openEdit = (item) => {
+    setEditItem(item)
+    setModalOpen(true)
+  }
+  const closeModal = () => {
+    setModalOpen(false)
+    setEditItem(null)
+  }
 
   const handleSubmit = async (values) => {
     setSubmitting(true)
@@ -77,12 +88,7 @@ export default function KnowledgePage() {
           </div>
         </div>
 
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={openCreate}
-          size="large"
-        >
+        <Button type="primary" icon={<PlusOutlined />} onClick={openCreate} size="large">
           Thêm Q&A mới
         </Button>
       </div>

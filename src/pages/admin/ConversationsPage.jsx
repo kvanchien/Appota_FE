@@ -11,9 +11,9 @@ import ConversationTable from '../../components/admin/ConversationTable'
  */
 export default function ConversationsPage() {
   const navigate = useNavigate()
-  const [data, setData]       = useState([])
+  const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError]     = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     async function load() {
@@ -62,14 +62,7 @@ export default function ConversationsPage() {
       </div>
 
       {/* ── Error ──────────────────────────────────────── */}
-      {error && (
-        <Alert
-          type="error"
-          message={error}
-          showIcon
-          className="mb-6 rounded-xl"
-        />
-      )}
+      {error && <Alert type="error" message={error} showIcon className="mb-6 rounded-xl" />}
 
       {/* ── Table ──────────────────────────────────────── */}
       <div className="card !p-0 overflow-hidden">

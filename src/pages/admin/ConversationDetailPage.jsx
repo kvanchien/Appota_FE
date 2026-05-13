@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Spin, Alert, Button } from 'antd'
-import { ArrowLeftOutlined, UserOutlined, RobotOutlined, ClockCircleOutlined } from '@ant-design/icons'
+import {
+  ArrowLeftOutlined,
+  UserOutlined,
+  RobotOutlined,
+  ClockCircleOutlined,
+} from '@ant-design/icons'
 import { getConversationById } from '../../api/conversationApi'
 import clsx from 'clsx'
 
@@ -13,9 +18,9 @@ export default function ConversationDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const [data, setData]       = useState(null)
+  const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError]     = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     async function load() {
@@ -50,9 +55,7 @@ export default function ConversationDetailPage() {
         </div>
       )}
 
-      {error && (
-        <Alert type="error" message={error} showIcon className="rounded-xl" />
-      )}
+      {error && <Alert type="error" message={error} showIcon className="rounded-xl" />}
 
       {data && (
         <>
@@ -60,7 +63,9 @@ export default function ConversationDetailPage() {
           <div className="card mb-6">
             <div className="flex flex-wrap items-start gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs text-slate-400 mb-1 uppercase tracking-wide font-semibold">Session ID</p>
+                <p className="text-xs text-slate-400 mb-1 uppercase tracking-wide font-semibold">
+                  Session ID
+                </p>
                 <code className="text-sm bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg font-mono break-all">
                   {data.sessionId}
                 </code>
@@ -95,10 +100,7 @@ export default function ConversationDetailPage() {
                 return (
                   <div
                     key={idx}
-                    className={clsx(
-                      'flex gap-3 p-4',
-                      isUser ? 'bg-white' : 'bg-blue-50/30'
-                    )}
+                    className={clsx('flex gap-3 p-4', isUser ? 'bg-white' : 'bg-blue-50/30')}
                   >
                     {/* Avatar */}
                     <div

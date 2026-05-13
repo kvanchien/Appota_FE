@@ -27,7 +27,7 @@ export default function KnowledgeModal({ open, editItem, onClose, onSubmit, load
     if (open && editItem) {
       form.setFieldsValue({
         question: editItem.question,
-        answer:   editItem.answer,
+        answer: editItem.answer,
         category: editItem.category || undefined,
       })
     } else if (open) {
@@ -47,7 +47,11 @@ export default function KnowledgeModal({ open, editItem, onClose, onSubmit, load
       onCancel={onClose}
       title={
         <div className="flex items-center gap-2 pb-1">
-          {isEdit ? <SaveOutlined className="text-blue-500" /> : <PlusOutlined className="text-blue-500" />}
+          {isEdit ? (
+            <SaveOutlined className="text-blue-500" />
+          ) : (
+            <PlusOutlined className="text-blue-500" />
+          )}
           <span className="font-semibold text-slate-800">
             {isEdit ? 'Chỉnh sửa Q&A' : 'Thêm Q&A mới'}
           </span>
@@ -57,12 +61,7 @@ export default function KnowledgeModal({ open, editItem, onClose, onSubmit, load
       width={600}
       destroyOnClose
     >
-      <Form
-        form={form}
-        layout="vertical"
-        className="mt-4"
-        onFinish={handleOk}
-      >
+      <Form form={form} layout="vertical" className="mt-4" onFinish={handleOk}>
         {/* Question */}
         <Form.Item
           label={<span className="font-semibold text-slate-700">Câu hỏi</span>}
@@ -96,11 +95,7 @@ export default function KnowledgeModal({ open, editItem, onClose, onSubmit, load
           label={<span className="font-semibold text-slate-700">Danh mục (tùy chọn)</span>}
           name="category"
         >
-          <Select
-            placeholder="Chọn danh mục..."
-            allowClear
-            size="large"
-          >
+          <Select placeholder="Chọn danh mục..." allowClear size="large">
             {CATEGORIES.map((cat) => (
               <Option key={cat} value={cat}>
                 {cat}
