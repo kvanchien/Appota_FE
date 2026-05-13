@@ -64,13 +64,13 @@ export default function ChatBubble({ role, content, timestamp, isStreaming = fal
   return (
     <div
       className={clsx(
-        'flex items-end gap-2 animate-slide-up',
+        'flex items-end gap-1.5 sm:gap-2 animate-slide-up',
         isUser ? 'flex-row-reverse' : 'flex-row'
       )}
     >
       <div
         className={clsx(
-          'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shadow',
+          'flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-sm font-bold shadow',
           isUser
             ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'
             : 'bg-gradient-to-br from-purple-500 to-pink-500 text-white'
