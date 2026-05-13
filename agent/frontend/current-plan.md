@@ -10,15 +10,15 @@ This file is dynamic. It should reflect the latest frontend task only.
 
 ## Status
 
-No active frontend task yet.
+Completed.
 
 ## Current Task
 
-TODO: Convert the next provided task prompt into a clear frontend task.
+Kết nối Frontend admin với AppotaBackend API — fix fallback URL sai, cập nhật agent docs, đảm bảo tất cả API calls đúng endpoint và response shape.
 
 ## Task Source Prompt
 
-TODO: Paste or summarize the user/Codex task prompt here.
+"Đọc cấu trúc Appota_FE và Appota_Backend. Backend đã hoàn thiện giờ tôi muốn cập nhật lại Frontend phần admin kết nối với api. Hiện chưa kết nối được api. Đọc các folder postman, docs trong backend và folder agents trong frontend tuân thủ các quy tắc đó"
 
 ## Affected Area
 
@@ -27,14 +27,14 @@ Mark all areas affected by the current task.
 - [ ] Chat screen
 - [ ] Chat streaming
 - [ ] SSE parser
-- [ ] API integration
-- [ ] Admin conversations
-- [ ] Admin Knowledge Base
+- [x] API integration
+- [x] Admin conversations
+- [x] Admin Knowledge Base
 - [ ] UI/UX
 - [ ] Routing
 - [ ] Layout
-- [ ] Build/lint
-- [ ] Other: TODO
+- [x] Build/lint
+- [x] Other: Agent doc update, vite.config.js proxy fix
 
 ## Related Agent Files To Read
 
@@ -59,45 +59,35 @@ Read feature-specific files when relevant:
 
 ## Problem Summary
 
-TODO: Summarize the problem in 2–5 lines.
+Hai vị trí fallback URL sai:
+1. `baseApi.js` dùng `localhost:5000` làm fallback thay vì `localhost:3000` (backend chạy PORT=3000)
+2. `vite.config.js` proxy target fallback cũng là `localhost:5000`
+3. `api-integration.md` (agent doc) cũng ghi sai `localhost:5000`
 
-The summary must explain:
-
-- What is wrong or missing.
-- What expected behavior should be.
-- Which frontend area is likely affected.
+Khi `.env` không được load đúng (ví dụ: môi trường CI/CD hoặc mở folder khác), cả proxy lẫn direct fetch đều trỏ sai port → API không kết nối được.
 
 ## Expected Behavior
 
-TODO: Describe the expected user-visible behavior after the task is completed.
-
-For chat-related tasks, explicitly state whether the stream must render progressively token-by-token.
+Sau fix:
+- Admin conversations list load được từ `GET /api/conversations`
+- Admin conversation detail load được từ `GET /api/conversations/:id` (dùng MongoDB `_id`)
+- Knowledge Base CRUD hoạt động với `GET/POST/PUT/DELETE /api/knowledge`
+- Chat page tạo session `POST /api/session` và stream `POST /api/chat` đúng
+- Fallback URL đúng `localhost:3000` ở mọi chỗ
 
 ## Current Behavior
 
-TODO: Describe the current observed behavior, if known.
-
-If unknown, write:
-
-Current behavior must be verified by inspecting the source code and running the relevant screen.
+API calls thất bại khi `.env` không được load — fallback trỏ sai port 5000 thay vì 3000.
 
 ## Scope
 
-TODO: Define what the agent is allowed to change.
-
-Example:
-
-- Modify chat hook logic.
-- Modify SSE parsing utility.
-- Modify chat API wrapper.
-- Adjust chat loading state.
-- Keep backend contract unchanged.
+- Fix fallback URL trong `baseApi.js` từ `localhost:5000` → `localhost:3000`
+- Fix fallback URL trong `vite.config.js` proxy từ `localhost:5000` → `localhost:3000`
+- Cập nhật `api-integration.md` agent doc để ghi đúng port
+- Xác minh tất cả API endpoints đúng với Postman collection
+- Xác minh response shape handling đúng
 
 ## Out Of Scope
-
-TODO: Define what the agent must not change.
-
-Default out-of-scope items:
 
 - Backend code.
 - MongoDB schema.
@@ -107,57 +97,39 @@ Default out-of-scope items:
 - Large folder restructuring.
 - Unrelated UI redesign.
 - Unrelated formatting across the codebase.
+- Không refactor toàn bộ API layer.
 
 ## Files To Inspect
 
-TODO: List files to inspect before editing.
-
-Common frontend files:
-
-- `src/App.jsx`
-- `src/api/baseApi.js`
-- `src/api/chatApi.js`
-- `src/api/conversationApi.js`
-- `src/api/knowledgeApi.js`
-- `src/hooks/useChat.js`
-- `src/hooks/useKnowledge.js`
-- `src/utils/sseParser.js`
-- `src/pages/ChatPage.jsx`
-- `src/pages/admin/ConversationsPage.jsx`
-- `src/pages/admin/ConversationDetailPage.jsx`
-- `src/pages/admin/KnowledgePage.jsx`
-- `src/components/chat/ChatBubble.jsx`
-- `src/components/chat/ChatInput.jsx`
-- `src/components/chat/TypingIndicator.jsx`
-- `src/components/admin/ConversationTable.jsx`
-- `src/components/admin/KnowledgeTable.jsx`
-- `src/components/admin/KnowledgeModal.jsx`
-- `src/components/layout/AdminLayout.jsx`
-
-Keep only files relevant to the actual task.
+- `src/api/baseApi.js` — kiểm tra fallback URL
+- `vite.config.js` — kiểm tra proxy target
+- `src/api/conversationApi.js` — kiểm tra endpoint paths
+- `src/api/knowledgeApi.js` — kiểm tra endpoint paths
+- `src/api/chatApi.js` — kiểm tra session/chat endpoints
+- `agent/features/api-integration.md` — kiểm tra doc có ghi đúng port không
+- Backend `.env` — xác nhận PORT=3000
+- Backend `src/app.ts` — xác nhận CORS origin
+- Backend `src/routes/index.ts` — xác nhận prefix /api
+- Postman collections — xác nhận endpoint shapes
 
 ## Files Likely To Modify
 
-TODO: List expected files to modify.
-
-Rules:
-
-- Keep this list narrow.
-- Do not modify files not related to the task.
-- If a new file is needed, explain why.
+- `src/api/baseApi.js` — fix fallback URL
+- `vite.config.js` — fix proxy target fallback
+- `agent/features/api-integration.md` — fix doc URL
+- `agent/frontend/current-plan.md` — (file này)
+- `agent/frontend/handoff.md` — sau khi xong
 
 ## Implementation Steps
 
-TODO: Convert the task into concrete implementation steps.
-
-Suggested format:
-
-1. Inspect relevant files and confirm current behavior.
-2. Identify the smallest safe change.
-3. Implement the change.
-4. Verify affected screen or flow.
-5. Run validation commands.
-6. Update `agent/frontend/handoff.md`.
+1. Đọc backend `.env`, `src/app.ts`, `src/routes/index.ts`, Postman collections để xác nhận API contract.
+2. Đọc `baseApi.js`, `vite.config.js`, `api-integration.md` để xác nhận vấn đề fallback URL.
+3. Fix `baseApi.js`: đổi fallback `localhost:5000` → `localhost:3000`.
+4. Fix `vite.config.js` proxy: đổi fallback `localhost:5000` → `localhost:3000`.
+5. Cập nhật `agent/features/api-integration.md`: fix URL doc.
+6. Xác minh tất cả API endpoint paths trong `conversationApi.js`, `knowledgeApi.js`, `chatApi.js` đúng với Postman.
+7. Run lint và build.
+8. Update `handoff.md`.
 
 ## Chat Streaming Requirements
 

@@ -1,8 +1,8 @@
-// Base URL from environment variable — defaults to localhost:5000
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
+const API_BASE = import.meta.env.VITE_API_URL
 
 /**
- * Generic fetch wrapper — throws on non-2xx
+ * Generic fetch wrapper
  * @param {string} url
  * @param {RequestInit} options
  * @returns {Promise<any>}

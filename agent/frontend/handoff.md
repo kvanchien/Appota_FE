@@ -10,21 +10,15 @@ Use this file to help the next agent, developer, or reviewer understand what cha
 
 ## Status
 
-No completed frontend task recorded yet.
+Completed — 2026-05-13.
 
 ## Latest Task Summary
 
-TODO: Summarize the latest frontend task in 2–5 lines.
-
-Include:
-
-- What the task requested.
-- Which frontend area was affected.
-- What behavior was implemented or changed.
+Phân tích toàn bộ AppotaBackend (Postman collections, docs, controllers, routes, .env) và Appota_FE (API layer, vite config, agent files). Phát hiện 3 vị trí fallback URL sai (port 5000 thay vì 3000 theo backend PORT=3000): `baseApi.js`, `vite.config.js` proxy, và `agent/features/api-integration.md`. Đã sửa cả 3 vị trí. Xác minh tất cả API endpoints đúng với Postman collection (conversations, knowledge, chat, session). Lint và build đều pass.
 
 ## Task Source Prompt
 
-TODO: Paste or summarize the task prompt that produced this handoff.
+"Đọc cấu trúc Appota_FE và Appota_Backend. Backend đã hoàn thiện giờ tôi muốn cập nhật lại Frontend phần admin kết nối với api. Hiện chưa kết nối được api. Đọc các folder postman, docs trong backend và folder agents trong frontend tuân thủ các quy tắc đó"
 
 ## Affected Area
 
@@ -33,47 +27,48 @@ Mark all areas affected by the task.
 - [ ] Chat screen
 - [ ] Chat streaming
 - [ ] SSE parser
-- [ ] API integration
-- [ ] Admin conversations
-- [ ] Admin Knowledge Base
+- [x] API integration
+- [x] Admin conversations
+- [x] Admin Knowledge Base
 - [ ] UI/UX
 - [ ] Routing
 - [ ] Layout
-- [ ] Build/lint
-- [ ] Other: TODO
+- [x] Build/lint
+- [x] Other: Agent doc update
 
 ## Files Changed
 
-TODO: List all changed files.
-
-For each file, include a short reason.
-
-Example:
-
-- `src/hooks/useChat.js` — updated streaming state management.
-- `src/api/chatApi.js` — adjusted stream reader callback handling.
-- `src/utils/sseParser.js` — improved parsing of split SSE chunks.
-- `src/components/chat/ChatBubble.jsx` — fixed progressive assistant text rendering.
+- `src/api/baseApi.js` — fix fallback URL từ `localhost:5000` → `localhost:3000` (khớp backend PORT=3000)
+- `vite.config.js` — fix proxy target fallback cũng từ `localhost:5000` → `localhost:3000`
+- `agent/features/api-integration.md` — cập nhật doc URL từ 5000 → 3000
+- `agent/frontend/current-plan.md` — cập nhật kế hoạch task mới
+- `agent/frontend/handoff.md` — (file này)
 
 ## Files Inspected But Not Changed
 
-TODO: List relevant files inspected but not modified.
-
-Example:
-
-- `src/pages/ChatPage.jsx` — inspected to confirm hook usage.
-- `src/components/chat/ChatInput.jsx` — inspected to confirm submit behavior.
+- `src/api/conversationApi.js` — xác nhận endpoints đúng: `GET /api/conversations`, `GET /api/conversations/:id`
+- `src/api/knowledgeApi.js` — xác nhận endpoints đúng: CRUD `/api/knowledge` và `/api/knowledge/:id`
+- `src/api/chatApi.js` — xác nhận `POST /api/session`, `POST /api/chat` đúng
+- `src/hooks/useChat.js` — xác nhận SSE stream được đọc đúng qua `getReader()`
+- `src/hooks/useKnowledge.js` — xác nhận CRUD logic đúng
+- `src/utils/sseParser.js` — xác nhận parse đúng `data: {token}`, `data: {done}`, `data: {error}`
+- `src/pages/admin/ConversationsPage.jsx` — xác nhận dùng `_id` đúng
+- `src/pages/admin/ConversationDetailPage.jsx` — xác nhận hiển thị `messages[]` đúng
+- `src/pages/admin/KnowledgePage.jsx` — xác nhận CRUD flow đúng
+- `src/components/admin/ConversationTable.jsx` — xác nhận field names đúng với backend
+- `src/components/admin/KnowledgeTable.jsx` — xác nhận dùng `_id` đúng
+- `src/App.jsx` — xác nhận routes đúng
+- `AppotaBackend/src/app.ts` — xác nhận CORS cho phép `localhost:5173`
+- `AppotaBackend/src/routes/index.ts` — xác nhận prefix `/api`
+- `AppotaBackend/postman/conversation.postman_collection.json` — xác nhận response shape
 
 ## Behavior Implemented
 
-TODO: Describe user-visible behavior after the task.
-
-Examples:
-
-- User message appears immediately after submit.
-- Assistant response renders progressively from SSE tokens.
-- Knowledge Base form validates required fields before submit.
-- Conversation detail page shows full message history in chronological order.
+- API layer dùng đúng fallback URL `localhost:3000` khi `.env` không có `VITE_API_URL`
+- Vite proxy trong dev mode trỏ đúng backend `localhost:3000`
+- Tất cả API calls admin đếu đi qua đúng endpoint: conversations, knowledge, chat
+- Response shape `{ success, data, message }` được xử lý đúng trong `baseApi.js`
+- Chat streaming được giữ nguyên, không đổi
 
 ## Chat Streaming Notes
 
@@ -134,32 +129,19 @@ TODO.
 
 Record only commands that were actually run.
 
-- [ ] `npm run lint`
-- [ ] `npm run build`
+- [x] `npm run lint`
+- [x] `npm run build`
 - [ ] `npm run format:check`
-- [ ] Other: TODO
+- [ ] Other
 
 ## Validation Result
 
-TODO: Record exact result.
-
-Use one of these statuses:
-
-- Passed
-- Failed
-- Not run
-- Partially run
+Passed
 
 Details:
 
-TODO.
-
-If validation failed, include:
-
-- Command that failed.
-- Error summary.
-- Likely cause.
-- Whether the failure is related to the current task.
+- `npm run lint`: EXIT 0, 0 warnings, 0 errors
+- `npm run build`: EXIT 0, 3054 modules transformed, build time 5.21s
 
 ## Manual Testing
 
@@ -205,64 +187,31 @@ TODO.
 
 ## Known Issues
 
-TODO: List known issues after the task.
-
-If none, write:
-
-No known frontend issues after this task.
-
-Examples:
-
-- Backend stream occasionally sends malformed JSON.
-- API returns missing `messageCount`.
-- Table overflows on very small screens.
-- Build fails due to pre-existing lint errors unrelated to this task.
+- `antd-vendor` chunk lớn (~918 kB gzip 290 kB) — không liên quan đến task này, đây là vấn đề bundle size của Ant Design.
+- Manual test chưa được thực hiện vì backend chạy MongoDB Atlas (cần kết nối internet).
 
 ## Backend/API Dependencies
 
-TODO: List backend dependencies or assumptions.
-
-Examples:
-
-- `POST /api/chat` must return `Content-Type: text/event-stream`.
-- Chat stream must send `data: {"token":"..."}` events.
-- Chat stream must end with `data: {"done":true}`.
-- REST APIs must return `{ success, data, message }`.
-- Knowledge Base endpoints must support create, update, and delete.
-
-If none, write:
-
-No new backend/API dependency introduced.
+- `POST /api/session` trả về `{ success, data: { sessionId } }` — FE xử lý đúng
+- `POST /api/chat` trả về `Content-Type: text/event-stream` — FE đọc đúng qua `getReader()`
+- Stream events: `data: {"token":"..."}` và `data: {"done":true, "sessionId":"..."}` — FE parse đúng
+- `GET /api/conversations` trả về array với fields: `_id, sessionId, messageCount, lastMessage, createdAt, updatedAt`
+- `GET /api/conversations/:id` dùng MongoDB ObjectId — FE dùng đúng `_id` không nhầm với `sessionId`
+- Detail response có `messages[]` mọi được `{ role, content, timestamp }` — FE hiển thị đúng
+- CORS backend cho phép `http://localhost:5173` — khớp với Vite dev port
+- Backend chạy `PORT=3000` theo `.env`
 
 ## Breaking Changes
 
-TODO: State whether any breaking change was introduced.
-
-Use one:
-
-- No breaking changes.
-- Breaking change introduced: TODO.
-- Unknown: TODO.
+No breaking changes.
 
 ## New Dependencies
 
-TODO: State whether any dependency was added.
-
-Use one:
-
-- No new dependencies.
-- New dependency added: TODO.
-- Dependency change required but not made: TODO.
+No new dependencies.
 
 ## Environment Changes
 
-TODO: State whether any environment variable or config changed.
-
-Use one:
-
-- No environment changes.
-- Environment change added: TODO.
-- Environment dependency discovered: TODO.
+No environment changes. `VITE_API_URL` trong `.env` FE đã đúng `http://localhost:3000`. Chỉ fix fallback trong code.
 
 ## Git Notes
 
@@ -279,15 +228,9 @@ Examples:
 
 ## Suggested Next Step
 
-TODO: Recommend the next useful action.
-
-Examples:
-
-- Test chat streaming against real backend.
-- Verify Knowledge Base CRUD against deployed API.
-- Improve mobile layout for admin tables.
-- Ask backend team to confirm final SSE event format.
-- No follow-up required.
+- Test admin conversations list và detail bằng cách chạy backend (`npm run dev` trong AppotaBackend) rồi chạy frontend (`npm run dev` trong Appota_FE) và mở `http://localhost:5173/admin/conversations`.
+- Test Knowledge Base CRUD tạo/sửa/xóa Q&A qua `http://localhost:5173/admin/knowledge`.
+- Test chat page tạo session và streaming qua `http://localhost:5173`.
 
 ## Handoff Template For Future Tasks
 

@@ -41,9 +41,9 @@ export default function ConversationTable({ data, loading, onRowClick }) {
       ),
     },
     {
-      title: 'Thời gian tạo',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: 'Hoạt động gần nhất',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
       width: 180,
       render: (ts) => (
         <span className="text-slate-500 text-xs flex items-center gap-1">
