@@ -16,13 +16,13 @@ import TypingIndicator from '../components/chat/TypingIndicator'
  *  - Auto-scroll xuống cuối khi có tin nhắn mới
  */
 export default function ChatPage() {
-  const { messages, isStreaming, isConnecting, sendMessage, error } = useChat()
+  const { messages, isLoading, isConnecting, sendMessage, error } = useChat()
   const bottomRef = useRef(null)
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, isStreaming])
+  }, [messages, isLoading])
 
   return (
     <div className="flex flex-col h-screen bg-hero-gradient">
@@ -94,7 +94,9 @@ export default function ChatPage() {
           ))}
 
           {/* Typing indicator — show when streaming but last bot msg is still getting tokens */}
-          {isStreaming && messages[messages.length - 1]?.role === 'user' && <TypingIndicator />}
+          {isLoading &&
+            messages[messages.length - 1]?.role === 'assistant' &&
+            !messages[messages.length - 1]?.content && <TypingIndicator />}
 
           {/* Error alert */}
           {error && (
@@ -108,7 +110,7 @@ export default function ChatPage() {
 
       {/* ── Input Bar ────────────────────────────────────────── */}
       <div className="flex-shrink-0 max-w-3xl w-full mx-auto">
-        <ChatInput onSend={sendMessage} disabled={isConnecting || isStreaming} />
+        <ChatInput onSend={sendMessage} disabled={isConnecting || isLoading} />
       </div>
     </div>
   )
