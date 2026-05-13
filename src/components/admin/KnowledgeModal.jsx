@@ -5,7 +5,7 @@ import { PlusOutlined, SaveOutlined } from '@ant-design/icons'
 const { TextArea } = Input
 const { Option } = Select
 
-const CATEGORIES = ['payment', 'account', 'gameplay', 'technical', 'general']
+const CATEGORIES = ['Thanh toán', 'Tài khoản', 'Lối chơi', 'Báo cáo hack/bug', 'Khác']
 
 /**
  * Modal form for creating or editing a Knowledge Base Q&A entry.
@@ -68,12 +68,7 @@ export default function KnowledgeModal({ open, editItem, onClose, onSubmit, load
           name="question"
           rules={[{ required: true, message: 'Vui lòng nhập câu hỏi' }]}
         >
-          <Input
-            placeholder="Ví dụ: Làm sao để nạp tiền vào game?"
-            size="large"
-            maxLength={300}
-            showCount
-          />
+          <Input placeholder="Ví dụ: Làm sao để nạp tiền vào game?" size="large" />
         </Form.Item>
 
         {/* Answer */}
@@ -82,12 +77,7 @@ export default function KnowledgeModal({ open, editItem, onClose, onSubmit, load
           name="answer"
           rules={[{ required: true, message: 'Vui lòng nhập câu trả lời' }]}
         >
-          <TextArea
-            placeholder="Nhập câu trả lời chi tiết..."
-            rows={4}
-            maxLength={1000}
-            showCount
-          />
+          <TextArea placeholder="Nhập câu trả lời chi tiết..." rows={4} />
         </Form.Item>
 
         {/* Category */}

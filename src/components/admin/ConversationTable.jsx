@@ -9,7 +9,7 @@ import { MessageOutlined, ClockCircleOutlined } from '@ant-design/icons'
 export default function ConversationTable({ data, loading, onRowClick }) {
   const columns = [
     {
-      title: 'Session ID',
+      title: <div className="text-center">Session ID</div>,
       dataIndex: 'sessionId',
       key: 'sessionId',
       width: 280,
@@ -22,7 +22,7 @@ export default function ConversationTable({ data, loading, onRowClick }) {
       ),
     },
     {
-      title: 'Tin nhắn cuối',
+      title: <div className="text-center">Tin nhắn cuối</div>,
       dataIndex: 'lastMessage',
       key: 'lastMessage',
       ellipsis: true,

@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { Table, Tag, Button, Popconfirm, Tooltip } from 'antd'
-import { EditOutlined, DeleteOutlined, TagOutlined, ClockCircleOutlined } from '@ant-design/icons'
+import {
+  EditOutlined,
+  DeleteOutlined,
+  TagOutlined,
+  ClockCircleOutlined,
+  EyeOutlined,
+} from '@ant-design/icons'
 
 const CATEGORY_COLORS = {
   payment: 'blue',
@@ -9,17 +15,7 @@ const CATEGORY_COLORS = {
   default: 'default',
 }
 
-/**
- * Knowledge Base table with edit / delete actions.
- *
- * @param {{
- *   data: KnowledgeEntry[],
- *   loading: boolean,
- *   onEdit: (item: KnowledgeEntry) => void,
- *   onDelete: (id: string) => Promise<void>
- * }} props
- */
-export default function KnowledgeTable({ data, loading, onEdit, onDelete }) {
+export default function KnowledgeTable({ data, loading, onView, onEdit, onDelete }) {
   const [deletingId, setDeletingId] = useState(null)
 
   const handleDelete = async (id) => {
@@ -40,7 +36,7 @@ export default function KnowledgeTable({ data, loading, onEdit, onDelete }) {
       render: (_, __, idx) => <span className="text-slate-400 text-xs font-mono">{idx + 1}</span>,
     },
     {
-      title: 'Câu hỏi',
+      title: <div className="text-center">Câu hỏi</div>,
       dataIndex: 'question',
       key: 'question',
       ellipsis: true,
@@ -48,21 +44,24 @@ export default function KnowledgeTable({ data, loading, onEdit, onDelete }) {
       render: (text) => <span className="font-medium text-slate-800 text-sm">{text}</span>,
     },
     {
-      title: 'Câu trả lời',
+      title: <div className="text-center">Câu trả lời</div>,
       dataIndex: 'answer',
       key: 'answer',
       ellipsis: true,
-      render: (text) => (
-        <Tooltip title={text} placement="topLeft">
-          <span className="text-slate-600 text-sm">{text}</span>
-        </Tooltip>
+      render: (text, record) => (
+        <span
+          className="text-slate-600 text-sm cursor-pointer hover:text-blue-600 transition-colors"
+          onClick={() => onView(record)}
+        >
+          {text}
+        </span>
       ),
     },
     {
-      title: 'Danh mục',
+      title: <div className="text-center">Danh mục</div>,
       dataIndex: 'category',
       key: 'category',
-      width: 130,
+      width: 150,
       align: 'center',
       render: (cat) =>
         cat ? (
@@ -81,7 +80,7 @@ export default function KnowledgeTable({ data, loading, onEdit, onDelete }) {
       title: 'Cập nhật',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
-      width: 150,
+      width: 100,
       render: (ts) => (
         <span className="text-slate-400 text-xs flex items-center gap-1">
           <ClockCircleOutlined />
@@ -92,10 +91,20 @@ export default function KnowledgeTable({ data, loading, onEdit, onDelete }) {
     {
       title: 'Hành động',
       key: 'actions',
-      width: 110,
+      width: 130,
       align: 'center',
       render: (_, record) => (
         <div className="flex items-center justify-center gap-1">
+          <Tooltip title="Xem chi tiết">
+            <Button
+              type="text"
+              icon={<EyeOutlined />}
+              onClick={() => onView(record)}
+              className="text-green-500 hover:text-green-700 hover:bg-green-50"
+              size="small"
+            />
+          </Tooltip>
+
           <Tooltip title="Chỉnh sửa">
             <Button
               type="text"

@@ -64,7 +64,7 @@ Mark all areas affected by the task.
 
 ## Behavior Implemented
 
-- API layer dùng đúng fallback URL `localhost:3000` khi `.env` không có `VITE_API_URL`
+- API layer dùng đúng fallback URL `localhost:3000`
 - Vite proxy trong dev mode trỏ đúng backend `localhost:3000`
 - Tất cả API calls admin đếu đi qua đúng endpoint: conversations, knowledge, chat
 - Response shape `{ success, data, message }` được xử lý đúng trong `baseApi.js`

@@ -48,3 +48,16 @@ export async function updateKnowledge(id, payload) {
 export async function deleteKnowledge(id) {
   await apiFetch(`/api/knowledge/${id}`, { method: 'DELETE' })
 }
+
+export async function updateCategoryApi(oldName, newName) {
+  return await apiFetch('/api/knowledge/categories/update', {
+    method: 'PUT',
+    body: JSON.stringify({ oldName, newName }),
+  })
+}
+
+export async function deleteCategoryApi(name) {
+  return await apiFetch(`/api/knowledge/categories/${encodeURIComponent(name)}`, {
+    method: 'DELETE',
+  })
+}
