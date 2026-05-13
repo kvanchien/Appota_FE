@@ -3,7 +3,6 @@ import { Modal, Input, Button, Space, Typography } from 'antd'
 import {
   DeleteOutlined,
   EditOutlined,
-  PlusOutlined,
   CheckOutlined,
   CloseOutlined,
   ExclamationCircleOutlined,
@@ -23,12 +22,6 @@ export default function CategoryManageModal({
   const [newCatName, setNewCatName] = useState('')
   const [editingCategory, setEditingCategory] = useState(null)
   const [tempCategoryName, setTempCategoryName] = useState('')
-
-  const handleAdd = () => {
-    if (!newCatName.trim()) return
-    onAdd(newCatName.trim())
-    setNewCatName('')
-  }
 
   const startEdit = (cat) => {
     setEditingCategory(cat)
