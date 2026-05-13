@@ -6,17 +6,17 @@ This file defines the feature-specific context, rules, and checklist for the adm
 
 The Frontend Agent must read this file before working on any task related to:
 
-* conversation list
-* conversation detail
-* admin conversation table
-* chat log display
-* `GET /api/conversations`
-* `GET /api/conversations/:id`
-* `GET /api/chat/:sessionId`
-* `conversationApi.js`
-* `ConversationsPage.jsx`
-* `ConversationDetailPage.jsx`
-* `ConversationTable.jsx`
+- conversation list
+- conversation detail
+- admin conversation table
+- chat log display
+- `GET /api/conversations`
+- `GET /api/conversations/:id`
+- `GET /api/chat/:sessionId`
+- `conversationApi.js`
+- `ConversationsPage.jsx`
+- `ConversationDetailPage.jsx`
+- `ConversationTable.jsx`
 
 ## Feature Summary
 
@@ -40,11 +40,11 @@ Do not add login, permission, role checking, or route protection unless explicit
 
 The admin should be able to:
 
-* view all recorded conversations
-* scan recent sessions quickly
-* identify the latest message in a session
-* open a session detail
-* inspect full user and assistant message history
+- view all recorded conversations
+- scan recent sessions quickly
+- identify the latest message in a session
+- open a session detail
+- inspect full user and assistant message history
 
 ## Backend Contract
 
@@ -76,7 +76,7 @@ Expected successful response shape:
 {
 "success": true,
 "data": {
-"_id": "MongoDB ObjectId string",
+"\_id": "MongoDB ObjectId string",
 "sessionId": "uuid",
 "messages": [
 {
@@ -135,12 +135,12 @@ Only modify files required by the current task.
 
 Expected responsibilities:
 
-* call API or hook to fetch conversation list
-* manage loading state
-* manage error state
-* pass data to table component
-* provide page title/context
-* handle navigation to detail page
+- call API or hook to fetch conversation list
+- manage loading state
+- manage error state
+- pass data to table component
+- provide page title/context
+- handle navigation to detail page
 
 Do not put complex table rendering directly in the page if `ConversationTable.jsx` exists.
 
@@ -150,21 +150,21 @@ Do not put complex table rendering directly in the page if `ConversationTable.js
 
 Expected columns:
 
-* session id
-* last message
-* message count
-* created or updated time
-* action to view detail
+- session id
+- last message
+- message count
+- created or updated time
+- action to view detail
 
 Column names can follow the existing UI language.
 
 The table must handle:
 
-* empty data
-* long session ids
-* long last message text
-* loading state if passed from page
-* navigation action
+- empty data
+- long session ids
+- long last message text
+- loading state if passed from page
+- navigation action
 
 Do not make a separate API request inside every table row.
 
@@ -174,14 +174,14 @@ Do not make a separate API request inside every table row.
 
 Expected responsibilities:
 
-* read conversation id from route params
-* fetch conversation detail
-* show loading state
-* show error state
-* show not found or empty state
-* display session id
-* display full message history
-* provide navigation back to conversation list
+- read conversation id from route params
+- fetch conversation detail
+- show loading state
+- show error state
+- show not found or empty state
+- display session id
+- display full message history
+- provide navigation back to conversation list
 
 Do not display messages from a different session.
 
@@ -193,12 +193,12 @@ Conversation detail must show messages clearly.
 
 Required behavior:
 
-* preserve chronological order
-* distinguish `user` from `assistant`
-* show message content
-* show timestamp when available
-* wrap long text
-* handle missing content safely
+- preserve chronological order
+- distinguish `user` from `assistant`
+- show message content
+- show timestamp when available
+- wrap long text
+- handle missing content safely
 
 Do not reverse message order unless the whole app already uses newest-first and the UX is consistent.
 
@@ -212,13 +212,13 @@ Do not hide user messages.
 
 Conversation list:
 
-* show loading indicator while fetching list
-* do not show a blank page
+- show loading indicator while fetching list
+- do not show a blank page
 
 Conversation detail:
 
-* show loading indicator while fetching detail
-* do not show stale detail for a different id
+- show loading indicator while fetching detail
+- do not show stale detail for a different id
 
 Use existing Ant Design or project loading pattern.
 
@@ -226,13 +226,13 @@ Use existing Ant Design or project loading pattern.
 
 Conversation list:
 
-* if there are no conversations, show a clear empty state
-* do not show an empty table without explanation
+- if there are no conversations, show a clear empty state
+- do not show an empty table without explanation
 
 Conversation detail:
 
-* if the conversation exists but has no messages, show a clear empty message state
-* if the conversation does not exist, show a not found or API error message
+- if the conversation exists but has no messages, show a clear empty message state
+- if the conversation does not exist, show a not found or API error message
 
 ## Error Handling Rules
 
@@ -240,9 +240,9 @@ Use backend `message` when available.
 
 Fallback messages:
 
-* “Failed to load conversations.”
-* “Failed to load conversation detail.”
-* “Conversation not found.”
+- “Failed to load conversations.”
+- “Failed to load conversation detail.”
+- “Conversation not found.”
 
 Do not expose stack traces.
 
@@ -262,12 +262,12 @@ Admin route detail:
 
 From list to detail:
 
-* use the conversation `_id` if backend detail endpoint expects MongoDB `_id`
-* do not use `sessionId` for `/api/conversations/:id` unless backend contract says so
+- use the conversation `_id` if backend detail endpoint expects MongoDB `_id`
+- do not use `sessionId` for `/api/conversations/:id` unless backend contract says so
 
 From detail back to list:
 
-* provide a clear back action
+- provide a clear back action
 
 Do not change route structure unless explicitly requested.
 
@@ -291,21 +291,21 @@ When opening detail from conversation list, use `_id` for route param if the rou
 
 Timestamps:
 
-* use a readable format if the project already has a formatter
-* otherwise use simple local date/time formatting
-* fallback to raw ISO string if needed
-* show `N/A` only when date is missing
+- use a readable format if the project already has a formatter
+- otherwise use simple local date/time formatting
+- fallback to raw ISO string if needed
+- show `N/A` only when date is missing
 
 Long text:
 
-* truncate last message in list view if needed
-* show full message content in detail view
-* ensure text wraps safely
+- truncate last message in list view if needed
+- show full message content in detail view
+- ensure text wraps safely
 
 Message count:
 
-* display `0` if count is zero
-* display fallback only if value is missing or invalid
+- display `0` if count is zero
+- display fallback only if value is missing or invalid
 
 ## UI/UX Rules
 
@@ -313,31 +313,31 @@ The list screen should be scan-friendly.
 
 Prefer:
 
-* page title
-* short description if useful
-* table with clear actions
-* readable spacing
-* empty state
-* error state
+- page title
+- short description if useful
+- table with clear actions
+- readable spacing
+- empty state
+- error state
 
 Avoid:
 
-* dense layout
-* excessive cards
-* unnecessary charts
-* filters unless explicitly requested
-* authentication UI
-* analytics dashboard
+- dense layout
+- excessive cards
+- unnecessary charts
+- filters unless explicitly requested
+- authentication UI
+- analytics dashboard
 
 The detail screen should be readable like a log.
 
 Prefer:
 
-* session metadata at top
-* message list below
-* role distinction
-* timestamp display
-* back navigation
+- session metadata at top
+- message list below
+- role distinction
+- timestamp display
+- back navigation
 
 ## API Integration Rules
 
@@ -349,11 +349,11 @@ API wrapper should use the configured base API behavior.
 
 For list:
 
-* return normalized data or raw `data` consistently according to existing API pattern
+- return normalized data or raw `data` consistently according to existing API pattern
 
 For detail:
 
-* handle 404 responses clearly
+- handle 404 responses clearly
 
 Do not hardcode `http://localhost:5000` in page or component files.
 
@@ -365,15 +365,15 @@ Do not add global state management.
 
 Conversation list state should track:
 
-* conversations
-* loading
-* error
+- conversations
+- loading
+- error
 
 Conversation detail state should track:
 
-* conversation
-* loading
-* error
+- conversation
+- loading
+- error
 
 Do not persist admin conversation list in local storage unless explicitly requested.
 
@@ -381,61 +381,61 @@ Do not persist admin conversation list in local storage unless explicitly reques
 
 Do not implement:
 
-* authentication
-* admin user management
-* role-based access control
-* conversation delete
-* conversation export
-* search/filter/sort unless explicitly requested
-* pagination unless backend supports it or task requests it
-* WebSocket updates
-* live polling for new conversations
-* advanced analytics
-* charts
-* message moderation tools
+- authentication
+- admin user management
+- role-based access control
+- conversation delete
+- conversation export
+- search/filter/sort unless explicitly requested
+- pagination unless backend supports it or task requests it
+- WebSocket updates
+- live polling for new conversations
+- advanced analytics
+- charts
+- message moderation tools
 
 ## Manual Test Checklist
 
 For conversation list changes:
 
-* [ ] Open `/admin/conversations`.
-* [ ] Confirm page renders.
-* [ ] Confirm loading state appears during fetch.
-* [ ] Confirm conversations display when API returns data.
-* [ ] Confirm empty state displays when API returns empty list.
-* [ ] Confirm error state displays when API fails.
-* [ ] Confirm session id is visible.
-* [ ] Confirm last message is visible where available.
-* [ ] Confirm message count is visible where available.
-* [ ] Confirm action opens detail page.
-* [ ] Confirm long text does not break layout.
+- [ ] Open `/admin/conversations`.
+- [ ] Confirm page renders.
+- [ ] Confirm loading state appears during fetch.
+- [ ] Confirm conversations display when API returns data.
+- [ ] Confirm empty state displays when API returns empty list.
+- [ ] Confirm error state displays when API fails.
+- [ ] Confirm session id is visible.
+- [ ] Confirm last message is visible where available.
+- [ ] Confirm message count is visible where available.
+- [ ] Confirm action opens detail page.
+- [ ] Confirm long text does not break layout.
 
 For conversation detail changes:
 
-* [ ] Open `/admin/conversations/:id`.
-* [ ] Confirm page renders.
-* [ ] Confirm loading state appears during fetch.
-* [ ] Confirm session id is visible.
-* [ ] Confirm message history displays in order.
-* [ ] Confirm user and assistant messages are visually distinct.
-* [ ] Confirm timestamps display where available.
-* [ ] Confirm empty messages are handled.
-* [ ] Confirm not found or API error is handled.
-* [ ] Confirm back navigation works.
+- [ ] Open `/admin/conversations/:id`.
+- [ ] Confirm page renders.
+- [ ] Confirm loading state appears during fetch.
+- [ ] Confirm session id is visible.
+- [ ] Confirm message history displays in order.
+- [ ] Confirm user and assistant messages are visually distinct.
+- [ ] Confirm timestamps display where available.
+- [ ] Confirm empty messages are handled.
+- [ ] Confirm not found or API error is handled.
+- [ ] Confirm back navigation works.
 
 ## Completion Checklist
 
 An admin conversations task is complete when:
 
-* [ ] Current plan was updated before coding.
-* [ ] Relevant API contract was preserved.
-* [ ] List screen works if affected.
-* [ ] Detail screen works if affected.
-* [ ] Loading state is handled.
-* [ ] Empty state is handled.
-* [ ] Error state is handled.
-* [ ] `_id` and `sessionId` are not confused.
-* [ ] No authentication was added unless requested.
-* [ ] No polling or realtime logic was introduced.
-* [ ] Validation status is known.
-* [ ] Handoff was updated after implementation.
+- [ ] Current plan was updated before coding.
+- [ ] Relevant API contract was preserved.
+- [ ] List screen works if affected.
+- [ ] Detail screen works if affected.
+- [ ] Loading state is handled.
+- [ ] Empty state is handled.
+- [ ] Error state is handled.
+- [ ] `_id` and `sessionId` are not confused.
+- [ ] No authentication was added unless requested.
+- [ ] No polling or realtime logic was introduced.
+- [ ] Validation status is known.
+- [ ] Handoff was updated after implementation.

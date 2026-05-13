@@ -14,11 +14,11 @@ The handoff must clearly explain what changed, what was validated, what remains 
 
 TODO: Choose one.
 
-* [ ] Completed
-* [ ] Partially completed
-* [ ] Blocked
-* [ ] Failed
-* [ ] Not validated
+- [ ] Completed
+- [ ] Partially completed
+- [ ] Blocked
+- [ ] Failed
+- [ ] Not validated
 
 ## Task
 
@@ -42,26 +42,26 @@ TODO: Summarize the completed work in 2–5 lines.
 
 Include:
 
-* what was changed
-* why it was changed
-* what user-visible behavior is now expected
+- what was changed
+- why it was changed
+- what user-visible behavior is now expected
 
 ## Affected Area
 
 Mark all affected areas.
 
-* [ ] Chat screen
-* [ ] Chat streaming
-* [ ] SSE parser
-* [ ] API integration
-* [ ] Admin conversations
-* [ ] Admin Knowledge Base
-* [ ] UI/UX
-* [ ] Routing
-* [ ] Layout
-* [ ] Build/lint
-* [ ] Agent documentation
-* [ ] Other: TODO
+- [ ] Chat screen
+- [ ] Chat streaming
+- [ ] SSE parser
+- [ ] API integration
+- [ ] Admin conversations
+- [ ] Admin Knowledge Base
+- [ ] UI/UX
+- [ ] Routing
+- [ ] Layout
+- [ ] Build/lint
+- [ ] Agent documentation
+- [ ] Other: TODO
 
 ## Files Changed
 
@@ -71,11 +71,11 @@ For each file, include a short reason.
 
 Example:
 
-* `src/hooks/useChat.js` — updated streaming state so tokens append to the active assistant message.
-* `src/api/chatApi.js` — changed chat request handling to read `ReadableStream`.
-* `src/utils/sseParser.js` — added support for split SSE chunks.
-* `agent/frontend/current-plan.md` — recorded task plan before implementation.
-* `agent/frontend/handoff.md` — recorded task result.
+- `src/hooks/useChat.js` — updated streaming state so tokens append to the active assistant message.
+- `src/api/chatApi.js` — changed chat request handling to read `ReadableStream`.
+- `src/utils/sseParser.js` — added support for split SSE chunks.
+- `agent/frontend/current-plan.md` — recorded task plan before implementation.
+- `agent/frontend/handoff.md` — recorded task result.
 
 ## Files Created
 
@@ -99,8 +99,8 @@ TODO: List relevant files inspected but not modified.
 
 Example:
 
-* `src/pages/ChatPage.jsx` — inspected to confirm hook usage.
-* `src/components/chat/ChatInput.jsx` — inspected to confirm submit behavior.
+- `src/pages/ChatPage.jsx` — inspected to confirm hook usage.
+- `src/components/chat/ChatInput.jsx` — inspected to confirm submit behavior.
 
 ## Behavior Implemented
 
@@ -108,10 +108,10 @@ TODO: Describe the user-visible behavior after the task.
 
 Examples:
 
-* Assistant response now renders progressively while backend stream sends tokens.
-* Knowledge Base modal validates required question and answer fields.
-* Conversation detail page now shows readable error state when API returns 404.
-* Admin table no longer breaks layout on small screens.
+- Assistant response now renders progressively while backend stream sends tokens.
+- Knowledge Base modal validates required question and answer fields.
+- Conversation detail page now shows readable error state when API returns 404.
+- Admin table no longer breaks layout on small screens.
 
 ## Behavior Not Implemented
 
@@ -123,9 +123,9 @@ No requested behavior was intentionally left unimplemented.
 
 Examples:
 
-* Did not add WebSocket support because chat uses HTTP streaming.
-* Did not add authentication because it is outside current scope.
-* Did not add pagination because backend does not provide pagination contract.
+- Did not add WebSocket support because chat uses HTTP streaming.
+- Did not add authentication because it is outside current scope.
+- Did not add pagination because backend does not provide pagination contract.
 
 ## Chat Streaming Notes
 
@@ -133,19 +133,19 @@ Use this section if the task affected chat, `useChat.js`, `chatApi.js`, or `sseP
 
 Confirm:
 
-* [ ] Chat still uses `POST /api/chat`.
-* [ ] Chat still expects `Content-Type: text/event-stream`.
-* [ ] Client reads `response.body.getReader()`.
-* [ ] Client decodes chunks progressively.
-* [ ] Client parses SSE `data:` events.
-* [ ] `{ token }` appends to the current assistant message.
-* [ ] `{ done: true }` ends loading/streaming state.
-* [ ] `{ error }` is handled if received.
-* [ ] No webhook logic was introduced.
-* [ ] No WebSocket logic was introduced.
-* [ ] No polling logic was introduced.
-* [ ] No fake typewriter-after-full-response logic was introduced.
-* [ ] One assistant bubble is not created per token.
+- [ ] Chat still uses `POST /api/chat`.
+- [ ] Chat still expects `Content-Type: text/event-stream`.
+- [ ] Client reads `response.body.getReader()`.
+- [ ] Client decodes chunks progressively.
+- [ ] Client parses SSE `data:` events.
+- [ ] `{ token }` appends to the current assistant message.
+- [ ] `{ done: true }` ends loading/streaming state.
+- [ ] `{ error }` is handled if received.
+- [ ] No webhook logic was introduced.
+- [ ] No WebSocket logic was introduced.
+- [ ] No polling logic was introduced.
+- [ ] No fake typewriter-after-full-response logic was introduced.
+- [ ] One assistant bubble is not created per token.
 
 Notes:
 
@@ -161,13 +161,13 @@ Use this section if the task affected API integration.
 
 Confirm:
 
-* [ ] Existing API base URL configuration is preserved.
-* [ ] Backend URL is not hardcoded inside page/component files.
-* [ ] API wrapper pattern under `src/api/` is preserved.
-* [ ] REST response format `{ success, data, message }` is handled.
-* [ ] Chat stream remains separate from standard JSON response handling.
-* [ ] Backend `message` is used when available.
-* [ ] Network failure is handled.
+- [ ] Existing API base URL configuration is preserved.
+- [ ] Backend URL is not hardcoded inside page/component files.
+- [ ] API wrapper pattern under `src/api/` is preserved.
+- [ ] REST response format `{ success, data, message }` is handled.
+- [ ] Chat stream remains separate from standard JSON response handling.
+- [ ] Backend `message` is used when available.
+- [ ] Network failure is handled.
 
 Notes:
 
@@ -183,15 +183,15 @@ Use this section if the task affected visible UI.
 
 Confirm:
 
-* [ ] Main action is clear.
-* [ ] Loading state is handled.
-* [ ] Empty state is handled where relevant.
-* [ ] Error state is handled.
-* [ ] Disabled state is clear where relevant.
-* [ ] Layout remains readable on desktop.
-* [ ] Layout remains usable on mobile.
-* [ ] Focus state remains visible.
-* [ ] No unrelated redesign was introduced.
+- [ ] Main action is clear.
+- [ ] Loading state is handled.
+- [ ] Empty state is handled where relevant.
+- [ ] Error state is handled.
+- [ ] Disabled state is clear where relevant.
+- [ ] Layout remains readable on desktop.
+- [ ] Layout remains usable on mobile.
+- [ ] Focus state remains visible.
+- [ ] No unrelated redesign was introduced.
 
 Notes:
 
@@ -207,13 +207,13 @@ Use this section if the task affected admin conversations.
 
 Confirm:
 
-* [ ] Conversation list loads from `GET /api/conversations`.
-* [ ] Conversation detail loads from `GET /api/conversations/:id`.
-* [ ] Loading state is handled.
-* [ ] Empty state is handled.
-* [ ] Error or not found state is handled.
-* [ ] `_id` and `sessionId` are not confused.
-* [ ] Message order is preserved.
+- [ ] Conversation list loads from `GET /api/conversations`.
+- [ ] Conversation detail loads from `GET /api/conversations/:id`.
+- [ ] Loading state is handled.
+- [ ] Empty state is handled.
+- [ ] Error or not found state is handled.
+- [ ] `_id` and `sessionId` are not confused.
+- [ ] Message order is preserved.
 
 Notes:
 
@@ -229,16 +229,16 @@ Use this section if the task affected Knowledge Base CRUD.
 
 Confirm:
 
-* [ ] Knowledge list loads from `GET /api/knowledge`.
-* [ ] Create uses `POST /api/knowledge`.
-* [ ] Update uses `PUT /api/knowledge/:id`.
-* [ ] Delete uses `DELETE /api/knowledge/:id`.
-* [ ] `question` is validated as required.
-* [ ] `answer` is validated as required.
-* [ ] `category` remains optional.
-* [ ] `_id` is used for update/delete.
-* [ ] Delete requires confirmation.
-* [ ] List updates after mutation.
+- [ ] Knowledge list loads from `GET /api/knowledge`.
+- [ ] Create uses `POST /api/knowledge`.
+- [ ] Update uses `PUT /api/knowledge/:id`.
+- [ ] Delete uses `DELETE /api/knowledge/:id`.
+- [ ] `question` is validated as required.
+- [ ] `answer` is validated as required.
+- [ ] `category` remains optional.
+- [ ] `_id` is used for update/delete.
+- [ ] Delete requires confirmation.
+- [ ] List updates after mutation.
 
 Notes:
 
@@ -252,19 +252,19 @@ Not applicable.
 
 Record only commands that were actually run.
 
-* [ ] `npm run lint`
-* [ ] `npm run build`
-* [ ] `npm run format:check`
-* [ ] Other: TODO
+- [ ] `npm run lint`
+- [ ] `npm run build`
+- [ ] `npm run format:check`
+- [ ] Other: TODO
 
 ## Validation Result
 
 TODO: Choose one.
 
-* [ ] Passed
-* [ ] Failed
-* [ ] Partially passed
-* [ ] Not run
+- [ ] Passed
+- [ ] Failed
+- [ ] Partially passed
+- [ ] Not run
 
 Details:
 
@@ -272,11 +272,11 @@ TODO.
 
 If validation failed, include:
 
-* command that failed
-* short error summary
-* likely cause
-* whether the failure is related to this task
-* next suggested fix
+- command that failed
+- short error summary
+- likely cause
+- whether the failure is related to this task
+- next suggested fix
 
 If validation was not run, include reason.
 
@@ -288,42 +288,42 @@ Validation was not run because dependencies were not installed in the current en
 
 General checks:
 
-* [ ] Opened affected route.
-* [ ] Confirmed page renders.
-* [ ] Triggered primary user action.
-* [ ] Confirmed loading state.
-* [ ] Confirmed success state.
-* [ ] Confirmed error or empty state where possible.
-* [ ] Confirmed no obvious unrelated screen break.
+- [ ] Opened affected route.
+- [ ] Confirmed page renders.
+- [ ] Triggered primary user action.
+- [ ] Confirmed loading state.
+- [ ] Confirmed success state.
+- [ ] Confirmed error or empty state where possible.
+- [ ] Confirmed no obvious unrelated screen break.
 
 Chat-specific checks:
 
-* [ ] Opened `/`.
-* [ ] Sent a message.
-* [ ] Confirmed user message appears immediately.
-* [ ] Confirmed assistant placeholder or typing state appears.
-* [ ] Confirmed assistant response renders progressively.
-* [ ] Confirmed input is disabled or guarded while streaming.
-* [ ] Confirmed `{ done: true }` ends loading state.
-* [ ] Confirmed no duplicate assistant bubble per token.
+- [ ] Opened `/`.
+- [ ] Sent a message.
+- [ ] Confirmed user message appears immediately.
+- [ ] Confirmed assistant placeholder or typing state appears.
+- [ ] Confirmed assistant response renders progressively.
+- [ ] Confirmed input is disabled or guarded while streaming.
+- [ ] Confirmed `{ done: true }` ends loading state.
+- [ ] Confirmed no duplicate assistant bubble per token.
 
 Admin conversation checks:
 
-* [ ] Opened `/admin/conversations`.
-* [ ] Confirmed conversation list loads.
-* [ ] Opened conversation detail.
-* [ ] Confirmed full message history displays.
-* [ ] Confirmed user and assistant messages are distinguishable.
-* [ ] Confirmed `_id`/`sessionId` usage is correct.
+- [ ] Opened `/admin/conversations`.
+- [ ] Confirmed conversation list loads.
+- [ ] Opened conversation detail.
+- [ ] Confirmed full message history displays.
+- [ ] Confirmed user and assistant messages are distinguishable.
+- [ ] Confirmed `_id`/`sessionId` usage is correct.
 
 Admin Knowledge checks:
 
-* [ ] Opened `/admin/knowledge`.
-* [ ] Confirmed Knowledge Base list loads.
-* [ ] Created entry.
-* [ ] Edited entry.
-* [ ] Deleted entry with confirmation.
-* [ ] Confirmed list updates after mutation.
+- [ ] Opened `/admin/knowledge`.
+- [ ] Confirmed Knowledge Base list loads.
+- [ ] Created entry.
+- [ ] Edited entry.
+- [ ] Deleted entry with confirmation.
+- [ ] Confirmed list updates after mutation.
 
 Notes:
 
@@ -339,11 +339,11 @@ No known frontend issues after this task.
 
 Examples:
 
-* Backend stream sometimes sends malformed JSON.
-* Existing lint errors remain in unrelated files.
-* API endpoint returns a field name different from the documented contract.
-* Admin table still overflows below 375px width.
-* Manual testing could not be completed because backend was unavailable.
+- Backend stream sometimes sends malformed JSON.
+- Existing lint errors remain in unrelated files.
+- API endpoint returns a field name different from the documented contract.
+- Admin table still overflows below 375px width.
+- Manual testing could not be completed because backend was unavailable.
 
 ## Backend/API Dependencies
 
@@ -351,12 +351,12 @@ TODO: List backend/API assumptions or dependencies.
 
 Examples:
 
-* `POST /api/chat` must return `text/event-stream`.
-* Chat stream must send `data: {"token":"..."}` events.
-* Chat stream must end with `data: {"done":true}`.
-* REST APIs must return `{ success, data, message }`.
-* Conversation detail endpoint must use MongoDB `_id`.
-* Knowledge update/delete must use entry `_id`.
+- `POST /api/chat` must return `text/event-stream`.
+- Chat stream must send `data: {"token":"..."}` events.
+- Chat stream must end with `data: {"done":true}`.
+- REST APIs must return `{ success, data, message }`.
+- Conversation detail endpoint must use MongoDB `_id`.
+- Knowledge update/delete must use entry `_id`.
 
 If no new dependency was introduced, write:
 
@@ -372,18 +372,18 @@ No backend/API mismatch found.
 
 Examples:
 
-* Backend returns `items` instead of `data`.
-* Backend sends `finished: true` instead of `done: true`.
-* Backend expects `session_id` instead of `sessionId`.
-* Backend returns conversation detail by `sessionId`, not `_id`.
+- Backend returns `items` instead of `data`.
+- Backend sends `finished: true` instead of `done: true`.
+- Backend expects `session_id` instead of `sessionId`.
+- Backend returns conversation detail by `sessionId`, not `_id`.
 
 ## Breaking Changes
 
 TODO: Choose one.
 
-* [ ] No breaking changes.
-* [ ] Breaking change introduced.
-* [ ] Unknown.
+- [ ] No breaking changes.
+- [ ] Breaking change introduced.
+- [ ] Unknown.
 
 Details:
 
@@ -393,10 +393,10 @@ TODO.
 
 TODO: Choose one.
 
-* [ ] No new dependencies.
-* [ ] New dependency added.
-* [ ] Dependency change required but not made.
-* [ ] Unknown.
+- [ ] No new dependencies.
+- [ ] New dependency added.
+- [ ] Dependency change required but not made.
+- [ ] Unknown.
 
 Details:
 
@@ -406,10 +406,10 @@ TODO.
 
 TODO: Choose one.
 
-* [ ] No environment changes.
-* [ ] Environment variable added or changed.
-* [ ] Environment dependency discovered.
-* [ ] Unknown.
+- [ ] No environment changes.
+- [ ] Environment variable added or changed.
+- [ ] Environment dependency discovered.
+- [ ] Unknown.
 
 Details:
 
@@ -429,10 +429,10 @@ No security-sensitive change.
 
 Confirm:
 
-* [ ] No API key was added to frontend source.
-* [ ] No secret was committed.
-* [ ] No `.env` file was committed.
-* [ ] No backend credential was exposed.
+- [ ] No API key was added to frontend source.
+- [ ] No secret was committed.
+- [ ] No `.env` file was committed.
+- [ ] No backend credential was exposed.
 
 ## Suggested Commit Message
 
@@ -456,11 +456,11 @@ TODO: Recommend the next useful action.
 
 Examples:
 
-* Test chat streaming against real backend.
-* Verify Knowledge Base CRUD against deployed backend.
-* Ask backend team to confirm final SSE event format.
-* Improve mobile layout for admin tables.
-* No follow-up required.
+- Test chat streaming against real backend.
+- Verify Knowledge Base CRUD against deployed backend.
+- Ask backend team to confirm final SSE event format.
+- Improve mobile layout for admin tables.
+- No follow-up required.
 
 ## Reviewer Notes
 
@@ -468,9 +468,9 @@ TODO: Give short notes for the human reviewer.
 
 Include:
 
-* most important file to review
-* behavior most likely to regress
-* any assumption that should be checked manually
+- most important file to review
+- behavior most likely to regress
+- any assumption that should be checked manually
 
 Example:
 

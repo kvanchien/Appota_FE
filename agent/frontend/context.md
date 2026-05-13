@@ -12,11 +12,11 @@ Project name: Appota Chatbot QA — Frontend.
 
 Frontend scope includes:
 
-* Player-facing chat screen.
-* Admin conversation logs.
-* Admin Knowledge Base management.
-* API integration with AppotaBackend.
-* SSE streaming rendering for chatbot responses.
+- Player-facing chat screen.
+- Admin conversation logs.
+- Admin Knowledge Base management.
+- API integration with AppotaBackend.
+- SSE streaming rendering for chatbot responses.
 
 This is a small 24-hour delivery project. Prioritize functional correctness, clean code, stable API integration, and passing validation commands over complex UI design.
 
@@ -24,14 +24,14 @@ This is a small 24-hour delivery project. Prioritize functional correctness, cle
 
 Use the existing frontend stack:
 
-* React 18
-* Vite 5
-* JavaScript
-* Tailwind CSS 3
-* Ant Design 5
-* React Router DOM v6
-* Fetch API with `ReadableStream` for streaming response
-* Vercel deployment target
+- React 18
+- Vite 5
+- JavaScript
+- Tailwind CSS 3
+- Ant Design 5
+- React Router DOM v6
+- Fetch API with `ReadableStream` for streaming response
+- Vercel deployment target
 
 Do not introduce a new frontend framework.
 
@@ -45,32 +45,32 @@ Expected source structure:
 
 src/
 ├── api/
-│   ├── baseApi.js
-│   ├── chatApi.js
-│   ├── conversationApi.js
-│   └── knowledgeApi.js
+│ ├── baseApi.js
+│ ├── chatApi.js
+│ ├── conversationApi.js
+│ └── knowledgeApi.js
 ├── components/
-│   ├── chat/
-│   │   ├── ChatBubble.jsx
-│   │   ├── ChatInput.jsx
-│   │   └── TypingIndicator.jsx
-│   ├── admin/
-│   │   ├── ConversationTable.jsx
-│   │   ├── KnowledgeTable.jsx
-│   │   └── KnowledgeModal.jsx
-│   └── layout/
-│       └── AdminLayout.jsx
+│ ├── chat/
+│ │ ├── ChatBubble.jsx
+│ │ ├── ChatInput.jsx
+│ │ └── TypingIndicator.jsx
+│ ├── admin/
+│ │ ├── ConversationTable.jsx
+│ │ ├── KnowledgeTable.jsx
+│ │ └── KnowledgeModal.jsx
+│ └── layout/
+│ └── AdminLayout.jsx
 ├── hooks/
-│   ├── useChat.js
-│   └── useKnowledge.js
+│ ├── useChat.js
+│ └── useKnowledge.js
 ├── pages/
-│   ├── ChatPage.jsx
-│   └── admin/
-│       ├── ConversationsPage.jsx
-│       ├── ConversationDetailPage.jsx
-│       └── KnowledgePage.jsx
+│ ├── ChatPage.jsx
+│ └── admin/
+│ ├── ConversationsPage.jsx
+│ ├── ConversationDetailPage.jsx
+│ └── KnowledgePage.jsx
 ├── utils/
-│   └── sseParser.js
+│ └── sseParser.js
 ├── App.jsx
 ├── main.jsx
 └── index.css
@@ -133,10 +133,10 @@ Admin can open one conversation and see the full message history.
 
 Admin can:
 
-* View Q&A entries.
-* Create a new Q&A pair.
-* Edit an existing Q&A pair.
-* Delete a Q&A pair.
+- View Q&A entries.
+- Create a new Q&A pair.
+- Edit an existing Q&A pair.
+- Delete a Q&A pair.
 
 After Knowledge Base changes, the next chat request should use updated backend data.
 
@@ -166,14 +166,14 @@ Expected stream event format:
 
 Frontend behavior:
 
-* Send user message to backend.
-* Show the user message immediately.
-* Create or show an assistant message placeholder.
-* Append each received `token` to the current assistant message.
-* Stop loading state when `{ "done": true }` is received.
-* Show a readable error state if stream fails.
-* Do not wait for the full response before rendering.
-* Do not create one assistant bubble per token.
+- Send user message to backend.
+- Show the user message immediately.
+- Create or show an assistant message placeholder.
+- Append each received `token` to the current assistant message.
+- Stop loading state when `{ "done": true }` is received.
+- Show a readable error state if stream fails.
+- Do not wait for the full response before rendering.
+- Do not create one assistant bubble per token.
 
 Because the API uses `POST /api/chat` with JSON body, prefer `fetch()` with `response.body.getReader()`.
 
@@ -232,26 +232,26 @@ Delete a Knowledge Base entry.
 
 The Frontend Agent may work on:
 
-* React components.
-* React hooks.
-* API wrapper functions.
-* SSE parsing.
-* UI states.
-* Form validation.
-* Admin table behavior.
-* Route wiring.
-* Styling with Tailwind CSS.
-* Ant Design component usage.
-* Build and lint fixes.
+- React components.
+- React hooks.
+- API wrapper functions.
+- SSE parsing.
+- UI states.
+- Form validation.
+- Admin table behavior.
+- Route wiring.
+- Styling with Tailwind CSS.
+- Ant Design component usage.
+- Build and lint fixes.
 
 The Frontend Agent must not work on:
 
-* Backend controller/service/model code.
-* MongoDB schema.
-* Grok API server integration.
-* Express route implementation.
-* Server deployment configuration.
-* Authentication unless explicitly requested.
+- Backend controller/service/model code.
+- MongoDB schema.
+- Grok API server integration.
+- Express route implementation.
+- Server deployment configuration.
+- Authentication unless explicitly requested.
 
 ## Development Priorities
 
@@ -292,14 +292,14 @@ Before coding any task, the agent must update:
 
 The current plan must be generated from the task prompt and include:
 
-* Current task.
-* Affected feature.
-* Scope.
-* Files to inspect.
-* Files likely to modify.
-* Implementation steps.
-* Validation commands.
-* Out-of-scope items.
+- Current task.
+- Affected feature.
+- Scope.
+- Files to inspect.
+- Files likely to modify.
+- Implementation steps.
+- Validation commands.
+- Out-of-scope items.
 
 Do not code before current plan is updated.
 
@@ -311,13 +311,13 @@ After each task, the agent must update:
 
 The handoff must include:
 
-* Task summary.
-* Files changed.
-* Validation commands run.
-* Result.
-* Known issues.
-* Backend/API dependencies.
-* Suggested next step.
+- Task summary.
+- Files changed.
+- Validation commands run.
+- Result.
+- Known issues.
+- Backend/API dependencies.
+- Suggested next step.
 
 ## Constraints
 
@@ -337,10 +337,10 @@ Do not implement fake data flow if real API integration is expected.
 
 A frontend task is complete only when:
 
-* The requested behavior is implemented.
-* Related UI state is handled.
-* API errors are handled.
-* No unrelated files are changed.
-* `current-plan.md` reflects the task.
-* `handoff.md` records the result.
-* Lint/build status is known.
+- The requested behavior is implemented.
+- Related UI state is handled.
+- API errors are handled.
+- No unrelated files are changed.
+- `current-plan.md` reflects the task.
+- `handoff.md` records the result.
+- Lint/build status is known.

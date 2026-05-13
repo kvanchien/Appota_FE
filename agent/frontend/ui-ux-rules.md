@@ -12,9 +12,9 @@ Do not introduce complex style generators, palette systems, font systems, animat
 
 The goal is a functional, clean, readable, responsive UI for:
 
-* Player chat.
-* Admin conversation logs.
-* Admin Knowledge Base CRUD.
+- Player chat.
+- Admin conversation logs.
+- Admin Knowledge Base CRUD.
 
 ## Design Priority
 
@@ -34,23 +34,23 @@ Do not prioritize decorative design over product behavior.
 
 The frontend UI only needs to support:
 
-* Player chat screen.
-* Admin conversations list.
-* Admin conversation detail.
-* Admin Knowledge Base list.
-* Knowledge Base create/edit/delete flow.
-* Basic admin layout.
+- Player chat screen.
+- Admin conversations list.
+- Admin conversation detail.
+- Admin Knowledge Base list.
+- Knowledge Base create/edit/delete flow.
+- Basic admin layout.
 
 Do not build:
 
-* marketing landing page
-* complex dashboard analytics
-* chart system
-* theme switcher
-* advanced animation system
-* multi-theme palette selector
-* font pairing system
-* design token engine
+- marketing landing page
+- complex dashboard analytics
+- chart system
+- theme switcher
+- advanced animation system
+- multi-theme palette selector
+- font pairing system
+- design token engine
 
 ## General Layout Rules
 
@@ -58,21 +58,21 @@ Use simple layouts.
 
 Prefer:
 
-* clear page title
-* short description when useful
-* primary content area
-* obvious primary action
-* consistent spacing
-* readable width constraints
+- clear page title
+- short description when useful
+- primary content area
+- obvious primary action
+- consistent spacing
+- readable width constraints
 
 Avoid:
 
-* crowded screens
-* too many cards
-* nested panels without purpose
-* decorative sections that do not support the task
-* excessive shadows or borders
-* unnecessary gradients
+- crowded screens
+- too many cards
+- nested panels without purpose
+- decorative sections that do not support the task
+- excessive shadows or borders
+- unnecessary gradients
 
 For admin pages, prefer a practical dashboard layout.
 
@@ -84,10 +84,10 @@ Use consistent spacing.
 
 Recommended Tailwind spacing:
 
-* page padding: `p-4`, `p-6`, or responsive equivalent
-* section gap: `gap-4` or `gap-6`
-* card padding: `p-4` or `p-6`
-* button/form spacing: `gap-2` or `gap-3`
+- page padding: `p-4`, `p-6`, or responsive equivalent
+- section gap: `gap-4` or `gap-6`
+- card padding: `p-4` or `p-6`
+- button/form spacing: `gap-2` or `gap-3`
 
 Do not use random spacing values unless required.
 
@@ -101,10 +101,10 @@ Do not introduce new web fonts unless explicitly requested.
 
 Use clear hierarchy:
 
-* page title: visually strongest
-* section title: secondary
-* body text: readable
-* metadata: smaller and muted
+- page title: visually strongest
+- section title: secondary
+- body text: readable
+- metadata: smaller and muted
 
 Avoid very small text for important content.
 
@@ -120,11 +120,11 @@ Do not introduce a large custom palette.
 
 Use color with restraint:
 
-* primary actions should be clear
-* destructive actions should be visually distinct
-* error states should be readable
-* disabled states should be obvious
-* metadata can use muted color
+- primary actions should be clear
+- destructive actions should be visually distinct
+- error states should be readable
+- disabled states should be obvious
+- metadata can use muted color
 
 Do not rely on color alone to communicate meaning.
 
@@ -134,17 +134,17 @@ For example, an error should include readable text, not just a red border.
 
 Use Ant Design for practical UI:
 
-* `Table`
-* `Form`
-* `Input`
-* `Button`
-* `Modal`
-* `Popconfirm`
-* `Spin`
-* `Empty`
-* `Alert`
-* `message` or notification if already used
-* layout primitives when helpful
+- `Table`
+- `Form`
+- `Input`
+- `Button`
+- `Modal`
+- `Popconfirm`
+- `Spin`
+- `Empty`
+- `Alert`
+- `message` or notification if already used
+- layout primitives when helpful
 
 Do not over-customize Ant Design.
 
@@ -158,16 +158,16 @@ Prefer Ant Design table behavior over hand-built tables for admin screens.
 
 Use Tailwind for layout and minor visual adjustments:
 
-* flex
-* grid
-* spacing
-* width
-* height
-* borders
-* background
-* rounded corners
-* responsive behavior
-* chat bubble alignment
+- flex
+- grid
+- spacing
+- width
+- height
+- borders
+- background
+- rounded corners
+- responsive behavior
+- chat bubble alignment
 
 Keep Tailwind classes readable.
 
@@ -181,13 +181,13 @@ The chat screen must make the conversation easy to follow.
 
 Required behavior:
 
-* User messages align separately from assistant messages.
-* Assistant streamed response is visible while being generated.
-* Partial response should update progressively.
-* Input should be easy to find.
-* Send action should be obvious.
-* Loading or typing state should appear while waiting.
-* Error state should be readable.
+- User messages align separately from assistant messages.
+- Assistant streamed response is visible while being generated.
+- Partial response should update progressively.
+- Input should be easy to find.
+- Send action should be obvious.
+- Loading or typing state should appear while waiting.
+- Error state should be readable.
 
 Do not render one assistant bubble per token.
 
@@ -203,23 +203,23 @@ Chat bubbles should be readable.
 
 User bubble:
 
-* visually distinct from assistant bubble
-* aligned consistently
-* should not take the full width on desktop unless content requires it
+- visually distinct from assistant bubble
+- aligned consistently
+- should not take the full width on desktop unless content requires it
 
 Assistant bubble:
 
-* readable text width
-* supports progressive text append
-* should not flicker during streaming
-* should preserve whitespace reasonably
+- readable text width
+- supports progressive text append
+- should not flicker during streaming
+- should preserve whitespace reasonably
 
 Both:
 
-* handle long messages
-* wrap text correctly
-* keep chronological order
-* avoid layout shift where possible
+- handle long messages
+- wrap text correctly
+- keep chronological order
+- avoid layout shift where possible
 
 ## Chat Input Rules
 
@@ -227,12 +227,12 @@ The chat input must support fast usage.
 
 Required:
 
-* prevent empty submit
-* trim message before sending
-* send by button
-* support Enter-to-send if existing behavior supports it
-* disable or guard while streaming to prevent duplicate submits
-* show loading state on send button if appropriate
+- prevent empty submit
+- trim message before sending
+- send by button
+- support Enter-to-send if existing behavior supports it
+- disable or guard while streaming to prevent duplicate submits
+- show loading state on send button if appropriate
 
 Do not let users submit multiple messages while one stream is still unresolved unless the hook is explicitly designed to queue messages.
 
@@ -242,29 +242,29 @@ Streaming is the central interaction of the chat feature.
 
 The UX must show:
 
-* immediate user message
-* assistant placeholder or typing indicator
-* progressive assistant content
-* completion when stream ends
-* clear error if stream fails
+- immediate user message
+- assistant placeholder or typing indicator
+- progressive assistant content
+- completion when stream ends
+- clear error if stream fails
 
 When first token arrives:
 
-* typing indicator can be replaced by assistant text
-* loading state should continue until done
+- typing indicator can be replaced by assistant text
+- loading state should continue until done
 
 When done event arrives:
 
-* stop streaming state
-* re-enable input
-* keep final assistant message visible
+- stop streaming state
+- re-enable input
+- keep final assistant message visible
 
 On stream error:
 
-* stop streaming state
-* show readable error
-* do not delete the user's message
-* preserve partial assistant content if it exists
+- stop streaming state
+- show readable error
+- do not delete the user's message
+- preserve partial assistant content if it exists
 
 ## Admin Conversations UI Rules
 
@@ -272,21 +272,21 @@ The conversation list must be scan-friendly.
 
 Show key fields:
 
-* session id
-* last message
-* message count
-* created or updated time
-* action to open detail
+- session id
+- last message
+- message count
+- created or updated time
+- action to open detail
 
 Use table layout unless the existing design uses cards.
 
 Handle:
 
-* loading state
-* empty state
-* error state
-* long session ids
-* long messages
+- loading state
+- empty state
+- error state
+- long session ids
+- long messages
 
 Long text should be truncated or wrapped in a controlled way.
 
@@ -298,11 +298,11 @@ Conversation detail must show full message history clearly.
 
 Required:
 
-* session identifier visible
-* messages ordered chronologically
-* user and assistant roles visually distinguishable
-* timestamps if available
-* back navigation to conversation list
+- session identifier visible
+- messages ordered chronologically
+- user and assistant roles visually distinguishable
+- timestamps if available
+- back navigation to conversation list
 
 Do not mix messages from different sessions.
 
@@ -314,19 +314,19 @@ The Knowledge Base page must prioritize CRUD efficiency.
 
 Required:
 
-* list all Q&A entries
-* create new entry
-* edit existing entry
-* delete entry with confirmation
-* show loading state
-* show empty state
-* show error state
+- list all Q&A entries
+- create new entry
+- edit existing entry
+- delete entry with confirmation
+- show loading state
+- show empty state
+- show error state
 
 Form fields:
 
-* question
-* answer
-* category if supported
+- question
+- answer
+- category if supported
 
 Question and answer are required.
 
@@ -340,25 +340,25 @@ The form must be simple.
 
 Required:
 
-* clear labels
-* required validation for question
-* required validation for answer
-* trim input
-* submit loading state
-* cancel action
-* readable error message on API failure
+- clear labels
+- required validation for question
+- required validation for answer
+- trim input
+- submit loading state
+- cancel action
+- readable error message on API failure
 
 After successful create or update:
 
-* close modal or exit edit mode
-* refresh list or update local state
-* clear stale form state
+- close modal or exit edit mode
+- refresh list or update local state
+- clear stale form state
 
 For delete:
 
-* use confirmation
-* do not delete immediately without user confirmation
-* refresh list or remove item from local state after success
+- use confirmation
+- do not delete immediately without user confirmation
+- refresh list or remove item from local state after success
 
 ## Loading State Rules
 
@@ -366,17 +366,17 @@ Every async screen must have loading state.
 
 For page-level loading:
 
-* use spinner or skeleton only if already used
-* avoid blank screens
+- use spinner or skeleton only if already used
+- avoid blank screens
 
 For button-level loading:
 
-* show submit in progress
-* prevent duplicate submits
+- show submit in progress
+- prevent duplicate submits
 
 For chat streaming:
 
-* distinguish between waiting for first token and actively rendering streamed content when possible
+- distinguish between waiting for first token and actively rendering streamed content when possible
 
 Do not leave loading state stuck after error.
 
@@ -386,16 +386,16 @@ Every list page must handle empty data.
 
 Admin conversations empty state:
 
-* indicate that no conversations exist yet
+- indicate that no conversations exist yet
 
 Knowledge Base empty state:
 
-* indicate no Q&A entries exist yet
-* keep create action available
+- indicate no Q&A entries exist yet
+- keep create action available
 
 Chat empty state:
 
-* show a simple starting point or neutral blank conversation area
+- show a simple starting point or neutral blank conversation area
 
 Do not show confusing empty tables without explanation.
 
@@ -407,10 +407,10 @@ Use backend `message` when available.
 
 Fallback examples:
 
-* “Failed to load conversations.”
-* “Failed to load Knowledge Base.”
-* “Failed to send message.”
-* “Streaming connection was interrupted.”
+- “Failed to load conversations.”
+- “Failed to load Knowledge Base.”
+- “Failed to send message.”
+- “Streaming connection was interrupted.”
 
 Do not expose stack traces.
 
@@ -422,24 +422,24 @@ Do not silently fail.
 
 The frontend must remain usable on:
 
-* mobile width around 375px
-* tablet width around 768px
-* desktop width around 1024px and above
+- mobile width around 375px
+- tablet width around 768px
+- desktop width around 1024px and above
 
 Minimum expectations:
 
-* chat screen works on mobile
-* input remains accessible
-* messages wrap correctly
-* admin tables do not break layout
-* modals fit smaller screens
-* admin navigation does not block content
+- chat screen works on mobile
+- input remains accessible
+- messages wrap correctly
+- admin tables do not break layout
+- modals fit smaller screens
+- admin navigation does not block content
 
 For admin tables on small screens:
 
-* allow horizontal scroll if needed
-* reduce non-essential columns if already supported
-* avoid forcing unreadable compressed columns
+- allow horizontal scroll if needed
+- reduce non-essential columns if already supported
+- avoid forcing unreadable compressed columns
 
 Do not spend excessive time on perfect responsive polish in the 24-hour scope.
 
@@ -449,12 +449,12 @@ Interactive elements must be understandable and keyboard-accessible.
 
 Required:
 
-* buttons have clear labels
-* form fields have labels
-* focus state remains visible
-* clickable icons have accessible labels if used without text
-* error messages are text-based
-* disabled state is visually clear
+- buttons have clear labels
+- form fields have labels
+- focus state remains visible
+- clickable icons have accessible labels if used without text
+- error messages are text-based
+- disabled state is visually clear
 
 Do not remove outlines unless a clear replacement focus style exists.
 
@@ -466,16 +466,16 @@ User actions should have predictable feedback.
 
 For create/update/delete:
 
-* show loading or disabled submit while request is running
-* show success or updated data after completion
-* show confirmation before delete
-* show error if failed
+- show loading or disabled submit while request is running
+- show success or updated data after completion
+- show confirmation before delete
+- show error if failed
 
 For chat send:
 
-* immediate user message feedback
-* visible stream progress
-* guarded input while streaming
+- immediate user message feedback
+- visible stream progress
+- guarded input while streaming
 
 Do not trigger destructive actions without confirmation.
 
@@ -487,17 +487,17 @@ Use consistent naming and layout across admin pages.
 
 For admin pages:
 
-* consistent page header
-* consistent table style
-* consistent action button placement
-* consistent modal form style
-* consistent loading/error display
+- consistent page header
+- consistent table style
+- consistent action button placement
+- consistent modal form style
+- consistent loading/error display
 
 For chat:
 
-* consistent bubble spacing
-* consistent role alignment
-* consistent input placement
+- consistent bubble spacing
+- consistent role alignment
+- consistent input placement
 
 Avoid one-off styling unless required by the feature.
 
@@ -507,17 +507,17 @@ Keep animation minimal.
 
 Acceptable:
 
-* typing dots if already implemented
-* simple hover states
-* standard Ant Design transitions
-* basic loading spinner
+- typing dots if already implemented
+- simple hover states
+- standard Ant Design transitions
+- basic loading spinner
 
 Avoid:
 
-* large page transitions
-* complex motion libraries
-* animated backgrounds
-* decorative micro-interactions that do not improve clarity
+- large page transitions
+- complex motion libraries
+- animated backgrounds
+- decorative micro-interactions that do not improve clarity
 
 Do not add Framer Motion or similar libraries unless explicitly requested.
 
@@ -529,18 +529,18 @@ Do not invent missing values.
 
 If a field is missing:
 
-* show a safe fallback such as “N/A”
-* or hide optional metadata if not required
+- show a safe fallback such as “N/A”
+- or hide optional metadata if not required
 
 For timestamps:
 
-* use readable format if existing utility exists
-* otherwise keep ISO or simple local format
+- use readable format if existing utility exists
+- otherwise keep ISO or simple local format
 
 For long text:
 
-* truncate in list view
-* show full content in detail view or modal
+- truncate in list view
+- show full content in detail view or modal
 
 ## Copywriting Rules
 
@@ -554,14 +554,14 @@ Avoid decorative copy.
 
 Prefer clear labels:
 
-* “Send”
-* “Create”
-* “Edit”
-* “Delete”
-* “Cancel”
-* “Save”
-* “Load conversations failed”
-* “No conversations yet”
+- “Send”
+- “Create”
+- “Edit”
+- “Delete”
+- “Cancel”
+- “Save”
+- “Load conversations failed”
+- “No conversations yet”
 
 ## Small Project Constraint
 
@@ -583,14 +583,14 @@ Build only what supports the acceptance criteria.
 
 A UI change is acceptable when:
 
-* The target screen works.
-* Main action is clear.
-* Loading state exists.
-* Empty state exists where needed.
-* Error state exists.
-* Form validation works where needed.
-* Layout is readable on desktop.
-* Layout is usable on mobile.
-* Chat streaming renders progressively if chat is affected.
-* No unrelated visual changes were introduced.
-* Lint/build status is known.
+- The target screen works.
+- Main action is clear.
+- Loading state exists.
+- Empty state exists where needed.
+- Error state exists.
+- Form validation works where needed.
+- Layout is readable on desktop.
+- Layout is usable on mobile.
+- Chat streaming renders progressively if chat is affected.
+- No unrelated visual changes were introduced.
+- Lint/build status is known.

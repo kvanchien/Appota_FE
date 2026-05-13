@@ -6,19 +6,19 @@ This file defines the feature-specific context, rules, and checklist for the adm
 
 The Frontend Agent must read this file before working on any task related to:
 
-* Knowledge Base list
-* Q&A create form
-* Q&A edit form
-* Q&A delete action
-* `GET /api/knowledge`
-* `POST /api/knowledge`
-* `PUT /api/knowledge/:id`
-* `DELETE /api/knowledge/:id`
-* `knowledgeApi.js`
-* `useKnowledge.js`
-* `KnowledgePage.jsx`
-* `KnowledgeTable.jsx`
-* `KnowledgeModal.jsx`
+- Knowledge Base list
+- Q&A create form
+- Q&A edit form
+- Q&A delete action
+- `GET /api/knowledge`
+- `POST /api/knowledge`
+- `PUT /api/knowledge/:id`
+- `DELETE /api/knowledge/:id`
+- `knowledgeApi.js`
+- `useKnowledge.js`
+- `KnowledgePage.jsx`
+- `KnowledgeTable.jsx`
+- `KnowledgeModal.jsx`
 
 ## Feature Summary
 
@@ -28,13 +28,13 @@ The backend uses these Q&A pairs when generating chatbot responses.
 
 The frontend is responsible for:
 
-* listing Knowledge Base entries
-* creating a new Q&A pair
-* editing an existing Q&A pair
-* deleting an existing Q&A pair
-* validating required fields before submit
-* showing loading, empty, and error states
-* keeping UI state synchronized after mutations
+- listing Knowledge Base entries
+- creating a new Q&A pair
+- editing an existing Q&A pair
+- deleting an existing Q&A pair
+- validating required fields before submit
+- showing loading, empty, and error states
+- keeping UI state synchronized after mutations
 
 Authentication is out of scope for the 24-hour version.
 
@@ -44,11 +44,11 @@ Do not add login, permission, role checking, or route protection unless explicit
 
 The admin should be able to:
 
-* view all Q&A entries
-* add a new Q&A pair quickly
-* edit outdated answer content
-* delete invalid or duplicated entries
-* see clear feedback when an operation fails
+- view all Q&A entries
+- add a new Q&A pair quickly
+- edit outdated answer content
+- delete invalid or duplicated entries
+- see clear feedback when an operation fails
 
 ## Backend Contract
 
@@ -89,7 +89,7 @@ Expected successful response shape:
 {
 "success": true,
 "data": {
-"_id": "MongoDB ObjectId string",
+"\_id": "MongoDB ObjectId string",
 "question": "question text",
 "answer": "answer text",
 "category": "optional category",
@@ -137,19 +137,19 @@ The frontend must show readable errors for failed list, create, update, or delet
 
 Required:
 
-* `question`
-* `answer`
+- `question`
+- `answer`
 
 Optional:
 
-* `category`
+- `category`
 
 Validation rules:
 
-* `question` must not be empty.
-* `answer` must not be empty.
-* input should be trimmed before submit.
-* `category` can be omitted or empty unless backend requires otherwise.
+- `question` must not be empty.
+- `answer` must not be empty.
+- input should be trimmed before submit.
+- `category` can be omitted or empty unless backend requires otherwise.
 
 Do not submit invalid form data to backend if the frontend can detect it.
 
@@ -183,13 +183,13 @@ Only modify files required by the current task.
 
 Expected responsibilities:
 
-* fetch Knowledge Base list through hook or API wrapper
-* manage page-level loading state
-* manage page-level error state
-* provide page title/context
-* provide create action
-* pass data and actions to table/modal components
-* refresh or update local state after create, update, or delete
+- fetch Knowledge Base list through hook or API wrapper
+- manage page-level loading state
+- manage page-level error state
+- provide page title/context
+- provide create action
+- pass data and actions to table/modal components
+- refresh or update local state after create, update, or delete
 
 Do not put all table, modal, form, and API behavior into one large page if reusable components already exist.
 
@@ -199,25 +199,25 @@ Do not put all table, modal, form, and API behavior into one large page if reusa
 
 Expected columns:
 
-* question
-* answer
-* category
-* updated time or created time if available
-* actions
+- question
+- answer
+- category
+- updated time or created time if available
+- actions
 
 Actions:
 
-* edit
-* delete
+- edit
+- delete
 
 Table must handle:
 
-* loading state if passed from page
-* empty data
-* long question text
-* long answer text
-* missing category
-* delete confirmation
+- loading state if passed from page
+- empty data
+- long question text
+- long answer text
+- missing category
+- delete confirmation
 
 Do not delete immediately without confirmation.
 
@@ -227,20 +227,20 @@ Do not delete immediately without confirmation.
 
 Expected fields:
 
-* question
-* answer
-* category
+- question
+- answer
+- category
 
 Expected behavior:
 
-* show empty form for create
-* prefill form for edit
-* validate required fields
-* trim values before submit
-* show submit loading
-* allow cancel
-* reset stale form state when closed or switched between create/edit
-* keep form behavior predictable
+- show empty form for create
+- prefill form for edit
+- validate required fields
+- trim values before submit
+- show submit loading
+- allow cancel
+- reset stale form state when closed or switched between create/edit
+- keep form behavior predictable
 
 Do not close modal before the API request succeeds unless explicitly using optimistic UI with rollback.
 
@@ -250,14 +250,14 @@ Do not close modal before the API request succeeds unless explicitly using optim
 
 Expected responsibilities:
 
-* load entries
-* create entry
-* update entry
-* delete entry
-* manage loading state
-* manage mutation state if needed
-* manage error state
-* expose refresh function if needed
+- load entries
+- create entry
+- update entry
+- delete entry
+- manage loading state
+- manage mutation state if needed
+- manage error state
+- expose refresh function if needed
 
 Do not silently swallow API errors.
 
@@ -271,10 +271,10 @@ Do not duplicate the same fetch/mutation logic across multiple components.
 
 Expected functions may include:
 
-* get knowledge entries
-* create knowledge entry
-* update knowledge entry
-* delete knowledge entry
+- get knowledge entries
+- create knowledge entry
+- update knowledge entry
+- delete knowledge entry
 
 Use existing base API configuration.
 
@@ -351,38 +351,38 @@ Do not generate fake `_id` for real backend data.
 
 Question:
 
-* show enough text for admin to identify the entry
-* wrap or truncate safely in table
+- show enough text for admin to identify the entry
+- wrap or truncate safely in table
 
 Answer:
 
-* may be longer than question
-* truncate in table if needed
-* show full answer in edit modal or detail area if present
+- may be longer than question
+- truncate in table if needed
+- show full answer in edit modal or detail area if present
 
 Category:
 
-* show category when available
-* show neutral fallback when missing if table requires a value
-* do not make category required unless backend requires it
+- show category when available
+- show neutral fallback when missing if table requires a value
+- do not make category required unless backend requires it
 
 Dates:
 
-* show readable date if existing formatter exists
-* otherwise show simple local date/time or raw ISO safely
+- show readable date if existing formatter exists
+- otherwise show simple local date/time or raw ISO safely
 
 ## Loading State Rules
 
 List loading:
 
-* show loading indicator while fetching entries
-* do not show blank page without explanation
+- show loading indicator while fetching entries
+- do not show blank page without explanation
 
 Mutation loading:
 
-* create/update/delete should prevent duplicate submit
-* submit button should show loading when possible
-* delete action should be guarded while request is running if practical
+- create/update/delete should prevent duplicate submit
+- submit button should show loading when possible
+- delete action should be guarded while request is running if practical
 
 Do not leave loading state stuck after failure.
 
@@ -390,9 +390,9 @@ Do not leave loading state stuck after failure.
 
 If Knowledge Base has no entries:
 
-* show a clear empty state
-* keep create action available
-* do not show a confusing blank table
+- show a clear empty state
+- keep create action available
+- do not show a confusing blank table
 
 Example meaning:
 
@@ -404,10 +404,10 @@ Use backend `message` when available.
 
 Fallback messages:
 
-* “Failed to load Knowledge Base.”
-* “Failed to create Knowledge Base entry.”
-* “Failed to update Knowledge Base entry.”
-* “Failed to delete Knowledge Base entry.”
+- “Failed to load Knowledge Base.”
+- “Failed to create Knowledge Base entry.”
+- “Failed to update Knowledge Base entry.”
+- “Failed to delete Knowledge Base entry.”
 
 Do not expose stack traces.
 
@@ -421,22 +421,22 @@ The Knowledge Base screen should prioritize CRUD efficiency.
 
 Prefer:
 
-* clear page title
-* visible create button
-* readable table
-* concise action buttons
-* confirmation before delete
-* simple modal form
-* clear validation messages
+- clear page title
+- visible create button
+- readable table
+- concise action buttons
+- confirmation before delete
+- simple modal form
+- clear validation messages
 
 Avoid:
 
-* complex filters unless requested
-* advanced search unless requested
-* bulk actions unless requested
-* import/export unless requested
-* analytics or charts
-* over-designed card layouts
+- complex filters unless requested
+- advanced search unless requested
+- bulk actions unless requested
+- import/export unless requested
+- analytics or charts
+- over-designed card layouts
 
 ## Form UX Rules
 
@@ -444,42 +444,42 @@ Forms must be predictable.
 
 Required:
 
-* labels for question and answer
-* required validation for question
-* required validation for answer
-* category as optional
-* clear submit and cancel actions
-* loading state on submit
-* readable error on failure
+- labels for question and answer
+- required validation for question
+- required validation for answer
+- category as optional
+- clear submit and cancel actions
+- loading state on submit
+- readable error on failure
 
 Question field:
 
-* can be single-line input or textarea depending on existing design
-* should not accept whitespace-only value
+- can be single-line input or textarea depending on existing design
+- should not accept whitespace-only value
 
 Answer field:
 
-* should usually be textarea
-* should not accept whitespace-only value
+- should usually be textarea
+- should not accept whitespace-only value
 
 Category field:
 
-* can be simple text input
-* do not force predefined categories unless task requests it
+- can be simple text input
+- do not force predefined categories unless task requests it
 
 ## State Synchronization Rules
 
 After successful create:
 
-* append new item to list or refresh list
+- append new item to list or refresh list
 
 After successful update:
 
-* update item in list or refresh list
+- update item in list or refresh list
 
 After successful delete:
 
-* remove item from list or refresh list
+- remove item from list or refresh list
 
 Choose the approach consistent with existing code.
 
@@ -491,12 +491,12 @@ Do not over-cache Knowledge Base entries because backend changes should affect s
 
 This feature depends on backend behavior:
 
-* `GET /api/knowledge` returns an array.
-* `POST /api/knowledge` creates an entry.
-* `PUT /api/knowledge/:id` updates an entry.
-* `DELETE /api/knowledge/:id` deletes an entry.
-* required fields are `question` and `answer`.
-* response format is `{ success, data, message }`.
+- `GET /api/knowledge` returns an array.
+- `POST /api/knowledge` creates an entry.
+- `PUT /api/knowledge/:id` updates an entry.
+- `DELETE /api/knowledge/:id` deletes an entry.
+- required fields are `question` and `answer`.
+- response format is `{ success, data, message }`.
 
 If backend contract differs, record the mismatch in:
 
@@ -508,77 +508,77 @@ Do not silently change frontend expectations without documenting the API mismatc
 
 Do not implement:
 
-* authentication
-* role-based admin permissions
-* bulk import
-* bulk delete
-* CSV export
-* semantic search
-* vector search
-* AI-powered KB generation
-* category taxonomy manager
-* advanced filters unless requested
-* pagination unless backend supports it or task requests it
-* optimistic delete without rollback
-* new UI library
-* new state management library
+- authentication
+- role-based admin permissions
+- bulk import
+- bulk delete
+- CSV export
+- semantic search
+- vector search
+- AI-powered KB generation
+- category taxonomy manager
+- advanced filters unless requested
+- pagination unless backend supports it or task requests it
+- optimistic delete without rollback
+- new UI library
+- new state management library
 
 ## Manual Test Checklist
 
 For Knowledge Base list:
 
-* [ ] Open `/admin/knowledge`.
-* [ ] Confirm page renders.
-* [ ] Confirm loading state appears during fetch.
-* [ ] Confirm entries display when API returns data.
-* [ ] Confirm empty state displays when API returns empty list.
-* [ ] Confirm error state displays when API fails.
-* [ ] Confirm long question and answer text do not break layout.
+- [ ] Open `/admin/knowledge`.
+- [ ] Confirm page renders.
+- [ ] Confirm loading state appears during fetch.
+- [ ] Confirm entries display when API returns data.
+- [ ] Confirm empty state displays when API returns empty list.
+- [ ] Confirm error state displays when API fails.
+- [ ] Confirm long question and answer text do not break layout.
 
 For create:
 
-* [ ] Open create form.
-* [ ] Submit empty form and confirm validation.
-* [ ] Submit whitespace-only question and confirm validation.
-* [ ] Submit whitespace-only answer and confirm validation.
-* [ ] Create valid entry.
-* [ ] Confirm list updates.
-* [ ] Confirm form resets or closes after success.
-* [ ] Confirm failed create shows error and preserves values.
+- [ ] Open create form.
+- [ ] Submit empty form and confirm validation.
+- [ ] Submit whitespace-only question and confirm validation.
+- [ ] Submit whitespace-only answer and confirm validation.
+- [ ] Create valid entry.
+- [ ] Confirm list updates.
+- [ ] Confirm form resets or closes after success.
+- [ ] Confirm failed create shows error and preserves values.
 
 For edit:
 
-* [ ] Open edit form.
-* [ ] Confirm existing values are prefilled.
-* [ ] Submit invalid values and confirm validation.
-* [ ] Submit valid update.
-* [ ] Confirm list updates.
-* [ ] Confirm failed update shows error and preserves values.
+- [ ] Open edit form.
+- [ ] Confirm existing values are prefilled.
+- [ ] Submit invalid values and confirm validation.
+- [ ] Submit valid update.
+- [ ] Confirm list updates.
+- [ ] Confirm failed update shows error and preserves values.
 
 For delete:
 
-* [ ] Click delete.
-* [ ] Confirm confirmation appears.
-* [ ] Cancel delete and confirm item remains.
-* [ ] Confirm delete.
-* [ ] Confirm item is removed or list refreshes.
-* [ ] Confirm failed delete shows error and item remains visible.
+- [ ] Click delete.
+- [ ] Confirm confirmation appears.
+- [ ] Cancel delete and confirm item remains.
+- [ ] Confirm delete.
+- [ ] Confirm item is removed or list refreshes.
+- [ ] Confirm failed delete shows error and item remains visible.
 
 ## Completion Checklist
 
 An admin Knowledge Base task is complete when:
 
-* [ ] Current plan was updated before coding.
-* [ ] Required fields are validated.
-* [ ] List behavior works if affected.
-* [ ] Create behavior works if affected.
-* [ ] Edit behavior works if affected.
-* [ ] Delete behavior works if affected.
-* [ ] Loading state is handled.
-* [ ] Empty state is handled.
-* [ ] Error state is handled.
-* [ ] `_id` is used for update/delete.
-* [ ] No authentication was added unless requested.
-* [ ] No unrelated advanced KB feature was added.
-* [ ] Validation status is known.
-* [ ] Handoff was updated after implementation.
+- [ ] Current plan was updated before coding.
+- [ ] Required fields are validated.
+- [ ] List behavior works if affected.
+- [ ] Create behavior works if affected.
+- [ ] Edit behavior works if affected.
+- [ ] Delete behavior works if affected.
+- [ ] Loading state is handled.
+- [ ] Empty state is handled.
+- [ ] Error state is handled.
+- [ ] `_id` is used for update/delete.
+- [ ] No authentication was added unless requested.
+- [ ] No unrelated advanced KB feature was added.
+- [ ] Validation status is known.
+- [ ] Handoff was updated after implementation.

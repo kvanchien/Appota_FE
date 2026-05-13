@@ -8,13 +8,13 @@ The goal is to help an AI coding agent or developer work safely and consistently
 
 The agent must use these files to:
 
-* understand the frontend project context
-* plan before coding
-* keep implementation scope narrow
-* preserve API contracts
-* preserve chat streaming behavior
-* validate changes
-* record handoff notes after each task
+- understand the frontend project context
+- plan before coding
+- keep implementation scope narrow
+- preserve API contracts
+- preserve chat streaming behavior
+- validate changes
+- record handoff notes after each task
 
 ## Project Scope
 
@@ -30,25 +30,25 @@ Backend work belongs to a separate backend agent inside the backend project.
 
 The frontend includes:
 
-* Player-facing chat screen
-* Streaming chatbot response rendering
-* Admin conversation list
-* Admin conversation detail
-* Admin Knowledge Base CRUD
-* API integration with AppotaBackend
-* Basic responsive and usable UI
+- Player-facing chat screen
+- Streaming chatbot response rendering
+- Admin conversation list
+- Admin conversation detail
+- Admin Knowledge Base CRUD
+- API integration with AppotaBackend
+- Basic responsive and usable UI
 
 The frontend does not include:
 
-* backend controllers
-* backend services
-* MongoDB schemas
-* Grok API server integration
-* authentication
-* role-based permission
-* advanced analytics
-* vector search
-* model fine-tuning
+- backend controllers
+- backend services
+- MongoDB schemas
+- Grok API server integration
+- authentication
+- role-based permission
+- advanced analytics
+- vector search
+- model fine-tuning
 
 ## Required Folder Structure
 
@@ -57,17 +57,17 @@ Expected agent folder structure:
 Appota_FE/agent/
 ├── README.md
 ├── frontend/
-│   ├── context.md
-│   ├── skill.md
-│   ├── ui-ux-rules.md
-│   ├── checklist.md
-│   ├── current-plan.md
-│   └── handoff.md
+│ ├── context.md
+│ ├── skill.md
+│ ├── ui-ux-rules.md
+│ ├── checklist.md
+│ ├── current-plan.md
+│ └── handoff.md
 ├── features/
-│   ├── chat.md
-│   ├── admin-conversations.md
-│   ├── admin-knowledge.md
-│   └── api-integration.md
+│ ├── chat.md
+│ ├── admin-conversations.md
+│ ├── admin-knowledge.md
+│ └── api-integration.md
 └── templates/
 ├── task-plan-template.md
 └── handoff-template.md
@@ -123,18 +123,18 @@ The current plan must be generated from the provided task prompt.
 
 It must include:
 
-* current task
-* task source prompt
-* affected area
-* problem summary
-* expected behavior
-* scope
-* out-of-scope items
-* files to inspect
-* files likely to modify
-* implementation steps
-* validation plan
-* backend/API dependencies
+- current task
+- task source prompt
+- affected area
+- problem summary
+- expected behavior
+- scope
+- out-of-scope items
+- files to inspect
+- files likely to modify
+- implementation steps
+- validation plan
+- backend/API dependencies
 
 The agent must not code before updating `current-plan.md`.
 
@@ -216,19 +216,19 @@ After implementation, update:
 
 The handoff must include:
 
-* latest task summary
-* task source prompt
-* affected area
-* files changed
-* files inspected but not changed
-* behavior implemented
-* validation commands run
-* validation result
-* manual testing
-* known issues
-* backend/API dependencies
-* suggested commit message
-* suggested next step
+- latest task summary
+- task source prompt
+- affected area
+- files changed
+- files inspected but not changed
+- behavior implemented
+- validation commands run
+- validation result
+- manual testing
+- known issues
+- backend/API dependencies
+- suggested commit message
+- suggested next step
 
 ## Critical Chat Rule
 
@@ -236,11 +236,11 @@ The chat feature is streaming.
 
 It is not:
 
-* webhook
-* WebSocket
-* polling
-* normal REST JSON
-* fake typewriter after full response
+- webhook
+- WebSocket
+- polling
+- normal REST JSON
+- fake typewriter after full response
 
 The frontend sends:
 
@@ -292,24 +292,24 @@ The frontend must keep standard JSON API handling and chat streaming handling se
 
 Use the existing stack:
 
-* React 18
-* Vite 5
-* JavaScript
-* Tailwind CSS 3
-* Ant Design 5
-* React Router DOM v6
-* Fetch API
+- React 18
+- Vite 5
+- JavaScript
+- Tailwind CSS 3
+- Ant Design 5
+- React Router DOM v6
+- Fetch API
 
 Do not introduce:
 
-* TypeScript migration
-* new frontend framework
-* new state management library
-* new UI library
-* WebSocket client
-* polling framework
-* authentication layer
-* advanced design system
+- TypeScript migration
+- new frontend framework
+- new state management library
+- new UI library
+- WebSocket client
+- polling framework
+- authentication layer
+- advanced design system
 
 unless explicitly requested.
 
@@ -323,11 +323,11 @@ Feature file:
 
 Main source areas:
 
-* `src/pages/ChatPage.jsx`
-* `src/hooks/useChat.js`
-* `src/api/chatApi.js`
-* `src/utils/sseParser.js`
-* `src/components/chat/`
+- `src/pages/ChatPage.jsx`
+- `src/hooks/useChat.js`
+- `src/api/chatApi.js`
+- `src/utils/sseParser.js`
+- `src/components/chat/`
 
 Main risk:
 
@@ -341,10 +341,10 @@ Feature file:
 
 Main source areas:
 
-* `src/pages/admin/ConversationsPage.jsx`
-* `src/pages/admin/ConversationDetailPage.jsx`
-* `src/components/admin/ConversationTable.jsx`
-* `src/api/conversationApi.js`
+- `src/pages/admin/ConversationsPage.jsx`
+- `src/pages/admin/ConversationDetailPage.jsx`
+- `src/components/admin/ConversationTable.jsx`
+- `src/api/conversationApi.js`
 
 Main risk:
 
@@ -358,11 +358,11 @@ Feature file:
 
 Main source areas:
 
-* `src/pages/admin/KnowledgePage.jsx`
-* `src/components/admin/KnowledgeTable.jsx`
-* `src/components/admin/KnowledgeModal.jsx`
-* `src/hooks/useKnowledge.js`
-* `src/api/knowledgeApi.js`
+- `src/pages/admin/KnowledgePage.jsx`
+- `src/components/admin/KnowledgeTable.jsx`
+- `src/components/admin/KnowledgeModal.jsx`
+- `src/hooks/useKnowledge.js`
+- `src/api/knowledgeApi.js`
 
 Main risk:
 
@@ -376,11 +376,11 @@ Feature file:
 
 Main source areas:
 
-* `src/api/baseApi.js`
-* `src/api/chatApi.js`
-* `src/api/conversationApi.js`
-* `src/api/knowledgeApi.js`
-* `src/utils/sseParser.js`
+- `src/api/baseApi.js`
+- `src/api/chatApi.js`
+- `src/api/conversationApi.js`
+- `src/api/knowledgeApi.js`
+- `src/utils/sseParser.js`
 
 Main risk:
 
@@ -394,10 +394,10 @@ Rules file:
 
 Main source areas:
 
-* visible pages
-* reusable components
-* layout components
-* form/table/chat UI
+- visible pages
+- reusable components
+- layout components
+- form/table/chat UI
 
 Main risk:
 
@@ -409,56 +409,56 @@ Do not over-engineer visual design for the 24-hour project.
 
 For a bug fix:
 
-* reproduce or inspect the issue
-* identify smallest affected area
-* modify only necessary files
-* validate affected flow
-* record test result
+- reproduce or inspect the issue
+- identify smallest affected area
+- modify only necessary files
+- validate affected flow
+- record test result
 
 ## Feature Task
 
 For a feature:
 
-* confirm it fits acceptance criteria
-* check relevant API contract
-* implement minimal working behavior
-* include loading/error states
-* validate route or flow
-* record handoff
+- confirm it fits acceptance criteria
+- check relevant API contract
+- implement minimal working behavior
+- include loading/error states
+- validate route or flow
+- record handoff
 
 ## UI Task
 
 For UI polish:
 
-* preserve existing behavior
-* avoid unrelated redesign
-* check responsive behavior
-* check accessibility basics
-* validate lint/build
+- preserve existing behavior
+- avoid unrelated redesign
+- check responsive behavior
+- check accessibility basics
+- validate lint/build
 
 ## Integration Task
 
 For FE-BE integration:
 
-* confirm endpoint
-* confirm request shape
-* confirm response shape
-* handle failure path
-* record backend mismatch if found
-* do not silently change contract
+- confirm endpoint
+- confirm request shape
+- confirm response shape
+- handle failure path
+- record backend mismatch if found
+- do not silently change contract
 
 ## Done Definition
 
 A frontend task is done only when:
 
-* `agent/frontend/current-plan.md` was updated before coding
-* task scope was implemented
-* no unrelated backend files were changed
-* no unnecessary dependencies were added
-* relevant loading/error/empty states were handled
-* chat streaming contract was preserved if chat was affected
-* validation status is known
-* `agent/frontend/handoff.md` was updated
+- `agent/frontend/current-plan.md` was updated before coding
+- task scope was implemented
+- no unrelated backend files were changed
+- no unnecessary dependencies were added
+- relevant loading/error/empty states were handled
+- chat streaming contract was preserved if chat was affected
+- validation status is known
+- `agent/frontend/handoff.md` was updated
 
 ## Suggested Commit Style
 

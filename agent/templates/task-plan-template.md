@@ -34,34 +34,34 @@ User requested fixing chat display because the client screen must render each st
 
 Mark all affected areas.
 
-* [ ] Chat screen
-* [ ] Chat streaming
-* [ ] SSE parser
-* [ ] API integration
-* [ ] Admin conversations
-* [ ] Admin Knowledge Base
-* [ ] UI/UX
-* [ ] Routing
-* [ ] Layout
-* [ ] Build/lint
-* [ ] Other: TODO
+- [ ] Chat screen
+- [ ] Chat streaming
+- [ ] SSE parser
+- [ ] API integration
+- [ ] Admin conversations
+- [ ] Admin Knowledge Base
+- [ ] UI/UX
+- [ ] Routing
+- [ ] Layout
+- [ ] Build/lint
+- [ ] Other: TODO
 
 ## Required Agent Files To Read
 
 Required for every frontend task:
 
-* [ ] `agent/README.md`
-* [ ] `agent/frontend/context.md`
-* [ ] `agent/frontend/skill.md`
-* [ ] `agent/frontend/checklist.md`
+- [ ] `agent/README.md`
+- [ ] `agent/frontend/context.md`
+- [ ] `agent/frontend/skill.md`
+- [ ] `agent/frontend/checklist.md`
 
 Read when relevant:
 
-* [ ] `agent/frontend/ui-ux-rules.md`
-* [ ] `agent/features/chat.md`
-* [ ] `agent/features/admin-conversations.md`
-* [ ] `agent/features/admin-knowledge.md`
-* [ ] `agent/features/api-integration.md`
+- [ ] `agent/frontend/ui-ux-rules.md`
+- [ ] `agent/features/chat.md`
+- [ ] `agent/features/admin-conversations.md`
+- [ ] `agent/features/admin-knowledge.md`
+- [ ] `agent/features/api-integration.md`
 
 ## Problem Summary
 
@@ -69,10 +69,10 @@ TODO: Summarize the problem in 2–5 lines.
 
 Include:
 
-* what is wrong or missing
-* where it appears
-* why it matters
-* expected user-facing result
+- what is wrong or missing
+- where it appears
+- why it matters
+- expected user-facing result
 
 ## Expected Behavior
 
@@ -96,25 +96,25 @@ TODO: Define what is allowed to change.
 
 Example:
 
-* Update chat stream reading logic.
-* Update SSE event parsing.
-* Update chat hook state handling.
-* Update chat loading/error UI.
-* Preserve backend API contract.
+- Update chat stream reading logic.
+- Update SSE event parsing.
+- Update chat hook state handling.
+- Update chat loading/error UI.
+- Preserve backend API contract.
 
 ## Out Of Scope
 
 Default out-of-scope items:
 
-* Backend code.
-* MongoDB schema.
-* Grok API server integration.
-* Authentication.
-* New dependencies.
-* Large folder restructuring.
-* Unrelated UI redesign.
-* Unrelated formatting across the codebase.
-* API contract changes unless explicitly requested.
+- Backend code.
+- MongoDB schema.
+- Grok API server integration.
+- Authentication.
+- New dependencies.
+- Large folder restructuring.
+- Unrelated UI redesign.
+- Unrelated formatting across the codebase.
+- API contract changes unless explicitly requested.
 
 Add task-specific out-of-scope items here:
 
@@ -126,25 +126,25 @@ List relevant files before editing.
 
 Common options:
 
-* [ ] `src/App.jsx`
-* [ ] `src/api/baseApi.js`
-* [ ] `src/api/chatApi.js`
-* [ ] `src/api/conversationApi.js`
-* [ ] `src/api/knowledgeApi.js`
-* [ ] `src/hooks/useChat.js`
-* [ ] `src/hooks/useKnowledge.js`
-* [ ] `src/utils/sseParser.js`
-* [ ] `src/pages/ChatPage.jsx`
-* [ ] `src/pages/admin/ConversationsPage.jsx`
-* [ ] `src/pages/admin/ConversationDetailPage.jsx`
-* [ ] `src/pages/admin/KnowledgePage.jsx`
-* [ ] `src/components/chat/ChatBubble.jsx`
-* [ ] `src/components/chat/ChatInput.jsx`
-* [ ] `src/components/chat/TypingIndicator.jsx`
-* [ ] `src/components/admin/ConversationTable.jsx`
-* [ ] `src/components/admin/KnowledgeTable.jsx`
-* [ ] `src/components/admin/KnowledgeModal.jsx`
-* [ ] `src/components/layout/AdminLayout.jsx`
+- [ ] `src/App.jsx`
+- [ ] `src/api/baseApi.js`
+- [ ] `src/api/chatApi.js`
+- [ ] `src/api/conversationApi.js`
+- [ ] `src/api/knowledgeApi.js`
+- [ ] `src/hooks/useChat.js`
+- [ ] `src/hooks/useKnowledge.js`
+- [ ] `src/utils/sseParser.js`
+- [ ] `src/pages/ChatPage.jsx`
+- [ ] `src/pages/admin/ConversationsPage.jsx`
+- [ ] `src/pages/admin/ConversationDetailPage.jsx`
+- [ ] `src/pages/admin/KnowledgePage.jsx`
+- [ ] `src/components/chat/ChatBubble.jsx`
+- [ ] `src/components/chat/ChatInput.jsx`
+- [ ] `src/components/chat/TypingIndicator.jsx`
+- [ ] `src/components/admin/ConversationTable.jsx`
+- [ ] `src/components/admin/KnowledgeTable.jsx`
+- [ ] `src/components/admin/KnowledgeModal.jsx`
+- [ ] `src/components/layout/AdminLayout.jsx`
 
 Task-specific files:
 
@@ -156,15 +156,15 @@ TODO: List expected files to modify.
 
 Rules:
 
-* Keep the list narrow.
-* Do not modify unrelated files.
-* If a new file is needed, explain why.
+- Keep the list narrow.
+- Do not modify unrelated files.
+- If a new file is needed, explain why.
 
 Example:
 
-* `src/hooks/useChat.js` — update assistant message state while streaming.
-* `src/api/chatApi.js` — ensure stream events are passed progressively.
-* `src/utils/sseParser.js` — handle split SSE chunks.
+- `src/hooks/useChat.js` — update assistant message state while streaming.
+- `src/api/chatApi.js` — ensure stream events are passed progressively.
+- `src/utils/sseParser.js` — handle split SSE chunks.
 
 ## Implementation Steps
 
@@ -184,20 +184,20 @@ Suggested structure:
 
 Use this section if the task affects chat, `useChat.js`, `chatApi.js`, or `sseParser.js`.
 
-* [ ] Preserve `POST /api/chat`.
-* [ ] Preserve `Content-Type: text/event-stream` expectation.
-* [ ] Use `fetch()` stream reading.
-* [ ] Use `response.body.getReader()`.
-* [ ] Decode stream chunks progressively.
-* [ ] Parse SSE `data:` events.
-* [ ] Append `{ token }` to the current assistant message.
-* [ ] Stop streaming on `{ done: true }`.
-* [ ] Handle `{ error }`.
-* [ ] Do not introduce WebSocket.
-* [ ] Do not introduce webhook.
-* [ ] Do not introduce polling.
-* [ ] Do not fake typewriter effect after receiving full response.
-* [ ] Do not create one assistant bubble per token.
+- [ ] Preserve `POST /api/chat`.
+- [ ] Preserve `Content-Type: text/event-stream` expectation.
+- [ ] Use `fetch()` stream reading.
+- [ ] Use `response.body.getReader()`.
+- [ ] Decode stream chunks progressively.
+- [ ] Parse SSE `data:` events.
+- [ ] Append `{ token }` to the current assistant message.
+- [ ] Stop streaming on `{ done: true }`.
+- [ ] Handle `{ error }`.
+- [ ] Do not introduce WebSocket.
+- [ ] Do not introduce webhook.
+- [ ] Do not introduce polling.
+- [ ] Do not fake typewriter effect after receiving full response.
+- [ ] Do not create one assistant bubble per token.
 
 Notes:
 
@@ -207,13 +207,13 @@ TODO.
 
 Use this section if the task affects API integration.
 
-* [ ] Use existing API base URL configuration.
-* [ ] Do not hardcode backend URL in components.
-* [ ] Use API wrapper files under `src/api/`.
-* [ ] Preserve REST response handling for `{ success, data, message }`.
-* [ ] Keep chat stream handling separate from JSON API handling.
-* [ ] Use backend `message` when available.
-* [ ] Handle network failures.
+- [ ] Use existing API base URL configuration.
+- [ ] Do not hardcode backend URL in components.
+- [ ] Use API wrapper files under `src/api/`.
+- [ ] Preserve REST response handling for `{ success, data, message }`.
+- [ ] Keep chat stream handling separate from JSON API handling.
+- [ ] Use backend `message` when available.
+- [ ] Handle network failures.
 
 Notes:
 
@@ -223,14 +223,14 @@ TODO.
 
 Use this section if the task affects visible UI.
 
-* [ ] Main action is clear.
-* [ ] Loading state is visible.
-* [ ] Empty state exists where needed.
-* [ ] Error state is readable.
-* [ ] Layout remains usable on mobile.
-* [ ] Layout remains readable on desktop.
-* [ ] Focus state remains visible.
-* [ ] No unnecessary redesign is introduced.
+- [ ] Main action is clear.
+- [ ] Loading state is visible.
+- [ ] Empty state exists where needed.
+- [ ] Error state is readable.
+- [ ] Layout remains usable on mobile.
+- [ ] Layout remains readable on desktop.
+- [ ] Focus state remains visible.
+- [ ] No unnecessary redesign is introduced.
 
 Notes:
 
@@ -240,14 +240,14 @@ TODO.
 
 Use this section if the task affects admin conversations.
 
-* [ ] `GET /api/conversations` is preserved.
-* [ ] `GET /api/conversations/:id` is preserved.
-* [ ] Conversation list handles loading.
-* [ ] Conversation list handles empty state.
-* [ ] Conversation list handles error state.
-* [ ] Conversation detail handles loading.
-* [ ] Conversation detail handles error or not found state.
-* [ ] `_id` and `sessionId` are not confused.
+- [ ] `GET /api/conversations` is preserved.
+- [ ] `GET /api/conversations/:id` is preserved.
+- [ ] Conversation list handles loading.
+- [ ] Conversation list handles empty state.
+- [ ] Conversation list handles error state.
+- [ ] Conversation detail handles loading.
+- [ ] Conversation detail handles error or not found state.
+- [ ] `_id` and `sessionId` are not confused.
 
 Notes:
 
@@ -257,15 +257,15 @@ TODO.
 
 Use this section if the task affects Knowledge Base CRUD.
 
-* [ ] `GET /api/knowledge` is preserved.
-* [ ] `POST /api/knowledge` is preserved.
-* [ ] `PUT /api/knowledge/:id` is preserved.
-* [ ] `DELETE /api/knowledge/:id` is preserved.
-* [ ] `question` is required.
-* [ ] `answer` is required.
-* [ ] `category` remains optional.
-* [ ] `_id` is used for update/delete.
-* [ ] Delete requires confirmation.
+- [ ] `GET /api/knowledge` is preserved.
+- [ ] `POST /api/knowledge` is preserved.
+- [ ] `PUT /api/knowledge/:id` is preserved.
+- [ ] `DELETE /api/knowledge/:id` is preserved.
+- [ ] `question` is required.
+- [ ] `answer` is required.
+- [ ] `category` remains optional.
+- [ ] `_id` is used for update/delete.
+- [ ] Delete requires confirmation.
 
 Notes:
 
@@ -275,18 +275,18 @@ TODO.
 
 Commands to run when possible:
 
-* [ ] `npm run lint`
-* [ ] `npm run build`
-* [ ] `npm run format:check` if available
+- [ ] `npm run lint`
+- [ ] `npm run build`
+- [ ] `npm run format:check` if available
 
 Manual validation:
 
-* [ ] Open affected route.
-* [ ] Trigger affected user action.
-* [ ] Confirm success path.
-* [ ] Confirm loading state.
-* [ ] Confirm error or empty state where relevant.
-* [ ] Confirm no unrelated route is broken.
+- [ ] Open affected route.
+- [ ] Trigger affected user action.
+- [ ] Confirm success path.
+- [ ] Confirm loading state.
+- [ ] Confirm error or empty state where relevant.
+- [ ] Confirm no unrelated route is broken.
 
 Task-specific manual checks:
 
@@ -298,11 +298,11 @@ TODO: List known risks before coding.
 
 Examples:
 
-* Backend endpoint may differ from documented contract.
-* SSE stream may split JSON across chunks.
-* Existing API wrapper may return full response instead of `data`.
-* Existing lint errors may be unrelated to this task.
-* Admin table may overflow on small screens.
+- Backend endpoint may differ from documented contract.
+- SSE stream may split JSON across chunks.
+- Existing API wrapper may return full response instead of `data`.
+- Existing lint errors may be unrelated to this task.
+- Admin table may overflow on small screens.
 
 ## Backend/API Dependencies
 
@@ -310,10 +310,10 @@ TODO: Record backend behavior required by this task.
 
 Examples:
 
-* `POST /api/chat` must return `text/event-stream`.
-* Stream must send `data: {"token":"..."}` events.
-* Stream must end with `data: {"done":true}`.
-* REST APIs must return `{ success, data, message }`.
+- `POST /api/chat` must return `text/event-stream`.
+- Stream must send `data: {"token":"..."}` events.
+- Stream must end with `data: {"done":true}`.
+- REST APIs must return `{ success, data, message }`.
 
 If none, write:
 
@@ -323,19 +323,19 @@ No new backend/API dependency beyond existing contract.
 
 The task is done when:
 
-* [ ] Current plan is filled before coding.
-* [ ] Implementation matches task prompt.
-* [ ] Scope stays narrow.
-* [ ] Affected UI works.
-* [ ] Affected API flow works.
-* [ ] Loading state is handled where relevant.
-* [ ] Empty state is handled where relevant.
-* [ ] Error state is handled where relevant.
-* [ ] Chat streaming contract is preserved if chat is affected.
-* [ ] No unrelated backend code is changed.
-* [ ] No unnecessary dependency is added.
-* [ ] Validation status is known.
-* [ ] `agent/frontend/handoff.md` is updated.
+- [ ] Current plan is filled before coding.
+- [ ] Implementation matches task prompt.
+- [ ] Scope stays narrow.
+- [ ] Affected UI works.
+- [ ] Affected API flow works.
+- [ ] Loading state is handled where relevant.
+- [ ] Empty state is handled where relevant.
+- [ ] Error state is handled where relevant.
+- [ ] Chat streaming contract is preserved if chat is affected.
+- [ ] No unrelated backend code is changed.
+- [ ] No unnecessary dependency is added.
+- [ ] Validation status is known.
+- [ ] `agent/frontend/handoff.md` is updated.
 
 ## Final Result
 
@@ -343,11 +343,11 @@ Fill this section after implementation.
 
 Status:
 
-* [ ] Not started
-* [ ] In progress
-* [ ] Completed
-* [ ] Blocked
-* [ ] Partially completed
+- [ ] Not started
+- [ ] In progress
+- [ ] Completed
+- [ ] Blocked
+- [ ] Partially completed
 
 Summary:
 

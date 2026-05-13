@@ -6,24 +6,24 @@ This file defines the feature-specific context, rules, and checklist for fronten
 
 The Frontend Agent must read this file before working on any task related to:
 
-* API wrapper files
-* API base URL
-* REST response handling
-* chat streaming request
-* SSE stream parsing
-* error handling
-* `baseApi.js`
-* `chatApi.js`
-* `conversationApi.js`
-* `knowledgeApi.js`
-* `sseParser.js`
+- API wrapper files
+- API base URL
+- REST response handling
+- chat streaming request
+- SSE stream parsing
+- error handling
+- `baseApi.js`
+- `chatApi.js`
+- `conversationApi.js`
+- `knowledgeApi.js`
+- `sseParser.js`
 
 ## Feature Summary
 
 The frontend communicates with `AppotaBackend` through:
 
-* standard REST JSON endpoints
-* one streaming chat endpoint
+- standard REST JSON endpoints
+- one streaming chat endpoint
 
 Most endpoints return JSON with this structure:
 
@@ -91,13 +91,13 @@ Failed response:
 
 Frontend API logic must:
 
-* check HTTP status
-* parse JSON safely
-* check `success`
-* return `data` consistently if that is the existing pattern
-* expose readable error messages
-* preserve backend `message` when available
-* handle network failures
+- check HTTP status
+- parse JSON safely
+- check `success`
+- return `data` consistently if that is the existing pattern
+- expose readable error messages
+- preserve backend `message` when available
+- handle network failures
 
 Do not assume all responses are successful.
 
@@ -142,20 +142,20 @@ Chat is streaming over HTTP.
 
 It is not:
 
-* webhook
-* WebSocket
-* polling
-* normal REST JSON
-* fake typewriter after full response
+- webhook
+- WebSocket
+- polling
+- normal REST JSON
+- fake typewriter after full response
 
 The client screen must render the assistant response progressively as the backend stream sends tokens or chunks.
 
 Use:
 
-* `fetch()`
-* `response.body.getReader()`
-* `TextDecoder`
-* SSE `data:` event parsing
+- `fetch()`
+- `response.body.getReader()`
+- `TextDecoder`
+- SSE `data:` event parsing
 
 Do not use `EventSource` for the current contract because the chat endpoint requires POST with JSON body.
 
@@ -165,14 +165,14 @@ Do not use `EventSource` for the current contract because the chat endpoint requ
 
 Expected responsibilities:
 
-* compose API base URL
-* set JSON headers when needed
-* perform `fetch`
-* parse JSON response
-* detect non-OK HTTP status
-* detect backend `success: false`
-* throw or return errors consistently
-* preserve backend error `message`
+- compose API base URL
+- set JSON headers when needed
+- perform `fetch`
+- parse JSON response
+- detect non-OK HTTP status
+- detect backend `success: false`
+- throw or return errors consistently
+- preserve backend error `message`
 
 Do not include chat streaming parser logic in `baseApi.js` unless the existing project intentionally centralizes all network logic there.
 
@@ -184,12 +184,12 @@ Streaming behavior is better kept in `chatApi.js` and `sseParser.js`.
 
 Expected responsibilities:
 
-* create session through `POST /api/session`
-* send message through `POST /api/chat`
-* read streaming response
-* decode chunks
-* pass parsed events to caller
-* expose errors clearly
+- create session through `POST /api/session`
+- send message through `POST /api/chat`
+- read streaming response
+- decode chunks
+- pass parsed events to caller
+- expose errors clearly
 
 For `POST /api/session`, use normal JSON response handling.
 
@@ -205,8 +205,8 @@ Do not mix conversation admin APIs into `chatApi.js`.
 
 Expected functions:
 
-* fetch all conversations
-* fetch one conversation detail
+- fetch all conversations
+- fetch one conversation detail
 
 Endpoints:
 
@@ -216,10 +216,10 @@ Endpoints:
 
 Rules:
 
-* use base API wrapper if available
-* preserve backend response format
-* handle 404 for missing conversation
-* do not confuse `_id` with `sessionId`
+- use base API wrapper if available
+- preserve backend response format
+- handle 404 for missing conversation
+- do not confuse `_id` with `sessionId`
 
 ## `knowledgeApi.js` Rules
 
@@ -227,10 +227,10 @@ Rules:
 
 Expected functions:
 
-* fetch all entries
-* create entry
-* update entry
-* delete entry
+- fetch all entries
+- create entry
+- update entry
+- delete entry
 
 Endpoints:
 
@@ -244,11 +244,11 @@ Endpoints:
 
 Rules:
 
-* use `_id` for update/delete
-* validate payload before sending when practical
-* preserve backend error messages
-* do not hardcode base URL
-* keep API function names clear
+- use `_id` for update/delete
+- validate payload before sending when practical
+- preserve backend error messages
+- do not hardcode base URL
+- keep API function names clear
 
 ## SSE Parser Rules
 
@@ -256,15 +256,15 @@ Rules:
 
 The parser must handle:
 
-* chunk split in the middle of an SSE event
-* chunk split in the middle of JSON
-* one chunk containing multiple events
-* empty lines between events
-* `data:` prefix
-* malformed JSON
-* token event
-* done event
-* error event
+- chunk split in the middle of an SSE event
+- chunk split in the middle of JSON
+- one chunk containing multiple events
+- empty lines between events
+- `data:` prefix
+- malformed JSON
+- token event
+- done event
+- error event
 
 The parser should not directly update React state.
 
@@ -287,10 +287,10 @@ The API stream function should follow this logic:
 7. Decode each chunk with streaming mode.
 8. Pass decoded text to SSE parser.
 9. For each parsed event:
+   - if `{ token }`, notify caller to append token
+   - if `{ done }`, notify caller stream is complete
+   - if `{ error }`, notify caller error occurred
 
-   * if `{ token }`, notify caller to append token
-   * if `{ done }`, notify caller stream is complete
-   * if `{ error }`, notify caller error occurred
 10. Release reader when complete if needed.
 11. Propagate errors to caller.
 
@@ -300,14 +300,14 @@ Do not buffer the full response before rendering.
 
 API integration must handle:
 
-* network failure
-* non-OK HTTP status
-* invalid JSON response
-* backend `success: false`
-* missing `response.body` for stream
-* stream interruption
-* malformed SSE event
-* backend stream error event
+- network failure
+- non-OK HTTP status
+- invalid JSON response
+- backend `success: false`
+- missing `response.body` for stream
+- stream interruption
+- malformed SSE event
+- backend stream error event
 
 Error message priority:
 
@@ -318,11 +318,11 @@ Error message priority:
 
 Generic fallbacks:
 
-* “Request failed.”
-* “Failed to send message.”
-* “Streaming connection was interrupted.”
-* “Failed to load conversations.”
-* “Failed to load Knowledge Base.”
+- “Request failed.”
+- “Failed to send message.”
+- “Streaming connection was interrupted.”
+- “Failed to load conversations.”
+- “Failed to load Knowledge Base.”
 
 Do not expose stack traces to users.
 
@@ -332,9 +332,9 @@ Hooks should call API functions, not duplicate request logic.
 
 Expected:
 
-* `useChat.js` calls `chatApi.js`
-* `useKnowledge.js` calls `knowledgeApi.js`
-* conversation pages or hooks call `conversationApi.js`
+- `useChat.js` calls `chatApi.js`
+- `useKnowledge.js` calls `knowledgeApi.js`
+- conversation pages or hooks call `conversationApi.js`
 
 Do not copy `fetch()` logic into multiple page components.
 
@@ -344,17 +344,17 @@ Do not duplicate SSE parsing logic in `useChat.js` if `sseParser.js` exists.
 
 For each API-backed flow, track:
 
-* loading
-* error
-* data
-* mutation state if needed
+- loading
+- error
+- data
+- mutation state if needed
 
 For chat streaming, track:
 
-* sending or waiting
-* streaming
-* error
-* messages
+- sending or waiting
+- streaming
+- error
+- messages
 
 Do not leave loading state stuck after request failure.
 
@@ -366,18 +366,18 @@ Perform frontend validation before request when obvious.
 
 For chat:
 
-* message must not be empty
-* session id must exist or be created
+- message must not be empty
+- session id must exist or be created
 
 For Knowledge Base:
 
-* question is required
-* answer is required
-* category is optional
+- question is required
+- answer is required
+- category is optional
 
 For conversation detail:
 
-* id route param must exist
+- id route param must exist
 
 Do not rely only on backend validation when the frontend can prevent an invalid request cheaply.
 
@@ -387,9 +387,9 @@ Keep response handling consistent.
 
 A good pattern is:
 
-* API layer extracts `data` from successful `{ success, data, message }`
-* API layer throws an error with readable message on failure
-* UI layer handles loading/error/data
+- API layer extracts `data` from successful `{ success, data, message }`
+- API layer throws an error with readable message on failure
+- UI layer handles loading/error/data
 
 If existing code returns the full response object, preserve that pattern unless the task is specifically to normalize API behavior.
 
@@ -399,69 +399,69 @@ Do not create mixed patterns where some API functions return `data` and others r
 
 Do not implement:
 
-* WebSocket client
-* webhook listener
-* polling loop for chat
-* fake typewriter effect after full response
-* GraphQL client
-* Axios migration unless requested
-* React Query or SWR unless requested
-* global API state library
-* retry framework
-* offline cache
-* authentication token handling unless requested
-* API mock layer unless requested
+- WebSocket client
+- webhook listener
+- polling loop for chat
+- fake typewriter effect after full response
+- GraphQL client
+- Axios migration unless requested
+- React Query or SWR unless requested
+- global API state library
+- retry framework
+- offline cache
+- authentication token handling unless requested
+- API mock layer unless requested
 
 ## Manual Test Checklist
 
 For REST API changes:
 
-* [ ] API base URL is read from existing config.
-* [ ] Successful response is handled.
-* [ ] Backend `success: false` is handled.
-* [ ] Non-OK HTTP status is handled.
-* [ ] Network failure is handled.
-* [ ] UI receives readable error.
+- [ ] API base URL is read from existing config.
+- [ ] Successful response is handled.
+- [ ] Backend `success: false` is handled.
+- [ ] Non-OK HTTP status is handled.
+- [ ] Network failure is handled.
+- [ ] UI receives readable error.
 
 For chat streaming:
 
-* [ ] `POST /api/chat` is used.
-* [ ] `response.json()` is not used for chat stream.
-* [ ] `response.body.getReader()` is used.
-* [ ] Stream chunks are decoded progressively.
-* [ ] SSE `data:` events are parsed.
-* [ ] `{ token }` events reach the chat hook/UI.
-* [ ] `{ done: true }` ends the stream state.
-* [ ] `{ error }` is handled.
-* [ ] UI renders assistant content progressively.
-* [ ] No webhook, WebSocket, or polling logic was added.
+- [ ] `POST /api/chat` is used.
+- [ ] `response.json()` is not used for chat stream.
+- [ ] `response.body.getReader()` is used.
+- [ ] Stream chunks are decoded progressively.
+- [ ] SSE `data:` events are parsed.
+- [ ] `{ token }` events reach the chat hook/UI.
+- [ ] `{ done: true }` ends the stream state.
+- [ ] `{ error }` is handled.
+- [ ] UI renders assistant content progressively.
+- [ ] No webhook, WebSocket, or polling logic was added.
 
 For Knowledge Base API:
 
-* [ ] `GET /api/knowledge` works.
-* [ ] `POST /api/knowledge` works.
-* [ ] `PUT /api/knowledge/:id` works.
-* [ ] `DELETE /api/knowledge/:id` works.
-* [ ] `_id` is used for update/delete.
+- [ ] `GET /api/knowledge` works.
+- [ ] `POST /api/knowledge` works.
+- [ ] `PUT /api/knowledge/:id` works.
+- [ ] `DELETE /api/knowledge/:id` works.
+- [ ] `_id` is used for update/delete.
 
 For conversation API:
 
-* [ ] `GET /api/conversations` works.
-* [ ] `GET /api/conversations/:id` works.
-* [ ] `_id` is used for conversation detail route/API when required.
+- [ ] `GET /api/conversations` works.
+- [ ] `GET /api/conversations/:id` works.
+- [ ] `_id` is used for conversation detail route/API when required.
 
 ## Completion Checklist
 
 An API integration task is complete when:
 
-* [ ] Current plan was updated before coding.
-* [ ] Existing API wrapper pattern is preserved.
-* [ ] API base URL is not hardcoded in components.
-* [ ] REST response format is handled.
-* [ ] Chat stream exception is handled correctly.
-* [ ] Stream rendering remains progressive if chat is affected.
-* [ ] Errors are surfaced clearly.
-* [ ] No unrelated API files were modified.
-* [ ] No new API dependency was added unnecessarily.
-* [ ] Validation status is known.
-* [ ] Handoff was updated after implementation.
+- [ ] Current plan was updated before coding.
+- [ ] Existing API wrapper pattern is preserved.
+- [ ] API base URL is not hardcoded in components.
+- [ ] REST response format is handled.
+- [ ] Chat stream exception is handled correctly.
+- [ ] Stream rendering remains progressive if chat is affected.
+- [ ] Errors are surfaced clearly.
+- [ ] No unrelated API files were modified.
+- [ ] No new API dependency was added unnecessarily.
+- [ ] Validation status is known.
+- [ ] Handoff was updated after implementation.

@@ -12,18 +12,18 @@ The agent must produce small, functional, maintainable changes that fit the exis
 
 The Frontend Agent is responsible for:
 
-* React page implementation.
-* React component implementation.
-* React hook behavior.
-* API wrapper usage.
-* SSE streaming client logic.
-* Chat UI state.
-* Admin table/form behavior.
-* Loading, empty, and error states.
-* Basic responsive layout.
-* Tailwind CSS styling.
-* Ant Design component usage.
-* Frontend lint/build validation.
+- React page implementation.
+- React component implementation.
+- React hook behavior.
+- API wrapper usage.
+- SSE streaming client logic.
+- Chat UI state.
+- Admin table/form behavior.
+- Loading, empty, and error states.
+- Basic responsive layout.
+- Tailwind CSS styling.
+- Ant Design component usage.
+- Frontend lint/build validation.
 
 The Frontend Agent is not responsible for backend logic, MongoDB models, Grok API implementation, or Express route behavior.
 
@@ -83,18 +83,18 @@ Use `useMemo` or `useCallback` only when there is a clear reason. Do not optimiz
 
 Separate responsibilities:
 
-* Page components handle layout and orchestration.
-* UI components handle display.
-* Hooks handle reusable stateful behavior.
-* API files handle network calls.
-* Utils handle pure parsing or formatting logic.
+- Page components handle layout and orchestration.
+- UI components handle display.
+- Hooks handle reusable stateful behavior.
+- API files handle network calls.
+- Utils handle pure parsing or formatting logic.
 
 Preferred pattern:
 
-* `pages/` calls hooks.
-* `hooks/` calls API modules.
-* `components/` receive props and render UI.
-* `utils/` contains reusable parsing/formatting helpers.
+- `pages/` calls hooks.
+- `hooks/` calls API modules.
+- `components/` receive props and render UI.
+- `utils/` contains reusable parsing/formatting helpers.
 
 Do not make one component responsible for API calls, parsing, state management, and UI rendering at the same time unless the task is very small and no reusable pattern exists.
 
@@ -104,16 +104,16 @@ Hooks should expose simple state and actions.
 
 Example hook responsibilities:
 
-* `useChat.js`: session state, message list, streaming state, send message action.
-* `useKnowledge.js`: Knowledge Base list, loading state, create/update/delete actions.
+- `useChat.js`: session state, message list, streaming state, send message action.
+- `useKnowledge.js`: Knowledge Base list, loading state, create/update/delete actions.
 
 Hooks should return predictable values:
 
-* data
-* loading state
-* error state
-* action functions
-* refresh or reset functions when needed
+- data
+- loading state
+- error state
+- action functions
+- refresh or reset functions when needed
 
 Hooks must handle failure states.
 
@@ -127,10 +127,10 @@ Keep dependency arrays correct.
 
 Use existing files under `src/api/`:
 
-* `baseApi.js`
-* `chatApi.js`
-* `conversationApi.js`
-* `knowledgeApi.js`
+- `baseApi.js`
+- `chatApi.js`
+- `conversationApi.js`
+- `knowledgeApi.js`
 
 Do not hardcode API URLs inside pages or components.
 
@@ -160,13 +160,13 @@ The backend responds with:
 
 The frontend must use stream reading logic:
 
-* Call `fetch()`.
-* Read `response.body.getReader()`.
-* Decode chunks with `TextDecoder`.
-* Parse SSE `data:` events.
-* Append each token to the current assistant message.
-* Stop streaming when `{ done: true }` is received.
-* Handle `{ error }` if provided by the backend.
+- Call `fetch()`.
+- Read `response.body.getReader()`.
+- Decode chunks with `TextDecoder`.
+- Parse SSE `data:` events.
+- Append each token to the current assistant message.
+- Stop streaming when `{ done: true }` is received.
+- Handle `{ error }` if provided by the backend.
 
 Do not wait for the full backend response before rendering.
 
@@ -186,15 +186,15 @@ The SSE parser must be resilient.
 
 It should handle:
 
-* one chunk containing multiple events
-* one event split across multiple chunks
-* empty lines
-* `data:` prefix
-* valid JSON event payloads
-* invalid JSON without crashing the UI
-* `{ token: string }`
-* `{ done: true }`
-* `{ error: string }`
+- one chunk containing multiple events
+- one event split across multiple chunks
+- empty lines
+- `data:` prefix
+- valid JSON event payloads
+- invalid JSON without crashing the UI
+- `{ token: string }`
+- `{ done: true }`
+- `{ error: string }`
 
 The parser should not be coupled to React state.
 
@@ -219,27 +219,27 @@ When user sends a message:
 
 While streaming:
 
-* Prevent duplicate submits.
-* Either disable input or guard submit action.
-* Keep partial assistant response visible.
-* Preserve message order.
-* Avoid flickering loading states.
+- Prevent duplicate submits.
+- Either disable input or guard submit action.
+- Keep partial assistant response visible.
+- Preserve message order.
+- Avoid flickering loading states.
 
 On error:
 
-* Stop streaming state.
-* Show readable error message.
-* Preserve already received partial content if useful.
-* Do not wipe the entire conversation unless explicitly requested.
+- Stop streaming state.
+- Show readable error message.
+- Preserve already received partial content if useful.
+- Do not wipe the entire conversation unless explicitly requested.
 
 ## Admin Conversations Rules
 
 Conversation list should show enough information for quick review:
 
-* session id
-* last message
-* message count
-* created or updated time
+- session id
+- last message
+- message count
+- created or updated time
 
 Conversation detail should show full message history in correct order.
 
@@ -257,32 +257,32 @@ Do not add authentication or permission logic unless explicitly requested.
 
 Knowledge Base management must support:
 
-* list entries
-* create entry
-* edit entry
-* delete entry
+- list entries
+- create entry
+- edit entry
+- delete entry
 
 Required fields:
 
-* question
-* answer
+- question
+- answer
 
 Optional field:
 
-* category
+- category
 
 Validation:
 
-* question must not be empty
-* answer must not be empty
-* trim user input before submit
-* show readable validation messages
+- question must not be empty
+- answer must not be empty
+- trim user input before submit
+- show readable validation messages
 
 After create/update/delete:
 
-* refresh list or update local state consistently
-* close modal only after successful request
-* show error message if request fails
+- refresh list or update local state consistently
+- close modal only after successful request
+- show error message if request fails
 
 Do not cache Knowledge Base data in a way that hides backend changes.
 
@@ -290,15 +290,15 @@ Do not cache Knowledge Base data in a way that hides backend changes.
 
 Use Ant Design for:
 
-* tables
-* forms
-* inputs
-* buttons
-* modals
-* confirmation dialogs
-* empty states
-* loading indicators
-* message notifications when already used by the project
+- tables
+- forms
+- inputs
+- buttons
+- modals
+- confirmation dialogs
+- empty states
+- loading indicators
+- message notifications when already used by the project
 
 Do not over-customize Ant Design components unless necessary.
 
@@ -314,14 +314,14 @@ Use modal forms for create/edit when that is already the project pattern.
 
 Use Tailwind CSS for:
 
-* layout
-* spacing
-* width and height
-* flex/grid
-* responsive behavior
-* simple typography
-* simple backgrounds
-* chat bubble alignment
+- layout
+- spacing
+- width and height
+- flex/grid
+- responsive behavior
+- simple typography
+- simple backgrounds
+- chat bubble alignment
 
 Do not create complex custom CSS unless Tailwind and Ant Design are insufficient.
 
@@ -355,22 +355,22 @@ Do not add auth guard unless explicitly requested.
 
 Every API-backed page or component must handle:
 
-* initial loading
-* empty data
-* error response
-* successful data display
+- initial loading
+- empty data
+- error response
+- successful data display
 
 For chat:
 
-* show typing/loading state while waiting for first token
-* show progressive response while streaming
-* stop loading after done or error
+- show typing/loading state while waiting for first token
+- show progressive response while streaming
+- stop loading after done or error
 
 For admin tables:
 
-* show loading while fetching
-* show empty state if no data
-* show readable error if fetch fails
+- show loading while fetching
+- show empty state if no data
+- show readable error if fetch fails
 
 Do not leave users with a blank screen.
 
@@ -390,9 +390,9 @@ Do not send empty strings for required fields.
 
 After successful submit:
 
-* close modal or reset form as appropriate
-* refresh or update visible data
-* show success state only if already used by project conventions
+- close modal or reset form as appropriate
+- refresh or update visible data
+- show success state only if already used by project conventions
 
 ## Error Handling Rules
 
@@ -434,11 +434,11 @@ Before adding a dependency, verify the feature cannot be implemented reasonably 
 
 For this project, prefer:
 
-* React built-ins
-* Fetch API
-* Ant Design
-* Tailwind CSS
-* existing utilities
+- React built-ins
+- Fetch API
+- Ant Design
+- Tailwind CSS
+- existing utilities
 
 Do not add state management libraries, animation libraries, UI kits, or SSE libraries unless explicitly requested.
 
@@ -476,10 +476,10 @@ The frontend must be usable on common desktop and mobile widths.
 
 Minimum expectation:
 
-* chat screen works on mobile
-* admin tables remain usable or horizontally scrollable
-* forms fit small screens
-* sidebar/layout does not block content
+- chat screen works on mobile
+- admin tables remain usable or horizontally scrollable
+- forms fit small screens
+- sidebar/layout does not block content
 
 Do not build complex responsive systems.
 
@@ -519,13 +519,13 @@ Do not change backend contract from frontend code.
 
 Before marking a frontend task complete, confirm:
 
-* Task scope is implemented.
-* Affected feature file was considered.
-* `current-plan.md` was updated before coding.
-* UI loading state is handled.
-* UI error state is handled.
-* API response format is respected.
-* Chat stream logic remains token-by-token if chat is affected.
-* No unrelated source files were changed.
-* Validation result is known.
-* `handoff.md` was updated.
+- Task scope is implemented.
+- Affected feature file was considered.
+- `current-plan.md` was updated before coding.
+- UI loading state is handled.
+- UI error state is handled.
+- API response format is respected.
+- Chat stream logic remains token-by-token if chat is affected.
+- No unrelated source files were changed.
+- Validation result is known.
+- `handoff.md` was updated.

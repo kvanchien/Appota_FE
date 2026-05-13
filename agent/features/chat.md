@@ -6,17 +6,17 @@ This file defines the feature-specific context, rules, and checklist for the pla
 
 The Frontend Agent must read this file before working on any task related to:
 
-* chat page
-* chat input
-* chat bubbles
-* chat message state
-* session creation
-* `POST /api/chat`
-* SSE streaming
-* token-by-token rendering
-* `useChat.js`
-* `chatApi.js`
-* `sseParser.js`
+- chat page
+- chat input
+- chat bubbles
+- chat message state
+- session creation
+- `POST /api/chat`
+- SSE streaming
+- token-by-token rendering
+- `useChat.js`
+- `chatApi.js`
+- `sseParser.js`
 
 ## Feature Summary
 
@@ -24,18 +24,18 @@ The chat feature allows a player to send a question and receive a chatbot respon
 
 The backend generates the response using:
 
-* existing Knowledge Base data
-* recent conversation context
-* Grok API
+- existing Knowledge Base data
+- recent conversation context
+- Grok API
 
 The frontend is responsible for:
 
-* creating or using a session id
-* sending the player message
-* reading the streamed backend response
-* rendering assistant output progressively
-* preserving chat history on screen
-* handling loading and error states
+- creating or using a session id
+- sending the player message
+- reading the streamed backend response
+- rendering assistant output progressively
+- preserving chat history on screen
+- handling loading and error states
 
 ## Critical Rule: Chat Is Streaming
 
@@ -69,8 +69,8 @@ Reason:
 
 The current API requires a `POST /api/chat` request with JSON body:
 
-* `sessionId`
-* `message`
+- `sessionId`
+- `message`
 
 Browser `EventSource` is designed for GET-based SSE and does not support sending a JSON POST body in the required way.
 
@@ -93,9 +93,9 @@ Body:
 
 The frontend must validate:
 
-* `sessionId` exists or can be created before sending
-* `message` is not empty
-* `message` is trimmed before sending
+- `sessionId` exists or can be created before sending
+- `message` is not empty
+- `message` is trimmed before sending
 
 ## Expected Stream Response
 
@@ -148,38 +148,38 @@ The assistant message must be rendered progressively.
 
 Correct behavior:
 
-* one user message bubble appears immediately
-* one assistant message bubble appears for the response
-* incoming tokens are appended to that assistant bubble
-* final assistant response remains in the same bubble
+- one user message bubble appears immediately
+- one assistant message bubble appears for the response
+- incoming tokens are appended to that assistant bubble
+- final assistant response remains in the same bubble
 
 Incorrect behavior:
 
-* creating one assistant bubble per token
-* hiding assistant response until the whole stream completes
-* faking typewriter effect after receiving full response
-* using polling to simulate streaming
-* using WebSocket
-* using webhook logic
+- creating one assistant bubble per token
+- hiding assistant response until the whole stream completes
+- faking typewriter effect after receiving full response
+- using polling to simulate streaming
+- using WebSocket
+- using webhook logic
 
 ## State Management Requirements
 
 The chat state should track:
 
-* `sessionId`
-* message list
-* input value if handled in hook or page
-* loading state
-* streaming state
-* error state
-* current assistant response being streamed
+- `sessionId`
+- message list
+- input value if handled in hook or page
+- loading state
+- streaming state
+- error state
+- current assistant response being streamed
 
 Recommended message shape:
 
-* `role`: `user` or `assistant`
-* `content`: message text
-* `timestamp`: optional if available
-* temporary local id if needed for rendering
+- `role`: `user` or `assistant`
+- `content`: message text
+- `timestamp`: optional if available
+- temporary local id if needed for rendering
 
 The frontend should not require backend persistence to complete before showing the local message.
 
@@ -234,14 +234,14 @@ Only modify files required by the task.
 
 Expected responsibilities:
 
-* manage messages
-* manage session id
-* expose send message action
-* manage loading and streaming states
-* call chat API functions
-* append streamed tokens to assistant message
-* handle done event
-* handle stream error
+- manage messages
+- manage session id
+- expose send message action
+- manage loading and streaming states
+- call chat API functions
+- append streamed tokens to assistant message
+- handle done event
+- handle stream error
 
 Avoid placing stream state logic directly in `ChatPage.jsx` unless the existing project is intentionally simple.
 
@@ -253,10 +253,10 @@ Do not put low-level SSE parsing logic inside the hook if `sseParser.js` exists.
 
 Expected responsibilities:
 
-* create session
-* send chat message
-* read stream response
-* pass parsed stream events to callbacks or return stream events through a clean interface
+- create session
+- send chat message
+- read stream response
+- pass parsed stream events to callbacks or return stream events through a clean interface
 
 Do not hardcode backend URL.
 
@@ -272,16 +272,16 @@ For `POST /api/chat`, expect a streaming response.
 
 It should handle:
 
-* one chunk containing one event
-* one chunk containing multiple events
-* one event split across multiple chunks
-* JSON split across chunks
-* empty lines
-* `data:` prefix
-* malformed JSON
-* token event
-* done event
-* error event
+- one chunk containing one event
+- one chunk containing multiple events
+- one event split across multiple chunks
+- JSON split across chunks
+- empty lines
+- `data:` prefix
+- malformed JSON
+- token event
+- done event
+- error event
 
 The parser should not crash the UI on bad data.
 
@@ -293,10 +293,10 @@ It should be reusable and testable as a utility.
 
 Chat bubbles should clearly distinguish:
 
-* user messages
-* assistant messages
-* streaming assistant message
-* error message if shown inline
+- user messages
+- assistant messages
+- streaming assistant message
+- error message if shown inline
 
 The assistant bubble must support incremental content updates.
 
@@ -312,13 +312,13 @@ Do not use one bubble per token.
 
 The input should:
 
-* prevent empty submit
-* trim user message
-* allow normal typing
-* provide a clear send action
-* be disabled or guarded while streaming
-* avoid duplicate submit while stream is active
-* clear after successful submit starts
+- prevent empty submit
+- trim user message
+- allow normal typing
+- provide a clear send action
+- be disabled or guarded while streaming
+- avoid duplicate submit while stream is active
+- clear after successful submit starts
 
 If Enter-to-send exists, preserve it.
 
@@ -334,61 +334,61 @@ Do not keep a typing indicator forever after tokens arrive.
 
 Stop typing/loading state on:
 
-* `{ done: true }`
-* stream error
-* request failure
+- `{ done: true }`
+- stream error
+- request failure
 
 ## Error Handling
 
 Handle these cases:
 
-* session creation fails
-* chat request fails before stream opens
-* stream connection is interrupted
-* backend sends `{ error: "..." }`
-* SSE parser receives malformed event
-* browser does not support `ReadableStream`
-* backend response is not `text/event-stream`
+- session creation fails
+- chat request fails before stream opens
+- stream connection is interrupted
+- backend sends `{ error: "..." }`
+- SSE parser receives malformed event
+- browser does not support `ReadableStream`
+- backend response is not `text/event-stream`
 
 Error behavior:
 
-* stop loading state
-* stop streaming state
-* show readable error message
-* preserve user message
-* preserve partial assistant message if useful
-* do not clear the full chat unnecessarily
+- stop loading state
+- stop streaming state
+- show readable error message
+- preserve user message
+- preserve partial assistant message if useful
+- do not clear the full chat unnecessarily
 
 ## Loading States
 
 The chat feature should distinguish:
 
-* idle
-* creating session
-* sending message
-* waiting for first token
-* streaming response
-* completed
-* error
+- idle
+- creating session
+- sending message
+- waiting for first token
+- streaming response
+- completed
+- error
 
 The UI does not need separate visual states for all of these, but the logic should not confuse them.
 
 At minimum:
 
-* show loading or typing while waiting
-* show progressive text while streaming
-* stop loading after done or error
+- show loading or typing while waiting
+- show progressive text while streaming
+- stop loading after done or error
 
 ## Backend Contract Dependency
 
 This feature depends on backend behavior:
 
-* `POST /api/session` returns a valid `sessionId`
-* `POST /api/chat` accepts `{ sessionId, message }`
-* `POST /api/chat` returns `text/event-stream`
-* stream sends `data: {"token":"..."}` events
-* stream ends with `data: {"done":true}`
-* stream may send `data: {"error":"..."}` on failure
+- `POST /api/session` returns a valid `sessionId`
+- `POST /api/chat` accepts `{ sessionId, message }`
+- `POST /api/chat` returns `text/event-stream`
+- stream sends `data: {"token":"..."}` events
+- stream ends with `data: {"done":true}`
+- stream may send `data: {"error":"..."}` on failure
 
 If backend does not follow this contract, record the mismatch in:
 
@@ -400,48 +400,48 @@ Do not silently patch around backend contract changes without documenting them.
 
 Do not implement:
 
-* WebSocket chat
-* webhook listener
-* polling loop
-* fake typewriter effect after full response
-* mock-only chat flow if real API is expected
-* new chat transport library
-* new state management library
-* authentication
-* multi-user presence
-* chat room logic
-* file upload
-* voice input
-* markdown renderer unless explicitly requested
+- WebSocket chat
+- webhook listener
+- polling loop
+- fake typewriter effect after full response
+- mock-only chat flow if real API is expected
+- new chat transport library
+- new state management library
+- authentication
+- multi-user presence
+- chat room logic
+- file upload
+- voice input
+- markdown renderer unless explicitly requested
 
 ## Manual Test Checklist
 
 For chat changes, manually verify:
 
-* [ ] Open `/`.
-* [ ] Chat page renders.
-* [ ] Input is visible.
-* [ ] Empty message cannot be submitted.
-* [ ] User message appears immediately after submit.
-* [ ] Assistant placeholder or typing indicator appears.
-* [ ] Assistant response appears progressively from stream tokens.
-* [ ] One assistant bubble is used for one assistant response.
-* [ ] Input is disabled or guarded while streaming.
-* [ ] `{ done: true }` ends loading state.
-* [ ] Error state is readable if request fails.
-* [ ] Long messages wrap correctly.
-* [ ] Mobile layout remains usable.
+- [ ] Open `/`.
+- [ ] Chat page renders.
+- [ ] Input is visible.
+- [ ] Empty message cannot be submitted.
+- [ ] User message appears immediately after submit.
+- [ ] Assistant placeholder or typing indicator appears.
+- [ ] Assistant response appears progressively from stream tokens.
+- [ ] One assistant bubble is used for one assistant response.
+- [ ] Input is disabled or guarded while streaming.
+- [ ] `{ done: true }` ends loading state.
+- [ ] Error state is readable if request fails.
+- [ ] Long messages wrap correctly.
+- [ ] Mobile layout remains usable.
 
 ## Completion Checklist
 
 A chat task is complete when:
 
-* [ ] Current plan was updated before coding.
-* [ ] Chat transport remains `POST /api/chat` with streaming response.
-* [ ] No webhook, WebSocket, or polling logic was introduced.
-* [ ] Stream tokens render progressively.
-* [ ] Done event ends streaming state.
-* [ ] Error path is handled.
-* [ ] No duplicate assistant bubble per token.
-* [ ] Relevant validation commands were run or failure reason was recorded.
-* [ ] Handoff was updated after implementation.
+- [ ] Current plan was updated before coding.
+- [ ] Chat transport remains `POST /api/chat` with streaming response.
+- [ ] No webhook, WebSocket, or polling logic was introduced.
+- [ ] Stream tokens render progressively.
+- [ ] Done event ends streaming state.
+- [ ] Error path is handled.
+- [ ] No duplicate assistant bubble per token.
+- [ ] Relevant validation commands were run or failure reason was recorded.
+- [ ] Handoff was updated after implementation.
