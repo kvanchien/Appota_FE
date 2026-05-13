@@ -48,16 +48,23 @@ export default function ChatInput({ onSend, disabled }) {
 
   const handleInput = (e) => {
     setText(e.target.value)
-    const el = e.target
-    el.style.height = 'auto'
-    el.style.height = `${Math.min(el.scrollHeight, 140)}px`
+    adjustHeight()
   }
+
+  const adjustHeight = useCallback(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 180)
+      textareaRef.current.style.height = `${newHeight}px`
+      textareaRef.current.style.overflowY =
+        textareaRef.current.scrollHeight > 180 ? 'auto' : 'hidden'
+    }
+  }, [])
 
   const resizeAndFocusTextArea = () => {
     if (!textareaRef.current) return
     textareaRef.current.focus()
-    textareaRef.current.style.height = 'auto'
-    textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 140)}px`
+    setTimeout(adjustHeight, 0)
   }
 
   const applyQuickPrompt = (prompt) => {
@@ -102,44 +109,45 @@ export default function ChatInput({ onSend, disabled }) {
   }
 
   return (
-    <div className="p-4 bg-white border-t border-slate-100 space-y-3">
-      <div className="flex flex-wrap gap-2">
+    <div className="p-4 bg-transparent space-y-4">
+      {/* Quick Prompts */}
+      <div className="flex flex-wrap gap-2 justify-center">
         <button
           type="button"
           disabled={disabled}
           onClick={() => applyQuickPrompt(QUICK_PROMPTS.mechanic)}
-          className="px-3 py-1.5 rounded-full text-xs font-medium border border-blue-200 text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 rounded-xl text-xs font-semibold border border-blue-100 text-blue-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-blue-300 transition-all disabled:opacity-50"
         >
-          Hỏi đáp cơ chế game
+          💡 Cơ chế game
         </button>
         <button
           type="button"
           disabled={disabled}
           onClick={() => applyQuickPrompt(QUICK_PROMPTS.event)}
-          className="px-3 py-1.5 rounded-full text-xs font-medium border border-purple-200 text-purple-700 bg-purple-50 hover:bg-purple-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 rounded-xl text-xs font-semibold border border-purple-100 text-purple-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-purple-300 transition-all disabled:opacity-50"
         >
-          Hỏi đáp sự kiện game
+          🎁 Sự kiện game
         </button>
         <button
           type="button"
           disabled={disabled}
           onClick={() => setShowTicketForm((prev) => !prev)}
-          className="px-3 py-1.5 rounded-full text-xs font-medium border border-emerald-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 rounded-xl text-xs font-semibold border border-emerald-100 text-emerald-600 bg-white/80 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-emerald-300 transition-all disabled:opacity-50"
         >
-          Viết ticket báo lỗi game
+          🐞 Báo lỗi QA
         </button>
       </div>
 
       {showTicketForm && (
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 space-y-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className="rounded-2xl border border-slate-200 bg-white/90 backdrop-blur-md p-4 space-y-3 shadow-xl animate-slide-up">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <input
               type="text"
               value={ticketForm.gameName}
               onChange={(e) => updateTicketField('gameName', e.target.value)}
               placeholder="Tên game"
               disabled={disabled}
-              className="input-field py-2 text-sm"
+              className="input-field bg-slate-50/50"
             />
             <input
               type="text"
@@ -147,7 +155,7 @@ export default function ChatInput({ onSend, disabled }) {
               onChange={(e) => updateTicketField('feature', e.target.value)}
               placeholder="Tính năng/Sự kiện"
               disabled={disabled}
-              className="input-field py-2 text-sm"
+              className="input-field bg-slate-50/50"
             />
           </div>
           <input
@@ -156,7 +164,7 @@ export default function ChatInput({ onSend, disabled }) {
             onChange={(e) => updateTicketField('summary', e.target.value)}
             placeholder="Mô tả lỗi ngắn"
             disabled={disabled}
-            className="input-field py-2 text-sm"
+            className="input-field bg-slate-50/50"
           />
           <textarea
             rows={2}
@@ -164,16 +172,16 @@ export default function ChatInput({ onSend, disabled }) {
             onChange={(e) => updateTicketField('steps', e.target.value)}
             placeholder="Các bước tái hiện"
             disabled={disabled}
-            className="input-field py-2 text-sm resize-none"
+            className="input-field bg-slate-50/50 resize-none"
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <textarea
               rows={2}
               value={ticketForm.actual}
               onChange={(e) => updateTicketField('actual', e.target.value)}
               placeholder="Kết quả thực tế"
               disabled={disabled}
-              className="input-field py-2 text-sm resize-none"
+              className="input-field bg-slate-50/50 resize-none"
             />
             <textarea
               rows={2}
@@ -181,23 +189,23 @@ export default function ChatInput({ onSend, disabled }) {
               onChange={(e) => updateTicketField('expected', e.target.value)}
               placeholder="Kết quả mong đợi"
               disabled={disabled}
-              className="input-field py-2 text-sm resize-none"
+              className="input-field bg-slate-50/50 resize-none"
             />
           </div>
-          <div className="flex flex-col gap-2 md:flex-row">
+          <div className="flex flex-col gap-3 md:flex-row">
             <input
               type="text"
               value={ticketForm.device}
               onChange={(e) => updateTicketField('device', e.target.value)}
               placeholder="Thiết bị/OS"
               disabled={disabled}
-              className="input-field py-2 text-sm flex-1"
+              className="input-field bg-slate-50/50 flex-1"
             />
             <button
               type="button"
               disabled={disabled}
               onClick={handleCreateTicketPrompt}
-              className="px-3 py-2 rounded-lg text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary"
             >
               Tạo prompt ticket
             </button>
@@ -205,8 +213,20 @@ export default function ChatInput({ onSend, disabled }) {
         </div>
       )}
 
-      <div className="flex items-end gap-3">
-        <div className="flex-1 relative">
+      {/* Main Input Area */}
+      <div className="relative max-w-4xl mx-auto w-full">
+        <div
+          className="
+      flex items-end gap-2
+      bg-white
+      rounded-3xl
+      border border-slate-200/80
+      px-4 py-2
+      shadow-sm
+      transition-all duration-200
+      focus-within:border-slate-300
+    "
+        >
           <textarea
             ref={textareaRef}
             rows={1}
@@ -214,27 +234,38 @@ export default function ChatInput({ onSend, disabled }) {
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             disabled={disabled}
-            placeholder="Nhập câu hỏi của bạn... (Enter để gửi)"
-            className="input-field resize-none overflow-hidden leading-6 py-3 pr-4 scrollbar-thin"
-            style={{ minHeight: '48px', maxHeight: '140px' }}
+            placeholder="Hỏi Appota AI bất cứ điều gì..."
+            className="
+        flex-1
+        bg-transparent
+        border-none
+        outline-none
+        focus:outline-none
+        focus:ring-0
+        resize-none
+        py-3
+        text-slate-800
+        placeholder:text-slate-400
+        text-sm
+        leading-6
+        scrollbar-thin
+      "
+            style={{ minHeight: '24px', maxHeight: '180px' }}
           />
-        </div>
 
-        <button
-          onClick={handleSend}
-          disabled={disabled || !text.trim()}
-          aria-label="Gửi tin nhắn"
-          className="flex-shrink-0 w-12 h-12 rounded-xl
-                     bg-gradient-to-r from-blue-500 to-blue-600
-                     text-white shadow-md
-                     hover:from-blue-600 hover:to-blue-700
-                     active:scale-95 transition-all duration-150
-                     disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100
-                     flex items-center justify-center"
-        >
-          <SendOutlined className="text-lg" />
-        </button>
+          <button
+            onClick={handleSend}
+            disabled={disabled || !text.trim()}
+            className="mb-1 mr-1 flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-20 disabled:grayscale disabled:scale-100 flex items-center justify-center"
+          >
+            {' '}
+            <SendOutlined className="text-base" />{' '}
+          </button>
+        </div>
       </div>
+      <p className="text-[10px] text-center text-slate-400 mt-2">
+        AI có thể đưa ra câu trả lời không chính xác. Hãy kiểm tra lại các thông tin quan trọng.
+      </p>
     </div>
   )
 }
