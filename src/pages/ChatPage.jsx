@@ -85,11 +85,13 @@ export default function ChatPage() {
 
           {/* Messages */}
           {messages.map((msg, idx) => (
+            // Avoid markdown re-parse during active token stream for the last assistant message.
             <ChatBubble
               key={msg.id || idx}
               role={msg.role}
               content={msg.content}
               timestamp={msg.timestamp}
+              isStreaming={isLoading && idx === messages.length - 1 && msg.role === 'assistant'}
             />
           ))}
 
