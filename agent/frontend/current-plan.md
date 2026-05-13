@@ -57,38 +57,6 @@ Read feature-specific files when relevant:
 - [ ] `agent/features/admin-knowledge.md`
 - [ ] `agent/features/api-integration.md`
 
-## Problem Summary
-
-Hai vị trí fallback URL sai:
-
-1. `baseApi.js` dùng `localhost:5000` làm fallback thay vì `localhost:3000` (backend chạy PORT=3000)
-2. `vite.config.js` proxy target fallback cũng là `localhost:5000`
-3. `api-integration.md` (agent doc) cũng ghi sai `localhost:5000`
-
-Khi `.env` không được load đúng (ví dụ: môi trường CI/CD hoặc mở folder khác), cả proxy lẫn direct fetch đều trỏ sai port → API không kết nối được.
-
-## Expected Behavior
-
-Sau fix:
-
-- Admin conversations list load được từ `GET /api/conversations`
-- Admin conversation detail load được từ `GET /api/conversations/:id` (dùng MongoDB `_id`)
-- Knowledge Base CRUD hoạt động với `GET/POST/PUT/DELETE /api/knowledge`
-- Chat page tạo session `POST /api/session` và stream `POST /api/chat` đúng
-- Fallback URL đúng `localhost:3000` ở mọi chỗ
-
-## Current Behavior
-
-API calls thất bại khi `.env` không được load — fallback trỏ sai port 5000 thay vì 3000.
-
-## Scope
-
-- Fix fallback URL trong `baseApi.js` từ `localhost:5000` → `localhost:3000`
-- Fix fallback URL trong `vite.config.js` proxy từ `localhost:5000` → `localhost:3000`
-- Cập nhật `api-integration.md` agent doc để ghi đúng port
-- Xác minh tất cả API endpoints đúng với Postman collection
-- Xác minh response shape handling đúng
-
 ## Out Of Scope
 
 - Backend code.

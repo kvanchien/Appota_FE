@@ -1,14 +1,17 @@
-const API_BASE = import.meta.env.VITE_API_URL
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 /**
- * Generic fetch wrapper
- * @param {string} url
->>>>>>> main
+ * Generic fetch wrapper.
+ * Uses API_BASE prefix so requests work both in dev (via Vite proxy) and in
+ * production where no proxy exists.
+ *
+ * @param {string} path  e.g. '/api/conversations'
  * @param {RequestInit} options
  * @returns {Promise<{ success: boolean, data: any, message?: string }>}
  */
 export async function apiFetch(path, options = {}) {
-  const res = await fetch(path, {
+  const url = `${API_BASE}${path}`
+  const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json', ...options.headers },
     ...options,
   })
