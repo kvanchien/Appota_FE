@@ -15,11 +15,9 @@ export default function CategoryManageModal({
   open,
   onClose,
   categories = [],
-  onAdd,
   onRename,
   onDelete,
 }) {
-  const [newCatName, setNewCatName] = useState('')
   const [editingCategory, setEditingCategory] = useState(null)
   const [tempCategoryName, setTempCategoryName] = useState('')
 
