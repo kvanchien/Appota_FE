@@ -1,31 +1,37 @@
 /**
- * Parse SSE (Server-Sent Events) raw text chunk into event objects.
+ * Parse SSE chunk with carry-over buffer to tolerate split frames.
  *
- * Each SSE event looks like:
- *   data: {"token":"hello"}\n\n
- *   data: {"done":true}\n\n
- *
- * @param {string} chunk  — raw text from ReadableStream decoder
- * @returns {Array<{ token?: string, done?: boolean, error?: string }>}
+ * @param {string} chunk
+ * @param {string} buffer
+ * @returns {{ events: Array<{ token?: string, done?: boolean, error?: string, sessionId?: string }>, buffer: string }}
  */
-export function parseSSEChunk(chunk) {
-  const lines = chunk.split('\n')
+export function parseSSEChunk(chunk, buffer = '') {
   const events = []
+  let working = `${buffer}${chunk ?? ''}`.replace(/\r\n/g, '\n')
+  let boundaryIndex = working.indexOf('\n\n')
 
-  for (const line of lines) {
-    const trimmed = line.trim()
-    if (!trimmed.startsWith('data:')) continue
+  while (boundaryIndex !== -1) {
+    const rawEvent = working.slice(0, boundaryIndex)
+    working = working.slice(boundaryIndex + 2)
+    boundaryIndex = working.indexOf('\n\n')
 
-    const jsonStr = trimmed.slice(5).trim()
-    if (!jsonStr) continue
+    const dataLines = rawEvent
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('data:'))
+      .map((line) => line.slice(5).trim())
+      .filter(Boolean)
+
+    if (dataLines.length === 0) continue
+
+    const payload = dataLines.join('\n')
 
     try {
-      const parsed = JSON.parse(jsonStr)
-      events.push(parsed)
+      events.push(JSON.parse(payload))
     } catch {
-      // Ignore malformed JSON lines in SSE stream
+      // Ignore malformed SSE frame and continue with next frame.
     }
   }
 
-  return events
+  return { events, buffer: working }
 }
