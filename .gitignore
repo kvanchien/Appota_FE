@@ -12,6 +12,7 @@ build/
 
 # Environment files — NEVER commit
 .env
+.env.production
 .env.local
 .env.*.local
 .claude/settings.local.json

@@ -12,9 +12,9 @@ const NAV_ITEMS = [
  */
 export default function AdminLayout() {
   return (
-    <div className="min-h-screen flex bg-surface-50">
+    <div className="h-screen flex bg-surface-50 overflow-hidden">
       {/* ── Sidebar ─────────────────────────────────────── */}
-      <aside className="w-60 flex-shrink-0 bg-white border-r border-slate-100 flex flex-col shadow-sm">
+      <aside className="w-60 flex-shrink-0 bg-white border-r border-slate-100 flex flex-col shadow-sm h-full overflow-y-auto">
         {/* Logo / Brand */}
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center gap-3">
@@ -52,7 +52,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* ── Main Content ─────────────────────────────────── */}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 h-full overflow-y-auto scrollbar-thin">
         <Outlet />
       </main>
     </div>
