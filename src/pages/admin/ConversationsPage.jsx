@@ -129,6 +129,7 @@ export default function ConversationsPage() {
           data={filteredData}
           loading={loading}
           pagination={pagination}
+          onPageChange={(page, limit) => loadConversations({ page, limit })}
           onRowClick={(record) => navigate(`/admin/conversations/${record._id}`)}
         />
       </div>
