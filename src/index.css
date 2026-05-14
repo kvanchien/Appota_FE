@@ -40,16 +40,18 @@
   /* ── Chat Bubbles ── */
   .bubble-user {
     @apply bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-3xl rounded-br-md
-           px-3 sm:px-4 py-2.5 sm:py-3 shadow-bubble max-w-[88%] sm:max-w-[75%] text-sm leading-relaxed;
+         px-3 sm:px-4 py-2.5 sm:py-3 shadow-bubble max-w-[88%] sm:max-w-[75%] text-sm leading-relaxed
+         break-words whitespace-normal;
   }
 
   .bubble-bot {
     @apply bg-white text-slate-700 rounded-3xl rounded-bl-md
-           px-3 sm:px-4 py-2.5 sm:py-3 shadow-bubble max-w-[88%] sm:max-w-[75%] text-sm leading-relaxed border border-slate-100;
+         px-3 sm:px-4 py-2.5 sm:py-3 shadow-bubble max-w-[88%] sm:max-w-[75%] text-sm leading-relaxed border border-slate-100
+         break-words whitespace-normal;
   }
 
   .markdown-content {
-    @apply text-sm leading-relaxed break-words;
+    @apply text-sm leading-relaxed break-words whitespace-normal;
   }
 
   .markdown-content > * + * {

@@ -79,13 +79,15 @@ export default function ChatBubble({ role, content, timestamp, isStreaming = fal
         {isUser ? 'U' : '🤖'}
       </div>
 
-      <div className={clsx('flex flex-col gap-1', isUser ? 'items-end' : 'items-start')}>
-        <div className={isUser ? 'bubble-user' : 'bubble-bot'}>
+      <div
+        className={clsx('flex flex-col gap-1 flex-1 min-w-0', isUser ? 'items-end' : 'items-start')}
+      >
+        <div className={clsx(isUser ? 'bubble-user' : 'bubble-bot', 'w-fit')}>
           {!safeContent && <span className="opacity-50 italic text-xs">Đang xử lý...</span>}
 
           {safeContent &&
             (isUser || isStreaming ? (
-              <div className="whitespace-pre-wrap break-words">{safeContent}</div>
+              <div className="break-words whitespace-pre-line">{safeContent}</div>
             ) : (
               <SafeMarkdown content={safeContent} />
             ))}
