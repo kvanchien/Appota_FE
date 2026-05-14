@@ -4,6 +4,12 @@
 
 Before writing or modifying code, read `agent/README.md` and its `backend` files and `docs/project-structure.md`. Follow its folder responsibility rules when deciding where to place config, controllers, enums, helpers, infra clients, interfaces, models, routes, services, shared primitives, and utils.
 
+## Encoding Rule
+
+This repository uses UTF-8 encoding. Vietnamese text must be written as proper Vietnamese with accents, for example `Không thể tải dữ liệu` or `Yêu cầu cả tên cũ và tên mới`.
+
+Do not introduce mojibake or double-encoded text. If you see broken Vietnamese glyphs while editing, fix them back to valid UTF-8 Vietnamese instead of converting Vietnamese text to ASCII.
+
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
 **Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
