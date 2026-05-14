@@ -6,23 +6,38 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000'
  * production where no proxy exists.
  *
  * @param {string} path  e.g. '/api/conversations'
- * @param {RequestInit} options
+ * @param {RequestInit & { timeoutMs?: number }} options
  * @returns {Promise<{ success: boolean, data: any, message?: string }>}
  */
 export async function apiFetch(path, options = {}) {
+  const { timeoutMs = 30_000, ...fetchOptions } = options
   const url = `${API_BASE}${path}`
-  const res = await fetch(url, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
-    ...options,
-  })
 
-  const data = await res.json()
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), timeoutMs)
 
-  if (!res.ok || !data.success) {
-    throw new Error(data.message || `HTTP ${res.status}`)
+  try {
+    const res = await fetch(url, {
+      headers: { 'Content-Type': 'application/json', ...fetchOptions.headers },
+      signal: controller.signal,
+      ...fetchOptions,
+    })
+
+    const data = await res.json()
+
+    if (!res.ok || !data.success) {
+      throw new Error(data.message || `HTTP ${res.status}`)
+    }
+
+    return data
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      throw new Error('Yêu cầu đã hết thời gian chờ. Vui lòng thử lại.')
+    }
+    throw err
+  } finally {
+    clearTimeout(timer)
   }
-
-  return data
 }
 
 // Exported for chatApi SSE streaming (needs absolute URL for EventSource / fetch stream)
