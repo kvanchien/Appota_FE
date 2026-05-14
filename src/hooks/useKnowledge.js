@@ -12,14 +12,20 @@ import { message } from 'antd'
 export function useKnowledge() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(false)
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 })
   const [addedCategories, setAddedCategories] = useState([]) // Lưu các danh mục vừa tạo nhưng chưa có Q&A
 
   // ── Fetch all ────────────────────────────────────────────────────────────
-  const fetchAll = useCallback(async () => {
+  const fetchAll = useCallback(async ({ page = 1, limit = 10 } = {}) => {
     setLoading(true)
     try {
-      const data = await getKnowledge()
-      setItems(data ?? [])
+      const data = await getKnowledge({ page, limit })
+      setItems(data?.entries ?? [])
+      setPagination({
+        current: data?.pagination?.page ?? page,
+        pageSize: data?.pagination?.limit ?? limit,
+        total: data?.pagination?.total ?? 0,
+      })
     } catch (err) {
       message.error(err.message)
     } finally {
@@ -90,6 +96,7 @@ export function useKnowledge() {
 
   return {
     items,
+    pagination,
     categories,
     loading,
     fetchAll,

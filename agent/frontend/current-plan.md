@@ -6,237 +6,135 @@ This file stores the current execution plan for the Frontend Agent.
 
 The agent must update this file from the provided task prompt before changing source code.
 
-This file is dynamic. It should reflect the latest frontend task only.
-
 ## Status
 
 Completed.
 
 ## Current Task
 
-Kết nối Frontend admin với AppotaBackend API — fix fallback URL sai, cập nhật agent docs, đảm bảo tất cả API calls đúng endpoint và response shape.
+Fix CI formatting failure for `npm run format:check`.
 
 ## Task Source Prompt
 
-"Đọc cấu trúc Appota_FE và Appota_Backend. Backend đã hoàn thiện giờ tôi muốn cập nhật lại Frontend phần admin kết nối với api. Hiện chưa kết nối được api. Đọc các folder postman, docs trong backend và folder agents trong frontend tuân thủ các quy tắc đó"
+"Trong frontend, đang có lỗi ci cd khi chạy npm run format:check, hãy fix"
 
 ## Affected Area
-
-Mark all areas affected by the current task.
 
 - [ ] Chat screen
 - [ ] Chat streaming
 - [ ] SSE parser
-- [x] API integration
-- [x] Admin conversations
-- [x] Admin Knowledge Base
+- [ ] API integration
+- [ ] Admin conversations
+- [ ] Admin Knowledge Base
 - [ ] UI/UX
 - [ ] Routing
 - [ ] Layout
 - [x] Build/lint
-- [x] Other: Agent doc update, vite.config.js proxy fix
+- [x] Formatting
 
-## Related Agent Files To Read
+## Related Agent Files Read
 
-Before coding, read the required files.
+- [x] `AGENTS.md`
+- [x] `agent/README.md`
+- [x] `agent/frontend/context.md`
+- [x] `agent/frontend/skill.md`
+- [x] `agent/frontend/checklist.md`
 
-Required for every frontend task:
+## Problem Summary
 
-- [ ] `agent/frontend/context.md`
-- [ ] `agent/frontend/skill.md`
-- [ ] `agent/frontend/checklist.md`
+`npm run format:check` fails because many files in the frontend repo do not match the configured Prettier style.
 
-Read when UI/UX is affected:
+## Expected Behavior
 
-- [ ] `agent/frontend/ui-ux-rules.md`
+`npm run format:check` should pass in CI with the existing `.prettierrc` configuration.
 
-Read feature-specific files when relevant:
+## Scope
 
-- [ ] `agent/features/chat.md`
-- [ ] `agent/features/admin-conversations.md`
-- [ ] `agent/features/admin-knowledge.md`
-- [ ] `agent/features/api-integration.md`
+- Run the repo's formatter against the frontend repo.
+- Keep changes mechanical and formatting-only.
+- Validate with `npm run format:check`, `npm run lint`, and `npm run build`.
+- Update handoff with validation result.
 
 ## Out Of Scope
 
-- Backend code.
-- MongoDB schema.
-- Grok API server integration.
-- Authentication.
-- New dependencies.
-- Large folder restructuring.
-- Unrelated UI redesign.
-- Unrelated formatting across the codebase.
-- Không refactor toàn bộ API layer.
+- Behavior changes.
+- API contract changes.
+- Dependency changes.
+- Refactors unrelated to formatting.
+- Backend changes.
 
-## Files To Inspect
+## Files Inspected
 
-- `src/api/baseApi.js` — kiểm tra fallback URL
-- `vite.config.js` — kiểm tra proxy target
-- `src/api/conversationApi.js` — kiểm tra endpoint paths
-- `src/api/knowledgeApi.js` — kiểm tra endpoint paths
-- `src/api/chatApi.js` — kiểm tra session/chat endpoints
-- `agent/features/api-integration.md` — kiểm tra doc có ghi đúng port không
-- Backend `.env` — xác nhận PORT=3000
-- Backend `src/app.ts` — xác nhận CORS origin
-- Backend `src/routes/index.ts` — xác nhận prefix /api
-- Postman collections — xác nhận endpoint shapes
+- `.prettierrc`
+- `package.json`
+- `agent/README.md`
+- `agent/frontend/context.md`
+- `agent/frontend/skill.md`
+- `agent/frontend/checklist.md`
 
 ## Files Likely To Modify
 
-- `src/api/baseApi.js` — fix fallback URL
-- `vite.config.js` — fix proxy target fallback
-- `agent/features/api-integration.md` — fix doc URL
-- `agent/frontend/current-plan.md` — (file này)
-- `agent/frontend/handoff.md` — sau khi xong
+Many files currently reported by `prettier --check .`, including source, config, markdown, and workflow files. This is expected because the task is explicitly to fix repo-wide format check.
+
+## GitNexus Impact
+
+- `App` pre-edit impact: LOW risk, no direct callers or affected processes.
+- Formatting is expected to be mechanical and not alter runtime behavior.
 
 ## Implementation Steps
 
-1. Đọc backend `.env`, `src/app.ts`, `src/routes/index.ts`, Postman collections để xác nhận API contract.
-2. Đọc `baseApi.js`, `vite.config.js`, `api-integration.md` để xác nhận vấn đề fallback URL.
-3. Fix `baseApi.js`: đổi fallback `localhost:5000` → `localhost:3000`.
-4. Fix `vite.config.js` proxy: đổi fallback `localhost:5000` → `localhost:3000`.
-5. Cập nhật `agent/features/api-integration.md`: fix URL doc.
-6. Xác minh tất cả API endpoint paths trong `conversationApi.js`, `knowledgeApi.js`, `chatApi.js` đúng với Postman.
-7. Run lint và build.
-8. Update `handoff.md`.
-
-## Chat Streaming Requirements
-
-Use this section only if the task affects chat, `useChat.js`, `chatApi.js`, or `sseParser.js`.
-
-- [ ] Confirm chat uses `POST /api/chat`.
-- [ ] Confirm frontend reads `response.body.getReader()`.
-- [ ] Confirm frontend decodes stream chunks with `TextDecoder`.
-- [ ] Confirm frontend parses SSE `data:` events.
-- [ ] Confirm `{ token }` appends to the current assistant message.
-- [ ] Confirm `{ done: true }` stops loading state.
-- [ ] Confirm stream error is handled.
-- [ ] Confirm no WebSocket, webhook, polling, or fake delayed rendering is introduced.
-- [ ] Confirm one assistant bubble is not created per token.
-
-## API Contract Requirements
-
-Use this section if the task affects API calls.
-
-- [ ] Preserve `VITE_API_URL` usage.
-- [ ] Preserve API wrapper pattern under `src/api/`.
-- [ ] Preserve JSON response format handling: `{ success, data, message }`.
-- [ ] Preserve chat stream exception for `text/event-stream`.
-- [ ] Handle backend error messages.
-- [ ] Handle network failures.
-
-## UI/UX Requirements
-
-Use this section if the task affects visible UI.
-
-- [ ] Main action is clear.
-- [ ] Loading state is visible.
-- [ ] Empty state exists where needed.
-- [ ] Error state is readable.
-- [ ] Layout remains usable on mobile.
-- [ ] Layout remains readable on desktop.
-- [ ] No unnecessary redesign is introduced.
+1. Confirm `npm run format:check` failure.
+2. Run `npm run format` using existing repo script.
+3. Re-run `npm run format:check`.
+4. Run `npm run lint`.
+5. Run `npm run build`.
+6. Run GitNexus detect changes.
+7. Update handoff.
 
 ## Validation Plan
 
-Run available commands when possible:
-
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] `npm run format:check` if available
-
-Manual validation to perform:
-
-- [ ] Open affected route.
-- [ ] Trigger affected user action.
-- [ ] Confirm success path.
-- [ ] Confirm error or empty state if relevant.
-- [ ] Confirm no unrelated screen is broken.
-
-For chat tasks:
-
-- [ ] Send a message.
-- [ ] Confirm user message appears immediately.
-- [ ] Confirm assistant response streams progressively.
-- [ ] Confirm input is guarded while streaming.
-- [ ] Confirm done event ends loading state.
-
-For admin conversations:
-
-- [ ] Load conversation list.
-- [ ] Open conversation detail.
-- [ ] Confirm message order and readable layout.
-
-For admin Knowledge Base:
-
-- [ ] Load KB list.
-- [ ] Create entry.
-- [ ] Edit entry.
-- [ ] Delete entry with confirmation.
-
-## Risk Notes
-
-TODO: List risks before coding.
-
-Examples:
-
-- Backend endpoint may not match expected response contract.
-- Stream parser may fail when JSON is split across chunks.
-- API may return error shape different from `{ success, data, message }`.
-- Ant Design table may overflow on mobile.
-- Existing code may not have validation scripts.
+- [x] Initial `npm run format:check`
+- [x] `npm run format`
+- [x] Final `npm run format:check`
+- [x] `npm run lint`
+- [x] `npm run build`
+- [x] GitNexus detect changes
 
 ## Backend/API Dependencies
 
-TODO: Record dependencies on backend behavior.
-
-Examples:
-
-- Requires `POST /api/chat` to return `text/event-stream`.
-- Requires stream events in `data: {"token":"..."}` format.
-- Requires final event `data: {"done":true}`.
-- Requires REST endpoints to return `{ success, data, message }`.
-
-If no backend dependency is involved, write:
-
-No backend/API dependency beyond existing contract.
+None.
 
 ## Definition Of Done
 
-The current task is done when:
-
-- [ ] Implementation matches task prompt.
-- [ ] Scope stayed narrow.
-- [ ] Affected UI works.
-- [ ] Affected API flow works.
-- [ ] Loading, empty, and error states are handled where relevant.
-- [ ] Chat streaming contract is preserved if chat is affected.
-- [ ] No unrelated backend code was changed.
-- [ ] No unnecessary dependency was added.
-- [ ] Validation status is known.
-- [ ] `agent/frontend/handoff.md` is updated.
+- [x] `npm run format:check` passes.
+- [x] `npm run lint` passes.
+- [x] `npm run build` passes.
+- [x] No backend files are changed.
+- [x] `agent/frontend/handoff.md` is updated.
 
 ## Final Result
-
-TODO: Fill after implementation.
 
 Status:
 
 - [ ] Not started
 - [ ] In progress
-- [ ] Completed
+- [x] Completed
 - [ ] Blocked
 - [ ] Partially completed
 
 Summary:
 
-TODO.
+Ran the existing repo formatter and verified the frontend CI format check now passes.
 
 Validation result:
 
-TODO.
+- Initial `npm run format:check`: failed on 50 files.
+- `npm run format`: passed.
+- Final `npm run format:check`: passed.
+- `npm run lint`: passed.
+- `npm run build`: passed.
+- GitNexus detect changes: low risk, no changed symbols/processes detected.
 
 Known issues:
 
-TODO.
+- Existing Vite build still warns that `antd-vendor` is larger than 500 kB; unchanged by this task.

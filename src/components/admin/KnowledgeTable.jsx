@@ -15,7 +15,15 @@ const CATEGORY_COLORS = {
   default: 'default',
 }
 
-export default function KnowledgeTable({ data, loading, onView, onEdit, onDelete }) {
+export default function KnowledgeTable({
+  data,
+  loading,
+  pagination,
+  onPageChange,
+  onView,
+  onEdit,
+  onDelete,
+}) {
   const [deletingId, setDeletingId] = useState(null)
 
   const handleDelete = async (id) => {
@@ -33,7 +41,11 @@ export default function KnowledgeTable({ data, loading, onView, onEdit, onDelete
       key: 'index',
       width: 52,
       align: 'center',
-      render: (_, __, idx) => <span className="text-slate-400 text-xs font-mono">{idx + 1}</span>,
+      render: (_, __, idx) => (
+        <span className="text-slate-400 text-xs font-mono">
+          {(pagination.current - 1) * pagination.pageSize + idx + 1}
+        </span>
+      ),
     },
     {
       title: <div className="text-center">Câu hỏi</div>,
@@ -145,9 +157,14 @@ export default function KnowledgeTable({ data, loading, onView, onEdit, onDelete
       loading={loading}
       rowKey="_id"
       pagination={{
-        pageSize: 10,
+        current: pagination.current,
+        pageSize: pagination.pageSize,
+        total: pagination.total,
         showTotal: (total) => `Tổng ${total} Q&A pairs`,
         showSizeChanger: false,
+      }}
+      onChange={(nextPagination) => {
+        onPageChange(nextPagination.current, nextPagination.pageSize)
       }}
       scroll={{ x: 800 }}
       className="rounded-xl overflow-hidden"

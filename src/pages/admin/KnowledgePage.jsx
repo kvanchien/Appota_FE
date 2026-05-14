@@ -18,6 +18,7 @@ const { Option } = Select
 export default function KnowledgePage() {
   const {
     items,
+    pagination,
     loading,
     fetchAll,
     create,
@@ -40,8 +41,8 @@ export default function KnowledgePage() {
   const [selectedCategory, setSelectedCategory] = useState(null)
 
   useEffect(() => {
-    fetchAll()
-  }, [fetchAll])
+    fetchAll({ page: 1, limit: pagination.pageSize })
+  }, [fetchAll, pagination.pageSize])
 
   const filteredItems = items.filter((item) => {
     const matchSearch =
@@ -78,6 +79,7 @@ export default function KnowledgePage() {
       } else {
         await create(values)
       }
+      await fetchAll({ page: editItem ? pagination.current : 1, limit: pagination.pageSize })
       closeModal()
     } catch (err) {
       setError(err.message || 'Đã xảy ra lỗi')
@@ -90,6 +92,7 @@ export default function KnowledgePage() {
     setError(null)
     try {
       await remove(id)
+      await fetchAll({ page: pagination.current, limit: pagination.pageSize })
     } catch (err) {
       setError(err.message || 'Không thể xóa Q&A')
     }
@@ -182,6 +185,8 @@ export default function KnowledgePage() {
         <KnowledgeTable
           data={filteredItems}
           loading={loading}
+          pagination={pagination}
+          onPageChange={(page, limit) => fetchAll({ page, limit })}
           onView={openView}
           onEdit={openEdit}
           onDelete={handleDelete}

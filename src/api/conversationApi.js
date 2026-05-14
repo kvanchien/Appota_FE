@@ -1,12 +1,16 @@
 import { apiFetch } from './baseApi'
 
 /**
- * Get all conversations summary (admin view).
- * GET /api/conversations
- * @returns {Promise<ConversationSummary[]>}
+ * Get conversations summary with pagination (admin view).
+ * GET /api/conversations?page=1&limit=15
+ * @returns {Promise<{ conversations: ConversationSummary[], pagination: object }>}
  */
-export async function getConversations() {
-  const res = await apiFetch('/api/conversations')
+export async function getConversations({ page = 1, limit = 15 } = {}) {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  })
+  const res = await apiFetch(`/api/conversations?${params.toString()}`)
   return res.data
 }
 
