@@ -6,79 +6,67 @@ Completed - 2026-05-14.
 
 ## Latest Task Summary
 
-Updated `Appota_FE` admin Knowledge and Conversations screens to consume the new paginated backend list APIs.
+Updated the chat hook so the frontend recovers when backend returns `Session not found` for a session that was created but later deleted by conversation cleanup before the user sends a message.
 
 ## Task Source Prompt
 
-"Rất tốt, bây giờ bạn sang repo D:\Workspace\personal\Appota_FE, chỉnh sửa 2 phần liên quan đến 2 API có dùng pagination mới này"
+"ở Frontend, nếu như có khi mới tạo một session mới (chưa kịp nhắn gì), nhưng ở backend lại mới gọi api get list conversation và xoá session cũ đi, nghĩa là session mới tạo ở frontend cũng bị xoá, gây ra lỗi \"Session not found \". Tôi cần bạn fix lỗi đó bằng cách nếu như có lỗi đó thì gọi tạo session mới luôn"
 
 ## Affected Area
 
+- [x] Chat screen
+- [x] Chat streaming
 - [x] API integration
-- [x] Admin conversations
-- [x] Admin Knowledge Base
-- [x] UI/UX table state
 - [x] Build/lint
 
 ## Files Changed
 
-- `src/api/knowledgeApi.js`
-- `src/hooks/useKnowledge.js`
-- `src/pages/admin/KnowledgePage.jsx`
-- `src/components/admin/KnowledgeTable.jsx`
-- `src/api/conversationApi.js`
-- `src/pages/admin/ConversationsPage.jsx`
-- `src/components/admin/ConversationTable.jsx`
+- `src/hooks/useChat.js`
 - `agent/frontend/current-plan.md`
 - `agent/frontend/handoff.md`
 
 ## Files Inspected But Not Changed
 
-- `agent/README.md`
-- `agent/frontend/context.md`
-- `agent/frontend/skill.md`
-- `agent/features/admin-conversations.md`
-- `agent/features/admin-knowledge.md`
+- `agent/features/chat.md`
 - `agent/features/api-integration.md`
-- `agent/frontend/checklist.md`
-- `agent/frontend/ui-ux-rules.md`
+- `src/api/chatApi.js`
+- `src/utils/sseParser.js`
+- `src/pages/ChatPage.jsx`
 
 ## Behavior Implemented
 
-- `getKnowledge({ page, limit })` now calls `GET /api/knowledge?page=<page>&limit=<limit>`.
-- `useKnowledge` now stores backend pagination metadata as Ant Design-compatible table state.
-- Knowledge table is controlled by backend pagination and page changes refetch the selected page.
-- Knowledge create/update/delete refreshes the visible paginated list after successful mutation.
-- `getConversations({ page, limit })` now calls `GET /api/conversations?page=<page>&limit=<limit>`.
-- Conversations page stores backend pagination metadata.
-- Conversations table is controlled by backend pagination and page changes refetch the selected page.
+- `sendMessage` still appends one user message and one assistant placeholder before opening the stream.
+- The stream send/read logic is retryable inside `useChat`.
+- If the first chat attempt fails with `Session not found` before any token arrives:
+  - frontend calls `POST /api/session` to create a new session,
+  - updates local `sessionId`,
+  - retries the same message once,
+  - reuses the same assistant placeholder.
+- If tokens already started arriving, retry is skipped to avoid mixing two assistant responses.
+- Non-recoverable errors keep the existing behavior: show an error and remove the empty assistant placeholder when no token was received.
 
 ## API Contract Notes
 
-- `GET /api/knowledge` is expected to return `data.entries` and `data.pagination`.
-- `GET /api/conversations` is expected to return `data.conversations` and `data.pagination`.
-- Existing `apiFetch` response handling remains unchanged.
-- Chat streaming was not touched.
+- Chat still uses `POST /api/chat` with streaming response.
+- Session recovery uses existing `POST /api/session`.
+- No `EventSource`, polling, WebSocket, or fake typewriter behavior was added.
 
 ## UI/UX Notes
 
-- Existing Ant Design table layout and page styling were preserved.
-- Table pagination now uses backend `page`, `limit`, and `total`.
-- Current search/category/date filters still apply client-side to the currently loaded backend page only.
+- No visual redesign.
+- No duplicate user bubble is created during retry.
+- The assistant response still streams into one assistant bubble.
 
 ## GitNexus Notes
 
 - Pre-edit impact:
-  - `getKnowledge`: LOW, direct caller `fetchAll`, affected process `KnowledgePage`.
-  - `useKnowledge`: LOW, direct caller `KnowledgePage`.
-  - `KnowledgePage`: LOW, 0 upstream callers.
-  - `KnowledgeTable`: LOW, 0 upstream callers.
-  - `getConversations`: LOW, direct caller `load`, affected process `ConversationsPage`.
-  - `ConversationsPage`: LOW, 0 upstream callers.
-  - `ConversationTable`: LOW, 0 upstream callers.
+  - `useChat`: LOW, direct caller `ChatPage`, affected process `ChatPage`.
+  - `sendChatMessage`: LOW, direct caller `sendMessage`.
+  - `createSession`: LOW, direct callers `ensureSession` and `initSession`.
+  - `sendMessage` was ambiguous in the index; scoped change is in `src/hooks/useChat.js`.
 - Post-edit detect changes:
   - Risk level: medium.
-  - Affected processes are expected: Knowledge API flow, Knowledge mutation refresh flow, and Conversations API flow.
+  - Affected processes are expected chat processes: `ChatPage` and `SendMessage` API flows.
 
 ## Validation Commands Run
 
@@ -90,29 +78,25 @@ Updated `Appota_FE` admin Knowledge and Conversations screens to consume the new
 
 - `npm run lint`: passed.
 - `npm run build`: passed.
-- `npm run format:check`: failed. The repo has existing Prettier drift across many files, including agent docs and source files; this task did not run repo-wide formatting.
+- `npm run format:check`: failed due to existing repo-wide Prettier drift across many files. `src/hooks/useChat.js` was not listed in the format warnings.
 - Build warning: Vite still reports the existing large `antd-vendor` chunk over 500 kB.
 
 ## Manual Testing
 
-- Browser/manual route testing was not run in this turn.
-- Behavior was verified by static inspection plus lint/build.
+- Manual browser simulation of the `Session not found` path was not run in this turn.
+- Behavior was validated by static flow inspection, lint, build, and GitNexus change detection.
 
 ## Known Issues
 
-- Search/category/date filters are still client-side and only filter the currently loaded page. Server-side filtering would require backend query support.
-- Prettier formatting drift remains repo-wide.
-- Large Ant Design vendor chunk warning remains unchanged.
+- Recovery depends on backend error text containing `Session not found`.
+- Existing repo-wide Prettier drift remains.
+- Existing large Ant Design vendor chunk warning remains unchanged.
 
 ## Backend/API Dependencies
 
-- Backend must support:
-  - `GET /api/knowledge?page=<number>&limit=<number>`
-  - `GET /api/conversations?page=<number>&limit=<number>`
-- Backend response payloads must include:
-  - `data.entries` and `data.pagination` for Knowledge.
-  - `data.conversations` and `data.pagination` for Conversations.
-  - `pagination.page`, `pagination.limit`, and `pagination.total`.
+- Backend must return or stream an error containing `Session not found` when a chat session was deleted.
+- Backend `POST /api/session` must return a valid `sessionId`.
+- Backend `POST /api/chat` must keep the current SSE contract.
 
 ## New Dependencies
 
@@ -120,8 +104,8 @@ No new dependencies.
 
 ## Suggested Commit Message
 
-`fix(admin): consume paginated list api responses`
+`fix(chat): recreate session when backend reports missing session`
 
 ## Suggested Next Step
 
-Run frontend and backend together, then manually check `/admin/knowledge` and `/admin/conversations` page changes against live API data.
+Manually test by deleting the current session on the backend before sending the first chat message, then confirm the frontend creates a new session and streams the response without duplicating the user message.
