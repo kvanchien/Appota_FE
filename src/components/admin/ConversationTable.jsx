@@ -6,7 +6,7 @@ import { MessageOutlined, ClockCircleOutlined } from '@ant-design/icons'
  *
  * @param {{ data: ConversationSummary[], loading: boolean, onRowClick: (record) => void }} props
  */
-export default function ConversationTable({ data, loading, onRowClick }) {
+export default function ConversationTable({ data, loading, pagination, onPageChange, onRowClick }) {
   const columns = [
     {
       title: <div className="text-center">Session ID</div>,
@@ -61,9 +61,14 @@ export default function ConversationTable({ data, loading, onRowClick }) {
       loading={loading}
       rowKey="_id"
       pagination={{
-        pageSize: 15,
+        current: pagination.current,
+        pageSize: pagination.pageSize,
+        total: pagination.total,
         showTotal: (total) => `Tổng ${total} conversations`,
         showSizeChanger: false,
+      }}
+      onChange={(nextPagination) => {
+        onPageChange(nextPagination.current, nextPagination.pageSize)
       }}
       onRow={(record) => ({
         onClick: () => onRowClick(record),

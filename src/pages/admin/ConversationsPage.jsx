@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Alert, DatePicker, Button, message } from 'antd'
 import { MessageOutlined, CalendarOutlined, BarChartOutlined } from '@ant-design/icons'
@@ -18,6 +18,7 @@ export default function ConversationsPage() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 15, total: 0 })
 
   const [dateRange, setDateRange] = useState(null)
 
@@ -26,21 +27,27 @@ export default function ConversationsPage() {
   const [reportData, setReportData] = useState(null)
   const [reportLoading, setReportLoading] = useState(false)
 
-  useEffect(() => {
-    async function load() {
-      setLoading(true)
-      setError(null)
-      try {
-        const list = await getConversations()
-        setData(list ?? [])
-      } catch (err) {
-        setError(err.message || 'Không thể tải danh sách conversations')
-      } finally {
-        setLoading(false)
-      }
+  const loadConversations = useCallback(async ({ page = 1, limit = 15 } = {}) => {
+    setLoading(true)
+    setError(null)
+    try {
+      const result = await getConversations({ page, limit })
+      setData(result?.conversations ?? [])
+      setPagination({
+        current: result?.pagination?.page ?? page,
+        pageSize: result?.pagination?.limit ?? limit,
+        total: result?.pagination?.total ?? 0,
+      })
+    } catch (err) {
+      setError(err.message || 'Không thể tải danh sách conversations')
+    } finally {
+      setLoading(false)
     }
-    load()
   }, [])
+
+  useEffect(() => {
+    loadConversations({ page: 1, limit: pagination.pageSize })
+  }, [loadConversations, pagination.pageSize])
 
   const filteredData = data.filter((item) => {
     if (!dateRange || !dateRange[0] || !dateRange[1]) return true
@@ -121,6 +128,7 @@ export default function ConversationsPage() {
         <ConversationTable
           data={filteredData}
           loading={loading}
+          pagination={pagination}
           onRowClick={(record) => navigate(`/admin/conversations/${record._id}`)}
         />
       </div>

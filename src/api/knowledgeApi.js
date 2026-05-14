@@ -1,12 +1,16 @@
 import { apiFetch } from './baseApi'
 
 /**
- * Get all Q&A pairs.
- * GET /api/knowledge
- * @returns {Promise<KnowledgeEntry[]>}
+ * Get Q&A pairs with pagination.
+ * GET /api/knowledge?page=1&limit=10
+ * @returns {Promise<{ entries: KnowledgeEntry[], pagination: object }>}
  */
-export async function getKnowledge() {
-  const res = await apiFetch('/api/knowledge')
+export async function getKnowledge({ page = 1, limit = 10 } = {}) {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  })
+  const res = await apiFetch(`/api/knowledge?${params.toString()}`)
   return res.data
 }
 
